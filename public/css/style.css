@@ -1,10 +1,146 @@
-body {
-    background-color: white;
-}
 
-h1 {
-    color: blue;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #FFF8F0; /* beige clair, doux */
+    margin: 0;
+    padding: 0;
+    }
+    header {
+    background-color: #F2C078; /* ton sable doré inspiré du museau du chien */
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+    .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #6B3F1D; /* brun foncé chaud */
+    }
+    .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    }
+    .nav-links li a {
+    text-decoration: none;
+    color: #4A3A2D;
+    font-weight: 500;
+    }
+    .nav-links li a:hover {
+    color: #A44D25; /* rouille-orange, dynamique */
+    }
+    main {
+    padding: 20px;
+    }
+    .footer {
     text-align: center;
-    margin-top: 100px;
-    font-family: Arial, sans-serif;
-}
+    padding: 20px;
+    background-color: #F2C078;
+    color: #4A3A2D;
+    margin-top: 40px;
+    }
+    .titre-accueil {
+    text-align: center;
+    font-size: 2em;
+    color: #A44D25;
+    }
+    .intro {
+    text-align: center;
+    color: #5C4B3D;
+    margin-bottom: 30px;
+    }
+    .cta-container {
+    text-align: center;
+    }
+    .btn {
+    display: inline-block;
+    background-color: #D97B29; /* orange chaleureux */
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+    background-color: #B45B19;
+    }
+    .carte {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    width: 250px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+    }
+    .produits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    }
+    .chien {
+    background-color: #FFE8C6; /* fond chien : sable clair */
+    }
+    .chat {
+    background-color: #FDD4B0; /* fond chat : orangé pâle */
+    }
+    .produit-img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff; /* ou une couleur douce pour éviter du vide autour */
+    }
+    
+    .logo-img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    }
+    .dropdown {
+    position: relative;
+    }
+    .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #FFF8F0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    border-radius: 10px;
+    }
+    .dropdown:hover .dropdown-menu {
+    display: block;
+    }
+    .dropdown-menu li {
+    margin: 5px 0;
+    }
+    .dropdown-menu li a {
+    color: #4A3A2D;
+    text-decoration: none;
+    }
+    .search-bar {
+    flex-grow: 1;
+    margin: 0 20px;
+    }
+    .search-bar input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    }
