@@ -12,7 +12,7 @@
     <?php foreach ($produits as $produit): ?>
         <div class="carte <?= esc($produit['animal']) ?>">
             <?php if (!empty($produit['image'])): ?>
-                <img src="/images/<?= esc($produit['image']) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
+                <img src="/trufficat/public/images/<?= esc($produit['image']) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
             <?php endif; ?>
             <h2><?= esc($produit['nom']) ?></h2>
             <p><?= esc($produit['description']) ?></p>

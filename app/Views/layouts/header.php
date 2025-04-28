@@ -9,7 +9,7 @@
 <header>
 <nav class="navbar">
 <div class="logo">
-<a href="/"><img src="public/images/logo.png" alt="Trufficat" class="logo-img"></a>
+<a href="/"><img src="/trufficat/public/images/logo.png" alt="Trufficat" class="logo-img"></a>
 </div>
 <form action="/recherche" method="get" class="search-bar">
 <input type="text" name="q" placeholder="Rechercher un produit...">
