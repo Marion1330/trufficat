@@ -11,3 +11,10 @@ $routes->get('produits/chats', 'Produits::chats');
 $routes->get('login', 'Compte::login');
 $routes->get('register', 'Compte::register');
 $routes->get('panier', 'Panier::index');
+
+// Routes d'administration
+$routes->get('admin', 'Admin::index');
+$routes->get('admin/produits', 'Admin::produits');
+$routes->get('admin/produit/ajouter', 'Admin::ajouterProduit');
+$routes->get('admin/produit/modifier/(:num)', 'Admin::modifierProduit/$1');
+$routes->get('admin/produit/supprimer/(:num)', 'Admin::supprimerProduit/$1');

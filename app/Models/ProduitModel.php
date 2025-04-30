@@ -14,4 +14,23 @@ class ProduitModel extends Model
     {
         return $this->where('animal', $type)->findAll();
     }
+
+    // Ajouter un produit
+public function ajouter($data)
+{
+    return $this->insert($data);
+}
+
+// Modifier un produit
+public function modifier($id, $data)
+{
+    return $this->update($id, $data);
+}
+
+// Supprimer un produit
+public function supprimer($id)
+{
+    return $this->delete($id);
+}
+
 }
