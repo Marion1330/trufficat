@@ -1,120 +1,146 @@
-
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #FFF8F0; /* beige clair, doux */
+    background-color: #FFF8F0;
     margin: 0;
     padding: 0;
-    }
-    header {
-    background-color: #F2C078; /* ton sable doré inspiré du museau du chien */
+}
+
+header {
+    background-color: #F2C078;
     padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .navbar {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    }
-    .logo {
+}
+
+.logo {
     font-size: 1.8em;
     font-weight: bold;
-    color: #6B3F1D; /* brun foncé chaud */
-    }
-    .nav-links {
+    color: #6B3F1D;
+}
+
+.nav-links {
     list-style: none;
     display: flex;
     gap: 15px;
-    }
-    .nav-links li a {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
     text-decoration: none;
     color: #4A3A2D;
     font-weight: 500;
-    }
-    .nav-links li a:hover {
-    color: #A44D25; /* rouille-orange, dynamique */
-    }
-    main {
+}
+
+.nav-links li a:hover {
+    color: #A44D25;
+}
+
+main {
     padding: 20px;
-    }
-    .footer {
+}
+
+.footer {
     text-align: center;
     padding: 20px;
     background-color: #F2C078;
     color: #4A3A2D;
     margin-top: 40px;
-    }
-    .titre-accueil {
+}
+
+.titre-accueil {
     text-align: center;
     font-size: 2em;
     color: #A44D25;
-    }
-    .intro {
+}
+
+.intro {
     text-align: center;
     color: #5C4B3D;
     margin-bottom: 30px;
-    }
-    .cta-container {
+}
+
+.cta-container {
     text-align: center;
-    }
-    .btn {
+}
+
+.btn {
     display: inline-block;
-    background-color: #D97B29; /* orange chaleureux */
+    background-color: #D97B29;
     color: white;
     padding: 10px 20px;
     margin: 10px;
     border-radius: 10px;
     text-decoration: none;
     transition: background-color 0.3s ease;
-    }
-    .btn:hover {
+}
+
+.btn:hover {
     background-color: #B45B19;
-    }
-    .carte {
+}
+
+/* 🟧 Produit et cartes */
+
+.produits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.carte {
     background-color: #fff;
     border: 1px solid #e5e5e5;
     border-radius: 10px;
     padding: 15px;
     margin: 10px;
     width: 250px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
-    }
-    .produits {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    }
-    .chien {
-    background-color: #FFE8C6; /* fond chien : sable clair */
-    }
-    .chat {
-    background-color: #FDD4B0; /* fond chat : orangé pâle */
-    }
-    .produit-img {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.chien {
+    background-color: #FFE8C6;
+}
+
+.chat {
+    background-color: #FDD4B0;
+}
+
+.produit-img {
     width: 200px;
     height: 200px;
     object-fit: contain;
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #fff; /* ou une couleur douce pour éviter du vide autour */
-    }
-    
-    .logo-img {
+    background-color: #fff;
+}
+
+/* 🟧 Logo */
+
+.logo-img {
     height: 80px;
     width: auto;
     object-fit: contain;
     display: block;
-    }
-    .dropdown {
+}
+
+/* 🟧 Dropdown */
+
+.dropdown {
     position: relative;
-    }
-    .dropdown-menu {
+}
+
+.dropdown-menu {
     display: none;
     position: absolute;
     background-color: #FFF8F0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     list-style: none;
     margin: 0;
     padding: 10px;
@@ -122,46 +148,105 @@ body {
     left: 0;
     z-index: 1000;
     border-radius: 10px;
-    }
-    .dropdown:hover .dropdown-menu {
+}
+
+.dropdown:hover .dropdown-menu {
     display: block;
-    }
-    .dropdown-menu li {
+}
+
+.dropdown-menu li {
     margin: 5px 0;
-    }
-    .dropdown-menu li a {
+}
+
+.dropdown-menu li a {
     color: #4A3A2D;
     text-decoration: none;
-    }
-    .search-bar {
+}
+
+/* 🟧 Barre de recherche */
+
+.search-bar {
     flex-grow: 1;
     margin: 0 20px;
-    }
-    .search-bar input {
+}
+
+.search-bar input {
     width: 100%;
     padding: 8px 12px;
     border-radius: 20px;
     border: 1px solid #ccc;
     font-size: 1em;
-    }
-    .carrousel-container {
-        overflow-x: scroll;
-        margin-bottom: 30px;
-    }
-    
+}
+
+/* 🟧 Carrousel */
+
+.carrousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.carrousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+}
+
+.carrousel::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.carrousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 20px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.carrousel-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.carrousel-btn.left {
+    left: 10px;
+}
+
+.carrousel-btn.right {
+    right: 10px;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
     .carrousel {
-        display: flex;
-        gap: 15px;
+        gap: 10px;
         padding: 10px;
     }
-    
-    .carrousel .carte {
-        flex: 0 0 auto;
-        width: 250px;
-        transition: transform 0.3s ease;
+
+    .carte {
+        min-width: 200px;
+        width: 80%;
+        margin-right: 0;
+        padding: 10px;
     }
-    
-    .carrousel .carte:hover {
-        transform: scale(1.05);
+
+    .produit-img {
+        width: 100%;
+        height: auto;
+        max-height: 160px;
     }
-    
+
+    /* Masquer les flèches sur mobile */
+    .carrousel-btn {
+        display: none;
+    }
+}
