@@ -85,7 +85,6 @@ main {
 }
 
 /* 🟧 Produit et cartes */
-
 .produits {
     display: flex;
     flex-wrap: wrap;
@@ -101,6 +100,7 @@ main {
     width: 250px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
     flex-shrink: 0;
+    scroll-snap-align: start;
 }
 
 .chien {
@@ -122,7 +122,6 @@ main {
 }
 
 /* 🟧 Logo */
-
 .logo-img {
     height: 80px;
     width: auto;
@@ -131,7 +130,6 @@ main {
 }
 
 /* 🟧 Dropdown */
-
 .dropdown {
     position: relative;
 }
@@ -164,26 +162,27 @@ main {
 }
 
 /* 🟧 Barre de recherche */
-
 .search-bar {
     flex-grow: 1;
-    margin: 0 20px;
+    margin-left: 20px;   /* Ajoute une marge à gauche pour éviter de toucher "Accueil" */
+    margin-right: 20px;  /* Ajoute une marge à droite pour éviter un débordement sur les éléments suivants */
 }
 
 .search-bar input {
     width: 100%;
-    padding: 8px 12px;
+    padding: 8px 15px;    /* Ajuste le padding pour plus de confort */
     border-radius: 20px;
     border: 1px solid #ccc;
     font-size: 1em;
+    box-sizing: border-box; /* Important pour inclure padding et bordure dans la largeur */
 }
 
 /* 🟧 Carrousel */
-
 .carrousel-wrapper {
     position: relative;
     overflow: hidden;
-    margin: 20px 0;
+    margin: 40px auto;
+    max-width: 100%;
 }
 
 .carrousel {
@@ -191,30 +190,33 @@ main {
     gap: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px;
+    scrollbar-width: none;
 }
 
 .carrousel::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
 }
 
 .carrousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
     color: white;
     border: none;
     padding: 10px 14px;
     cursor: pointer;
     z-index: 2;
-    font-size: 20px;
+    font-size: 22px;
     border-radius: 50%;
-    transition: background 0.3s ease;
+    transition: background 0.3s;
 }
 
 .carrousel-btn:hover {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .carrousel-btn.left {
@@ -235,7 +237,6 @@ main {
     .carte {
         min-width: 200px;
         width: 80%;
-        margin-right: 0;
         padding: 10px;
     }
 
@@ -245,8 +246,18 @@ main {
         max-height: 160px;
     }
 
-    /* Masquer les flèches sur mobile */
     .carrousel-btn {
         display: none;
     }
+
+    /* Barre de recherche sur mobile */
+    .search-bar {
+        margin: 0 10px;        /* Réduit la marge pour que ça tienne mieux sur mobile */
+        max-width: 90%;        /* La barre de recherche occupe 90% de la largeur de l'écran */
+    }
+
+    .search-bar input {
+        padding: 10px 12px;    /* Augmente un peu le padding sur mobile pour une meilleure utilisation */
+    }
 }
+

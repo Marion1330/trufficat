@@ -7,13 +7,10 @@
     <a href="/produits/chiens" class="btn">Produits pour Chiens</a>
     <a href="/produits/chats" class="btn">Produits pour Chats</a>
 </div>
-<!-- Carrousel des produits vedettes -->
 <h2 class="titre-accueil">Produits Vedettes</h2>
-
 <div class="carrousel-wrapper">
-    <button class="carrousel-btn left" id="prevBtn">&#8592;</button>
-
-    <div class="carrousel" id="carrousel">
+    <button class="carrousel-btn left">&#10094;</button>
+    <div class="carrousel">
         <?php if (!empty($produitsVedettes)): ?>
             <?php foreach ($produitsVedettes as $produit): ?>
                 <div class="carte <?= esc($produit['animal']) ?>">
@@ -28,8 +25,9 @@
             <p>Aucun produit vedette disponible pour le moment.</p>
         <?php endif; ?>
     </div>
+    <button class="carrousel-btn right">&#10095;</button>
+</div>
 
-    <button class="carrousel-btn right" id="nextBtn">&#8594;</button>
 </div>
 
 
