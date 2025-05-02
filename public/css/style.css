@@ -144,3 +144,24 @@ body {
     border: 1px solid #ccc;
     font-size: 1em;
     }
+    .carrousel-container {
+        overflow-x: scroll;
+        margin-bottom: 30px;
+    }
+    
+    .carrousel {
+        display: flex;
+        gap: 15px;
+        padding: 10px;
+    }
+    
+    .carrousel .carte {
+        flex: 0 0 auto;
+        width: 250px;
+        transition: transform 0.3s ease;
+    }
+    
+    .carrousel .carte:hover {
+        transform: scale(1.05);
+    }
+    

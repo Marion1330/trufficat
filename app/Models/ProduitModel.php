@@ -8,29 +8,18 @@ class ProduitModel extends Model
 {
     protected $table = 'produits';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['nom', 'description', 'animal', 'image'];
+    protected $allowedFields = ['nom', 'description', 'image', 'animal', 'is_vedette'];
 
-    public function getByAnimal($type)
+    // Récupère les produits vedettes
+    public function getProduitsVedettes()
     {
-        return $this->where('animal', $type)->findAll();
+        return $this->where('is_vedette', 1) // Filtre les produits vedettes
+                    ->findAll();
     }
 
-    // Ajouter un produit
-public function ajouter($data)
-{
-    return $this->insert($data);
-}
-
-// Modifier un produit
-public function modifier($id, $data)
-{
-    return $this->update($id, $data);
-}
-
-// Supprimer un produit
-public function supprimer($id)
-{
-    return $this->delete($id);
-}
-
+    // Récupère tous les produits
+    public function getProduits()
+    {
+        return $this->findAll();
+    }
 }
