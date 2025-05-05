@@ -7,6 +7,29 @@
     <a href="/produits/chiens" class="btn">Produits pour Chiens</a>
     <a href="/produits/chats" class="btn">Produits pour Chats</a>
 </div>
+
+<h2 class="titre-accueil">Publicités</h2>
+<div class="carrousel-wrapper pub-carousel">
+    <button class="carrousel-btn left">&#10094;</button>
+    <div class="carrousel">
+        <?php if (!empty($publicites)): ?>
+            <?php foreach ($publicites as $pub): ?>
+                <div class="carte pub">
+                    <a href="<?= esc($pub['url'] ?? '#') ?>" target="_blank">
+                    <img src="/trufficat/public/images/pubs/<?= esc($pub['image']) ?>" 
+     alt="<?= esc($pub['alt_text'] ?? 'Publicité') ?>" 
+     class="produit-img">
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucune publicité disponible pour le moment.</p>
+        <?php endif; ?>
+    </div>
+    <button class="carrousel-btn right">&#10095;</button>
+</div>
+
+
 <h2 class="titre-accueil">Produits Vedettes</h2>
 <div class="carrousel-wrapper">
     <button class="carrousel-btn left">&#10094;</button>
@@ -30,7 +53,6 @@
 
 </div>
 
-
 <div class="produits">
     <?php foreach ($produits as $produit): ?>
         <div class="carte <?= esc($produit['animal']) ?>">
@@ -45,32 +67,46 @@
 
 <?php include(APPPATH . 'Views/layouts/footer.php'); ?>
 
-<!-- JavaScript pour le carrousel -->
+<!-- JavaScript pour les carrousels -->
 <script>
-    const carrousel = document.querySelector('.carrousel');
-    let isMouseDown = false;
-    let startX, scrollLeft;
+    // Carrousel général (produits et pub)
+    document.addEventListener('DOMContentLoaded', () => {
+        const carrousels = document.querySelectorAll('.carrousel');
+        const scrollAmount = 270;
 
-    carrousel.addEventListener('mousedown', (e) => {
-        isMouseDown = true;
-        startX = e.pageX - carrousel.offsetLeft;
-        scrollLeft = carrousel.scrollLeft;
-    });
+        carrousels.forEach(carrousel => {
+            const btnLeft = carrousel.closest('.carrousel-wrapper').querySelector('.carrousel-btn.left');
+            const btnRight = carrousel.closest('.carrousel-wrapper').querySelector('.carrousel-btn.right');
 
-    carrousel.addEventListener('mouseleave', () => {
-        isMouseDown = false;
-    });
+            btnLeft.addEventListener('click', () => {
+                carrousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
 
-    carrousel.addEventListener('mouseup', () => {
-        isMouseDown = false;
-    });
+            btnRight.addEventListener('click', () => {
+                carrousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
 
-    carrousel.addEventListener('mousemove', (e) => {
-        if (!isMouseDown) return;
-        e.preventDefault();
-        const x = e.pageX - carrousel.offsetLeft;
-        const walk = (x - startX) * 3; // Ajuste la vitesse du défilement horizontal
-        carrousel.scrollLeft = scrollLeft - walk;
+            let isMouseDown = false;
+            let startX, scrollLeft;
+
+            carrousel.addEventListener('mousedown', (e) => {
+                isMouseDown = true;
+                startX = e.pageX - carrousel.offsetLeft;
+                scrollLeft = carrousel.scrollLeft;
+            });
+
+            carrousel.addEventListener('mouseup', () => {
+                isMouseDown = false;
+            });
+
+            carrousel.addEventListener('mousemove', (e) => {
+                if (!isMouseDown) return;
+                e.preventDefault();
+                const x = e.pageX - carrousel.offsetLeft;
+                const walk = (x - startX) * 3;
+                carrousel.scrollLeft = scrollLeft - walk;
+            });
+        });
     });
 </script>
 <script src="/trufficat/public/js/carrousel.js"></script>

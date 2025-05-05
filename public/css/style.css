@@ -225,11 +225,60 @@ main {
 
 .carrousel-btn.right {
     right: 10px;
+
+/* 🟧 Carrousel 2 (si un second carrousel est nécessaire) */
+.carrousel-wrapper-2 {
+    position: relative;
+    overflow: hidden;
+    margin: 40px auto;
+    max-width: 100%;
+}
+
+.carrousel-2 {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px;
+    scrollbar-width: none;
+}
+
+.carrousel-2::-webkit-scrollbar {
+    display: none;
+}
+
+.carrousel-btn-2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 22px;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.carrousel-btn-2:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.carrousel-btn-2.left {
+    left: 10px;
+}
+
+.carrousel-btn-2.right {
+    right: 10px;
 }
 
 /* Responsive mobile */
 @media (max-width: 768px) {
-    .carrousel {
+    .carrousel, .carrousel-2 {
         gap: 10px;
         padding: 10px;
     }
@@ -246,7 +295,7 @@ main {
         max-height: 160px;
     }
 
-    .carrousel-btn {
+    .carrousel-btn, .carrousel-btn-2 {
         display: none;
     }
 
@@ -260,4 +309,4 @@ main {
         padding: 10px 12px;    /* Augmente un peu le padding sur mobile pour une meilleure utilisation */
     }
 }
-
+}
