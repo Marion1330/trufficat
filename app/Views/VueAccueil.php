@@ -8,27 +8,21 @@
     <a href="/produits/chats" class="btn">Produits pour Chats</a>
 </div>
 
+<!-- 🟧 Nouveau carrousel PUB plein écran -->
 <h2 class="titre-accueil">Publicités</h2>
-<div class="carrousel-wrapper pub-carousel">
-    <button class="carrousel-btn left">&#10094;</button>
-    <div class="carrousel">
-        <?php if (!empty($publicites)): ?>
-            <?php foreach ($publicites as $pub): ?>
-                <div class="carte pub">
-                    <a href="<?= esc($pub['url'] ?? '#') ?>" target="_blank">
-                    <img src="/trufficat/public/images/pubs/<?= esc($pub['image']) ?>" 
-     alt="<?= esc($pub['alt_text'] ?? 'Publicité') ?>" 
-     class="produit-img">
-                    </a>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Aucune publicité disponible pour le moment.</p>
-        <?php endif; ?>
+<div class="pub-carousel-container">
+    <div class="pub-carousel">
+        <?php foreach ($publicites as $pub): ?>
+            <div class="pub-slide">
+                <a href="<?= esc($pub['url'] ?? '#') ?>" target="_blank">
+                    <img src="/trufficat/public/images/pubs/<?= esc($pub['image']) ?>" alt="<?= esc($pub['alt_text'] ?? 'Publicité') ?>">
+                </a>
+            </div>
+        <?php endforeach; ?>
     </div>
-    <button class="carrousel-btn right">&#10095;</button>
+    <button class="pub-prev">&#10094;</button>
+    <button class="pub-next">&#10095;</button>
 </div>
-
 
 <h2 class="titre-accueil">Produits Vedettes</h2>
 <div class="carrousel-wrapper">
@@ -69,47 +63,27 @@
 
 <!-- JavaScript pour les carrousels -->
 <script>
-    // Carrousel général (produits et pub)
+    // Carrousel pub
     document.addEventListener('DOMContentLoaded', () => {
-        const carrousels = document.querySelectorAll('.carrousel');
-        const scrollAmount = 270;
+        const pubCarousel = document.querySelector('.pub-carousel');
+        const pubSlides = document.querySelectorAll('.pub-slide');
+        const prevBtn = document.querySelector('.pub-prev');
+        const nextBtn = document.querySelector('.pub-next');
+        let currentIndex = 0;
 
-        carrousels.forEach(carrousel => {
-            const btnLeft = carrousel.closest('.carrousel-wrapper').querySelector('.carrousel-btn.left');
-            const btnRight = carrousel.closest('.carrousel-wrapper').querySelector('.carrousel-btn.right');
+        function showSlide(index) {
+            if (index >= pubSlides.length) currentIndex = 0;
+            else if (index < 0) currentIndex = pubSlides.length - 1;
+            else currentIndex = index;
 
-            btnLeft.addEventListener('click', () => {
-                carrousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            });
+            pubCarousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
 
-            btnRight.addEventListener('click', () => {
-                carrousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            });
-
-            let isMouseDown = false;
-            let startX, scrollLeft;
-
-            carrousel.addEventListener('mousedown', (e) => {
-                isMouseDown = true;
-                startX = e.pageX - carrousel.offsetLeft;
-                scrollLeft = carrousel.scrollLeft;
-            });
-
-            carrousel.addEventListener('mouseup', () => {
-                isMouseDown = false;
-            });
-
-            carrousel.addEventListener('mousemove', (e) => {
-                if (!isMouseDown) return;
-                e.preventDefault();
-                const x = e.pageX - carrousel.offsetLeft;
-                const walk = (x - startX) * 3;
-                carrousel.scrollLeft = scrollLeft - walk;
-            });
-        });
+        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+        setInterval(() => showSlide(currentIndex + 1), 5000); // Auto-slide toutes les 5 sec
     });
 </script>
 <script src="/trufficat/public/js/carrousel.js"></script>
-
 </body>
 </html>
