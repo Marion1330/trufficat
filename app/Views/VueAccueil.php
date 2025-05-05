@@ -61,29 +61,7 @@
 
 <?php include(APPPATH . 'Views/layouts/footer.php'); ?>
 
-<!-- JavaScript pour les carrousels -->
-<script>
-    // Carrousel pub
-    document.addEventListener('DOMContentLoaded', () => {
-        const pubCarousel = document.querySelector('.pub-carousel');
-        const pubSlides = document.querySelectorAll('.pub-slide');
-        const prevBtn = document.querySelector('.pub-prev');
-        const nextBtn = document.querySelector('.pub-next');
-        let currentIndex = 0;
-
-        function showSlide(index) {
-            if (index >= pubSlides.length) currentIndex = 0;
-            else if (index < 0) currentIndex = pubSlides.length - 1;
-            else currentIndex = index;
-
-            pubCarousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
-
-        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
-        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
-        setInterval(() => showSlide(currentIndex + 1), 5000); // Auto-slide toutes les 5 sec
-    });
-</script>
+<!-- JavaScript centralisé -->
 <script src="/trufficat/public/js/carrousel.js"></script>
 </body>
 </html>
