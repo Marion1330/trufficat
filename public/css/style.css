@@ -1,10 +1,13 @@
+/* 🌿 Base */
 body {
     font-family: 'Segoe UI', sans-serif;
     background-color: #FFF8F0;
     margin: 0;
     padding: 0;
+    color: #4A3A2D;
 }
 
+/* 🌿 Header & Nav */
 header {
     background-color: #F2C078;
     padding: 10px 20px;
@@ -15,6 +18,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .logo {
@@ -23,40 +27,43 @@ header {
     color: #6B3F1D;
 }
 
+.logo-img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
 .nav-links {
     list-style: none;
     display: flex;
     gap: 15px;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap;
 }
 
 .nav-links li a {
     text-decoration: none;
     color: #4A3A2D;
     font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .nav-links li a:hover {
     color: #A44D25;
 }
 
+/* 🌿 Main content */
 main {
     padding: 20px;
-}
-
-.footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #F2C078;
-    color: #4A3A2D;
-    margin-top: 40px;
 }
 
 .titre-accueil {
     text-align: center;
     font-size: 2em;
     color: #A44D25;
+    margin: 20px 0;
 }
 
 .intro {
@@ -65,8 +72,10 @@ main {
     margin-bottom: 30px;
 }
 
+/* 🌿 CTA */
 .cta-container {
     text-align: center;
+    margin-bottom: 40px;
 }
 
 .btn {
@@ -77,6 +86,7 @@ main {
     margin: 10px;
     border-radius: 10px;
     text-decoration: none;
+    font-weight: bold;
     transition: background-color 0.3s ease;
 }
 
@@ -84,52 +94,22 @@ main {
     background-color: #B45B19;
 }
 
-/* 🟧 Produit et cartes */
-.produits {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+/* 🌿 Search bar */
+.search-bar {
+    flex-grow: 1;
+    margin: 0 20px;
 }
 
-.carte {
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px;
-    width: 250px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
-    flex-shrink: 0;
-    scroll-snap-align: start;
+.search-bar input {
+    width: 100%;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    box-sizing: border-box;
 }
 
-.chien {
-    background-color: #FFE8C6;
-}
-
-.chat {
-    background-color: #FDD4B0;
-}
-
-.produit-img {
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-    border-radius: 10px;
-    margin: 0 auto 10px;
-    display: block;
-    background-color: #fff;
-}
-
-/* 🟧 Logo */
-.logo-img {
-    height: 80px;
-    width: auto;
-    object-fit: contain;
-    display: block;
-}
-
-/* 🟧 Dropdown */
+/* 🌿 Dropdown */
 .dropdown {
     position: relative;
 }
@@ -140,7 +120,6 @@ main {
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     list-style: none;
-    margin: 0;
     padding: 10px;
     top: 100%;
     left: 0;
@@ -161,23 +140,59 @@ main {
     text-decoration: none;
 }
 
-/* 🟧 Barre de recherche */
-.search-bar {
-    flex-grow: 1;
-    margin-left: 20px;   /* Ajoute une marge à gauche pour éviter de toucher "Accueil" */
-    margin-right: 20px;  /* Ajoute une marge à droite pour éviter un débordement sur les éléments suivants */
+/* 🌿 Produits */
+.produits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.search-bar input {
-    width: 100%;
-    padding: 8px 15px;    /* Ajuste le padding pour plus de confort */
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    box-sizing: border-box; /* Important pour inclure padding et bordure dans la largeur */
+.carte {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    width: 250px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    text-align: center;
+    transition: transform 0.2s ease;
 }
 
-/* 🟧 Carrousel */
+.carte:hover {
+    transform: translateY(-5px);
+}
+
+.chien {
+    background-color: #FFE8C6;
+}
+
+.chat {
+    background-color: #FDD4B0;
+}
+
+.produit-img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin: 0 auto 10px;
+    display: block;
+    background-color: #fff;
+}
+
+/* 🌿 Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #F2C078;
+    color: #4A3A2D;
+    margin-top: 40px;
+}
+
+/* 🌿 Carrousel produits vedettes */
 .carrousel-wrapper {
     position: relative;
     overflow: hidden;
@@ -225,93 +240,9 @@ main {
 
 .carrousel-btn.right {
     right: 10px;
-
-/* 🟧 Carrousel 2 (si un second carrousel est nécessaire) */
-.carrousel-wrapper-2 {
-    position: relative;
-    overflow: hidden;
-    margin: 40px auto;
-    max-width: 100%;
 }
 
-.carrousel-2 {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px;
-    scrollbar-width: none;
-}
-
-.carrousel-2::-webkit-scrollbar {
-    display: none;
-}
-
-.carrousel-btn-2 {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    cursor: pointer;
-    z-index: 2;
-    font-size: 22px;
-    border-radius: 50%;
-    transition: background 0.3s;
-}
-
-.carrousel-btn-2:hover {
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.carrousel-btn-2.left {
-    left: 10px;
-}
-
-.carrousel-btn-2.right {
-    right: 10px;
-}
-
-/* Responsive mobile */
-@media (max-width: 768px) {
-    .carrousel, .carrousel-2 {
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .carte {
-        min-width: 200px;
-        width: 80%;
-        padding: 10px;
-    }
-
-    .produit-img {
-        width: 100%;
-        height: auto;
-        max-height: 160px;
-    }
-
-    .carrousel-btn, .carrousel-btn-2 {
-        display: none;
-    }
-
-    /* Barre de recherche sur mobile */
-    .search-bar {
-        margin: 0 10px;        /* Réduit la marge pour que ça tienne mieux sur mobile */
-        max-width: 90%;        /* La barre de recherche occupe 90% de la largeur de l'écran */
-    }
-
-    .search-bar input {
-        padding: 10px 12px;    /* Augmente un peu le padding sur mobile pour une meilleure utilisation */
-    }
-}
-}
-
-/* 🟧 Carrousel Publicité (plein écran - 1 image à la fois) */
+/* 🌿 Carrousel publicité */
 .pub-carousel-container {
     position: relative;
     width: 100%;
@@ -340,7 +271,8 @@ main {
     border-radius: 12px;
 }
 
-.pub-prev, .pub-next {
+.pub-prev,
+.pub-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -360,4 +292,43 @@ main {
 
 .pub-next {
     right: 15px;
+}
+
+/* 🌿 Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carrousel, .carrousel-2 {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .carte {
+        min-width: 200px;
+        width: 80%;
+        padding: 10px;
+    }
+
+    .produit-img {
+        width: 100%;
+        height: auto;
+        max-height: 160px;
+    }
+
+    .carrousel-btn,
+    .carrousel-btn-2 {
+        display: none;
+    }
+
+    .search-bar {
+        margin: 10px auto;
+        max-width: 90%;
+    }
+
+    .pub-slide img {
+        height: 220px;
+    }
 }
