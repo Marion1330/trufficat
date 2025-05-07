@@ -31,109 +31,92 @@
       <li><a href="/panier">Panier</a></li>
     </ul>
   </nav>
-</header>
-
-<nav class="produits-navbar">
-  <ul class="produits-menu">
-    <!-- Menu Produits pour chats -->
-    <li class="produits-item">
-      <a href="#">Produits pour chats</a>
-      <ul class="produits-dropdown">
-        <li><strong>Alimentation</strong>
-          <ul>
-            <li><a href="#">Alimentation sans céréales</a></li>
-            <li><a href="#">Alimentation Bio</a></li>
-            <li><a href="#">Croquettes</a></li>
-            <li><a href="#">Croquettes pour chat stérilisé</a></li>
-            <li><a href="#">Boites et sachets</a></li>
-            <li><a href="#">Friandises</a></li>
-          </ul>
-        </li>
-        <li><strong>Chatières</strong></li>
-        <li><strong>Sellerie</strong></li>
-        <li><strong>Couchage</strong>
-          <ul>
-            <li><a href="#">Hamac</a></li>
-            <li><a href="#">Maison</a></li>
-            <li><a href="#">Niche et cabane</a></li>
-            <li><a href="#">Panier et coussin</a></li>
-          </ul>
-        </li>
-        <li><strong>Hygiène et soins</strong>
-          <ul>
-            <li><a href="#">Produits antiparasitaires</a></li>
-            <li><a href="#">Litières</a></li>
-            <li><a href="#">Bacs à litière</a></li>
-            <li><a href="#">Accessoires de litières</a></li>
-            <li><a href="#">Maison de toilette</a></li>
-            <li><a href="#">Entretien du poil</a></li>
-          </ul>
-        </li>
-        <li><strong>Paniers et transports</strong>
-          <ul>
-            <li><a href="#">Sac de transport</a></li>
-            <li><a href="#">Caisse de transport</a></li>
-          </ul>
-        </li>
-        <li><strong>Jouets</strong></li>
-        <li><strong>Arbres à chat et griffoirs</strong></li>
-        <li><strong>Gamelles et accessoires</strong></li>
-      </ul>
+  <!-- Barre de navigation secondaire -->
+<nav class="navbar-secondary">
+  <ul class="nav-links-secondary">
+    <li class="dropdown">
+      <a href="#">Produits pour chiens</a>
+      <div class="dropdown-menu">
+        <div class="dropdown-columns">
+          <div class="dropdown-column">
+            <strong>Alimentation</strong>
+            <a href="#">Sans céréales</a>
+            <a href="#">Bio</a>
+            <a href="#">Croquettes</a>
+            <a href="#">Croquettes stérilisé</a>
+            <a href="#">Boites et sachets</a>
+            <a href="#">Friandises</a>
+          </div>
+          <div class="dropdown-column">
+            <strong>Jouets</strong>
+            <br><br>
+            <strong>Niche et couchage</strong>
+            <a href="#">Paniers et coussins</a>
+            <a href="#">Niches et chenils</a>
+            <strong>Hygiène et soins</strong>
+            <a href="#">Antiparasitaires</a>
+            <a href="#">Entretien du poil</a>
+            <a href="#">Sacs de propreté</a>
+          </div>
+          <div class="dropdown-column">
+            <strong>Transport</strong>
+            <a href="#">Caisses et sacs</a>
+            <a href="#">Accessoires voyage</a>
+            <strong>Sellerie</strong>
+            <a href="#">Laisses</a>
+            <a href="#">Colliers</a>
+            <a href="#">Harnais</a>
+            <a href="#">Muselières</a>
+            <strong>Accessoires</strong>
+            <a href="#">Gamelles</a>
+          </div>
+        </div>
+      </div>
     </li>
 
-    <!-- Menu Produits pour chiens -->
-    <li class="produits-item">
-      <a href="#">Produits pour chiens</a>
-      <ul class="produits-dropdown">
-        <li><strong>Alimentation</strong>
-          <ul>
-            <li><a href="#">Alimentation sans céréales</a></li>
-            <li><a href="#">Alimentation Bio</a></li>
-            <li><a href="#">Croquettes</a></li>
-            <li><a href="#">Croquettes pour chiens stérilisé</a></li>
-            <li><a href="#">Boites et sachets</a></li>
-            <li><a href="#">Friandises</a></li>
-          </ul>
-        </li>
-        <li><strong>Jouets</strong></li>
-        <li><strong>Niche et couchage</strong>
-          <ul>
-            <li><a href="#">Paniers et coussins</a></li>
-            <li><a href="#">Niches et chenils</a></li>
-          </ul>
-        </li>
-        <li><strong>Hygiène et soins</strong>
-          <ul>
-            <li><a href="#">Produits antiparasitaires</a></li>
-            <li><a href="#">Entretien du poil</a></li>
-            <li><a href="#">Sacs de propreté</a></li>
-          </ul>
-        </li>
-        <li><strong>Paniers et transports</strong>
-          <ul>
-            <li><a href="#">Caisses et sacs de transport</a></li>
-            <li><a href="#">Accessoires de voyage</a></li>
-          </ul>
-        </li>
-        <li><strong>Sellerie</strong>
-          <ul>
-            <li><a href="#">Laisses</a></li>
-            <li><a href="#">Laisses à enrouleur</a></li>
-            <li><a href="#">Colliers</a></li>
-            <li><a href="#">Harnais</a></li>
-            <li><a href="#">Muselières</a></li>
-          </ul>
-        </li>
-        <li><strong>Accessoires</strong>
-          <ul>
-            <li><a href="#">Gamelles et accessoires</a></li>
-          </ul>
-        </li>
-      </ul>
+    <li class="dropdown">
+      <a href="#">Produits pour chats</a>
+      <div class="dropdown-menu">
+        <div class="dropdown-columns">
+          <div class="dropdown-column">
+            <strong>Alimentation</strong>
+            <a href="#">Sans céréales</a>
+            <a href="#">Bio</a>
+            <a href="#">Croquettes</a>
+            <a href="#">Croquettes stérilisé</a>
+            <a href="#">Boites et sachets</a>
+            <a href="#">Friandises</a>
+          </div>
+          <div class="dropdown-column">
+            <strong>Couchage</strong>
+            <a href="#">Hamac</a>
+            <a href="#">Maison</a>
+            <a href="#">Cabane</a>
+            <a href="#">Panier</a>
+            <strong>Hygiène</strong>
+            <a href="#">Antiparasitaires</a>
+            <a href="#">Litières</a>
+            <a href="#">Bacs</a>
+            <a href="#">Accessoires</a>
+          </div>
+          <div class="dropdown-column">
+            <strong>Transport</strong>
+            <a href="#">Sacs</a>
+            <a href="#">Caisses</a>
+            <strong>Jouets</strong>
+            <br><br>
+            <strong>Griffoirs</strong>
+            <br><br>
+            <strong>Sellerie</strong>
+            <br><br>
+            <strong>Gamelles</strong>
+          </div>
+        </div>
+      </div>
     </li>
   </ul>
 </nav>
 
-
+</header>
 </body>
 </html>

@@ -331,103 +331,81 @@ main {
         height: 220px;
     }
 }
-/* 🌿 Produits Navbar */
-.produits-navbar {
+
+
+/* Navbar secondaire */
+.navbar-secondary {
     background-color: #F2C078;
-    padding: 15px 20px;
+    padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-/* 🌿 Menu Produits */
-.produits-menu {
-    display: flex;
-    justify-content: space-around;
+.nav-links-secondary {
     list-style: none;
+    display: flex;
+    gap: 30px;
     margin: 0;
     padding: 0;
 }
 
-.produits-item {
-    position: relative;
-    padding: 10px;
-}
-
-.produits-item a {
+.nav-links-secondary li a {
     text-decoration: none;
     color: #4A3A2D;
-    font-weight: bold;
-    padding: 10px 20px;
-    display: block;
+    font-weight: 600;
     transition: color 0.3s ease;
 }
 
-.produits-item a:hover {
+.nav-links-secondary li a:hover {
     color: #A44D25;
 }
 
-/* 🌿 Mega Menu */
-.produits-dropdown {
+.nav-links-secondary .dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    padding: 20px;
     border-radius: 10px;
-    min-width: 800px;
+    padding: 20px;
     z-index: 1000;
-    flex-wrap: wrap;
-    gap: 20px;
+    min-width: 600px;
 }
 
-.produits-item:hover .produits-dropdown {
-    display: flex;
-}
-
-.produits-dropdown > li {
-    flex: 0 0 220px;
-}
-
-.produits-dropdown > li > strong {
+.dropdown:hover .dropdown-menu {
     display: block;
-    margin-bottom: 8px;
+}
+
+/* Structure en colonnes */
+.dropdown-columns {
+    display: flex;
+    gap: 40px;
+}
+
+.dropdown-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+}
+
+.dropdown-column strong {
+    margin-bottom: 5px;
     font-weight: bold;
-    color: #A44D25;
+    color: #6B3F1D;
 }
 
-.produits-dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.produits-dropdown ul li {
-    margin: 4px 0;
-}
-
-.produits-dropdown ul li a {
+.dropdown-column a {
     text-decoration: none;
     color: #4A3A2D;
-    padding: 4px 6px;
-    display: block;
-    font-weight: normal;
+    padding: 2px 0;
+    transition: color 0.3s;
 }
 
-.produits-dropdown ul li a:hover {
+.dropdown-column a:hover {
     color: #A44D25;
 }
-
-/* 🌿 Animations - Transition suave */
-.produits-item a,
-.produits-dropdown ul li a {
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.produits-item a:hover,
-.produits-dropdown ul li a:hover {
-    color: #A44D25;
-    transform: scale(1.05);
-}
-
