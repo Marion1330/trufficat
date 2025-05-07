@@ -331,19 +331,14 @@ main {
         height: 220px;
     }
 }
-
 /* 🌿 Produits Navbar */
 .produits-navbar {
     background-color: #F2C078;
-    padding: 10px 20px;
+    padding: 15px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.nav-divider {
-    border-bottom: 2px solid #4A3A2D;
-    margin: 0 20px;
-}
-
+/* 🌿 Menu Produits */
 .produits-menu {
     display: flex;
     justify-content: space-around;
@@ -354,6 +349,7 @@ main {
 
 .produits-item {
     position: relative;
+    padding: 10px;
 }
 
 .produits-item a {
@@ -369,21 +365,21 @@ main {
     color: #A44D25;
 }
 
-/* 🌿 Mega Menu amélioré */
+/* 🌿 Mega Menu */
 .produits-dropdown {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
     list-style: none;
+    padding: 20px;
     border-radius: 10px;
-    min-width: 600px;
+    min-width: 800px;
     z-index: 1000;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .produits-item:hover .produits-dropdown {
@@ -391,7 +387,7 @@ main {
 }
 
 .produits-dropdown > li {
-    flex: 0 0 200px;
+    flex: 0 0 220px;
 }
 
 .produits-dropdown > li > strong {
@@ -422,3 +418,16 @@ main {
 .produits-dropdown ul li a:hover {
     color: #A44D25;
 }
+
+/* 🌿 Animations - Transition suave */
+.produits-item a,
+.produits-dropdown ul li a {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.produits-item a:hover,
+.produits-dropdown ul li a:hover {
+    color: #A44D25;
+    transform: scale(1.05);
+}
+

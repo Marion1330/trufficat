@@ -33,7 +33,6 @@
   </nav>
 </header>
 
-<!-- Deuxième barre : Menu Produits -->
 <nav class="produits-navbar">
   <ul class="produits-menu">
     <!-- Menu Produits pour chats -->
@@ -134,6 +133,7 @@
     </li>
   </ul>
 </nav>
+
 
 </body>
 </html>
