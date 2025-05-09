@@ -117,7 +117,7 @@ main {
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%; /* Positionne le menu juste en dessous de la navbar-secondary */
+    top: 95%; /* Réduit l'écart entre le lien et le menu */
     left: 0; /* Aligne le menu avec le logo */
     width: 100%; /* Prend toute la largeur de l'écran */
     background-color: #FFF8F0; /* Assure un fond uniforme */
@@ -128,12 +128,19 @@ main {
     overflow-x: auto; /* Ajoute un défilement horizontal si le contenu dépasse */
     overflow-y: hidden; /* Désactive le défilement vertical */
     white-space: nowrap; /* Empêche les colonnes de passer à la ligne */
+    visibility: hidden; /* Par défaut, le menu est caché */
+    opacity: 0; /* Par défaut, le menu est transparent */
+    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    visibility: visible; /* Rendre le menu visible */
+    opacity: 1; /* Rendre le menu complètement opaque */
+    transition: opacity 0.2s ease-in-out; /* Ajoute une transition fluide */
 }
 
 .dropdown-menu li {
@@ -373,7 +380,7 @@ main {
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%; /* Positionne le menu juste en dessous de la navbar-secondary */
+    top: 95%; /* Réduit l'écart entre le lien et le menu */
     left: 0; /* Aligne le menu avec le logo */
     width: 1000px; /* Prend toute la largeur de l'écran */
     background-color: #FFF8F0; /* Assure un fond uniforme */
@@ -384,6 +391,17 @@ main {
     overflow-x: auto; /* Ajoute un défilement horizontal si le contenu dépasse */
     overflow-y: hidden; /* Désactive le défilement vertical */
     white-space: nowrap; /* Empêche les colonnes de passer à la ligne */
+    visibility: hidden; /* Par défaut, le menu est caché */
+    opacity: 0; /* Par défaut, le menu est transparent */
+    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
+}
+
+.navbar-secondary .dropdown:hover .dropdown-menu,
+.navbar-secondary .dropdown-menu:hover {
+    display: flex; /* Assure que le menu reste visible */
+    visibility: visible; /* Rendre le menu visible */
+    opacity: 1; /* Rendre le menu complètement opaque */
+    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
 }
 
 .navbar-secondary .dropdown:hover .dropdown-menu {
@@ -397,7 +415,7 @@ main {
 .navbar-secondary .dropdown:nth-child(1) .dropdown-menu {
     display: none; /* Assurez-vous que le menu est caché par défaut */
     position: fixed; /* Rend le menu fixe par rapport à la fenêtre */
-    top: 150px; /* Ajustez cette valeur pour le positionnement vertical (plus bas que le menu des chats) */
+    top: 130px; /* Ajustez cette valeur pour le positionnement vertical (plus bas que le menu des chats) */
     left: 0; /* Fixe le menu tout à gauche de la page */
     width: 1405px; /* Ajuste la largeur du menu */
     background-color: #FFF8F0; /* Fond du menu */
@@ -420,7 +438,7 @@ main {
 .navbar-secondary .dropdown:nth-child(2) .dropdown-menu {
     display: none; /* Assurez-vous que le menu est caché par défaut */
     position: fixed; /* Rend le menu fixe par rapport à la fenêtre */
-    top: 150px; /* Ajustez cette valeur pour le positionnement vertical */
+    top: 130px; /* Ajustez cette valeur pour le positionnement vertical */
     left: 0; /* Fixe le menu tout à gauche de la page */
     width: 1405px; /* Ajuste la largeur du menu */
     background-color: #FFF8F0; /* Fond du menu */
@@ -471,4 +489,29 @@ main {
 
 .dropdown-column a:hover {
     color: #A44D25;
+}
+
+/* Empêche le menu de disparaître immédiatement */
+.navbar-secondary .dropdown:hover .dropdown-menu,
+.navbar-secondary .dropdown-menu:hover {
+    display: flex; /* Assure que le menu reste visible */
+    visibility: visible; /* Rendre le menu visible */
+    opacity: 1; /* Rendre le menu complètement opaque */
+    transition: visibility 0.5s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
+}
+
+/* Réduit l'écart entre le lien et le menu déroulant */
+.navbar-secondary .dropdown-menu {
+    top: 90%; /* Réduit l'écart pour rapprocher le menu du lien */
+    position: absolute; /* Assure que le menu est positionné par rapport au lien */
+    visibility: hidden; /* Par défaut, le menu est caché */
+    opacity: 0; /* Par défaut, le menu est transparent */
+    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
+    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
+    pointer-events: auto; /* Permet d'interagir avec le menu */
+}
+
+/* Ajoute une zone tampon pour éviter que le menu disparaisse trop vite */
+.navbar-secondary .dropdown {
+    padding-bottom: 5px; /* Ajoute un espace pour faciliter le passage de la souris */
 }
