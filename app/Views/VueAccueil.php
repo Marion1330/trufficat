@@ -3,13 +3,7 @@
 <h1 class="titre-accueil">Bienvenue sur Trufficat</h1>
 <p class="intro">Votre boutique dédiée aux chiens et chats, tout en douceur.</p>
 
-<div class="cta-container">
-    <a href="/produits/chiens" class="btn">Produits pour Chiens</a>
-    <a href="/produits/chats" class="btn">Produits pour Chats</a>
-</div>
-
 <!-- 🟧 Nouveau carrousel PUB plein écran -->
-<h2 class="titre-accueil">Publicités</h2>
 <div class="pub-carousel-container">
     <div class="pub-carousel">
         <?php foreach ($publicites as $pub): ?>
