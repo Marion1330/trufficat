@@ -497,6 +497,26 @@ main {
     display: flex; /* Assure que le menu reste visible */
     visibility: visible; /* Rendre le menu visible */
     opacity: 1; /* Rendre le menu complètement opaque */
+}
+
+/* Par défaut, le menu est caché */
+.navbar-secondary .dropdown-menu {
+    display: none; /* Cache le menu par défaut */
+    visibility: hidden; /* Par défaut, le menu est invisible */
+    opacity: 0; /* Par défaut, le menu est transparent */
+    position: absolute; /* Positionne le menu par rapport au lien */
+    top: 100%; /* Place le menu juste en dessous du lien */
+    left: 0; /* Aligne le menu à gauche */
+    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
+    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
+}
+
+/* Empêche le menu de disparaître immédiatement */
+.navbar-secondary .dropdown:hover .dropdown-menu,
+.navbar-secondary .dropdown-menu:hover {
+    display: flex; /* Assure que le menu reste visible */
+    visibility: visible; /* Rendre le menu visible */
+    opacity: 1; /* Rendre le menu complètement opaque */
     transition: visibility 0.5s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
 }
 
