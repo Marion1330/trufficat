@@ -394,6 +394,50 @@ main {
     align-items: flex-start; /* Aligne les colonnes en haut */
 }
 
+/* Positionnement fixe pour le menu déroulant des chiens */
+.navbar-secondary .dropdown:nth-child(1) .dropdown-menu {
+    display: none; /* Assurez-vous que le menu est caché par défaut */
+    position: fixed; /* Rend le menu fixe par rapport à la fenêtre */
+    top: 150px; /* Ajustez cette valeur pour le positionnement vertical (plus bas que le menu des chats) */
+    left: 0; /* Fixe le menu tout à gauche de la page */
+    width: 1405px; /* Ajuste la largeur du menu */
+    background-color: #FFF8F0; /* Fond du menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    padding: 20px; /* Espacement interne */
+    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
+    border-radius: 0 0 10px 10px; /* Coins arrondis */
+}
+
+/* Affiche le menu des chiens au survol */
+.navbar-secondary .dropdown:nth-child(1):hover .dropdown-menu {
+    display: flex; /* Affiche le menu */
+    flex-direction: row; /* Organise les colonnes horizontalement */
+    justify-content: flex-start; /* Aligne les colonnes à gauche */
+    align-items: flex-start; /* Aligne les colonnes en haut */
+}
+
+/* Positionnement fixe pour le menu déroulant des chats */
+.navbar-secondary .dropdown:nth-child(2) .dropdown-menu {
+    display: none; /* Assurez-vous que le menu est caché par défaut */
+    position: fixed; /* Rend le menu fixe par rapport à la fenêtre */
+    top: 150px; /* Ajustez cette valeur pour le positionnement vertical */
+    left: 0; /* Fixe le menu tout à gauche de la page */
+    width: 1405px; /* Ajuste la largeur du menu */
+    background-color: #FFF8F0; /* Fond du menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    padding: 20px; /* Espacement interne */
+    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
+    border-radius: 0 0 10px 10px; /* Coins arrondis */
+}
+
+/* Affiche le menu des chats au survol */
+.navbar-secondary .dropdown:nth-child(2):hover .dropdown-menu {
+    display: flex; /* Affiche le menu */
+    flex-direction: row; /* Organise les colonnes horizontalement */
+    justify-content: flex-start; /* Aligne les colonnes à gauche */
+    align-items: flex-start; /* Aligne les colonnes en haut */
+}
+
 .dropdown-row {
     display: flex;
     gap: 40px;
