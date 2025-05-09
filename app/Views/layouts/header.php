@@ -25,7 +25,8 @@
         <a href="#">Compte</a>
         <ul class="dropdown-menu">
           <li><a href="/login">Connexion</a></li>
-          <li><a href="/register">S'inscrire</a></li>
+          <li><a href="/register">Inscription</a></li>
+          <li><a href="/logout">Déconnexion</a></li>
         </ul>
       </li>
       <li><a href="/panier">Panier</a></li>

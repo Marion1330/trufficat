@@ -54,6 +54,47 @@ header {
     color: #A44D25;
 }
 
+/* Menu déroulant pour le Compte */
+.navbar .dropdown-menu {
+    display: none; /* Cache le menu par défaut */
+    position: absolute;
+    top: 100%; /* Place le menu juste en dessous du lien */
+    left: 0; /* Aligne le menu avec le lien parent */
+    background-color: #FFF8F0; /* Fond du menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    padding: 10px;
+    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
+    border-radius: 5px; /* Coins arrondis */
+    list-style: none;
+    width: 125px; /* Largeur du menu ajustée */
+     /* Assure que le menu ne dépasse pas sur les petits écrans */
+    height: auto; /* Laisse la hauteur s'adapter au contenu */
+    max-height: 300px; /* Hauteur maximale du menu */
+    overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+}
+
+/* Affiche le menu au survol */
+.navbar .dropdown:hover .dropdown-menu,
+.navbar .dropdown-menu:hover {
+    display: block; /* Affiche le menu */
+}
+
+/* Style des liens dans le menu déroulant */
+.navbar .dropdown-menu li a {
+    text-decoration: none;
+    color: #4A3A2D;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Changement de couleur au survol des liens */
+.navbar .dropdown-menu li a:hover {
+    background-color: #F2C078;
+    color: #A44D25;
+}
+
+
 /* 🌿 Main content */
 main {
     padding: 20px;
@@ -377,38 +418,60 @@ main {
     color: #A44D25;
 }
 
+/* Menu déroulant */
 .dropdown-menu {
-    display: none;
+    display: none; /* Cache le menu par défaut */
     position: absolute;
-    top: 95%; /* Réduit l'écart entre le lien et le menu */
-    left: 0; /* Aligne le menu avec le logo */
-    width: 1000px; /* Prend toute la largeur de l'écran */
-    background-color: #FFF8F0; /* Assure un fond uniforme */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    top: 100%; /* Place le menu juste en dessous du lien */
+    left: 0; /* Aligne le menu à gauche */
+    width: 1000px; /* Ajuste la largeur du menu */
+    background-color: #FFF8F0; /* Fond du menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
     padding: 20px;
-    z-index: 1000;
-    border-radius: 0 0 10px 10px;
-    overflow-x: auto; /* Ajoute un défilement horizontal si le contenu dépasse */
-    overflow-y: hidden; /* Désactive le défilement vertical */
-    white-space: nowrap; /* Empêche les colonnes de passer à la ligne */
-    visibility: hidden; /* Par défaut, le menu est caché */
+    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
+    border-radius: 0 0 10px 10px; /* Coins arrondis */
+    visibility: hidden; /* Par défaut, le menu est invisible */
     opacity: 0; /* Par défaut, le menu est transparent */
     transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
 }
 
+/* Affiche le menu au survol */
 .navbar-secondary .dropdown:hover .dropdown-menu,
 .navbar-secondary .dropdown-menu:hover {
-    display: flex; /* Assure que le menu reste visible */
+    display: flex; /* Affiche le menu */
     visibility: visible; /* Rendre le menu visible */
     opacity: 1; /* Rendre le menu complètement opaque */
-    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
-}
-
-.navbar-secondary .dropdown:hover .dropdown-menu {
-    display: flex;
     flex-direction: row; /* Organise les colonnes horizontalement */
     justify-content: flex-start; /* Aligne les colonnes à gauche */
     align-items: flex-start; /* Aligne les colonnes en haut */
+}
+
+/* Colonnes du menu déroulant */
+.dropdown-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+    background-color: #FFF8F0; /* Fond des colonnes */
+    padding: 10px; /* Espacement interne */
+    border-radius: 5px; /* Coins arrondis */
+    white-space: normal; /* Permet aux textes de revenir à la ligne */
+}
+
+.dropdown-column strong {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #6B3F1D;
+}
+
+.dropdown-column a {
+    text-decoration: none;
+    color: #4A3A2D;
+    padding: 2px 0;
+    transition: color 0.3s;
+}
+
+.dropdown-column a:hover {
+    color: #A44D25;
 }
 
 /* Positionnement fixe pour le menu déroulant des chiens */
