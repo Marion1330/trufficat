@@ -384,27 +384,25 @@ main {
         height: 220px;
     }
 }
-
-
 /* Navbar secondaire */
 .navbar-secondary {
     background-color: #F2C078;
     padding: 10px 20px;
-    position: relative; /* Définit la navbar secondaire comme référence */
-    text-align: left; /* Aligne les éléments à gauche */
+    position: relative;
+    text-align: left;
 }
 
 .nav-links-secondary {
     list-style: none;
     display: flex;
-    justify-content: flex-start; /* Aligne les liens à gauche */
+    justify-content: flex-start;
     gap: 30px;
     margin: 0;
     padding: 0;
 }
 
 .nav-links-secondary li {
-    position: relative; /* Nécessaire pour positionner le menu déroulant */
+    position: relative;
 }
 
 .nav-links-secondary li a {
@@ -418,123 +416,51 @@ main {
     color: #A44D25;
 }
 
-/* Menu déroulant */
+/* Dropdown menu (générique) */
 .dropdown-menu {
-    display: none; /* Cache le menu par défaut */
+    display: none;
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
-    top: 100%; /* Place le menu juste en dessous du lien */
-    left: 0; /* Aligne le menu à gauche */
-    width: 1000px; /* Ajuste la largeur du menu */
-    background-color: #FFF8F0; /* Fond du menu */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    top: 90%;
+    left: 0;
+    width: 1000px;
+    background-color: #FFF8F0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
-    border-radius: 0 0 10px 10px; /* Coins arrondis */
-    visibility: hidden; /* Par défaut, le menu est invisible */
-    opacity: 0; /* Par défaut, le menu est transparent */
-    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
+    border-radius: 0 0 10px 10px;
+    z-index: 1000;
+    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    pointer-events: auto;
 }
 
-/* Affiche le menu au survol */
+/* Dropdown hover */
 .navbar-secondary .dropdown:hover .dropdown-menu,
 .navbar-secondary .dropdown-menu:hover {
-    display: flex; /* Affiche le menu */
-    visibility: visible; /* Rendre le menu visible */
-    opacity: 1; /* Rendre le menu complètement opaque */
-    flex-direction: row; /* Organise les colonnes horizontalement */
-    justify-content: flex-start; /* Aligne les colonnes à gauche */
-    align-items: flex-start; /* Aligne les colonnes en haut */
-}
-
-/* Colonnes du menu déroulant */
-.dropdown-column {
     display: flex;
-    flex-direction: column;
-    min-width: 180px;
-    background-color: #FFF8F0; /* Fond des colonnes */
-    padding: 10px; /* Espacement interne */
-    border-radius: 5px; /* Coins arrondis */
-    white-space: normal; /* Permet aux textes de revenir à la ligne */
+    visibility: visible;
+    opacity: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.dropdown-column strong {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #6B3F1D;
-}
-
-.dropdown-column a {
-    text-decoration: none;
-    color: #4A3A2D;
-    padding: 2px 0;
-    transition: color 0.3s;
-}
-
-.dropdown-column a:hover {
-    color: #A44D25;
-}
-
-/* Positionnement fixe pour le menu déroulant des chiens */
-.navbar-secondary .dropdown:nth-child(1) .dropdown-menu {
-    display: none; /* Assurez-vous que le menu est caché par défaut */
-    position: fixed; /* Rend le menu fixe par rapport à la fenêtre */
-    top: 130px; /* Ajustez cette valeur pour le positionnement vertical (plus bas que le menu des chats) */
-    left: 0; /* Fixe le menu tout à gauche de la page */
-    width: 1405px; /* Ajuste la largeur du menu */
-    background-color: #FFF8F0; /* Fond du menu */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
-    padding: 20px; /* Espacement interne */
-    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
-    border-radius: 0 0 10px 10px; /* Coins arrondis */
-    height: 200px;
-}
-
-/* Affiche le menu des chiens au survol */
-.navbar-secondary .dropdown:nth-child(1):hover .dropdown-menu {
-    display: flex; /* Affiche le menu */
-    flex-direction: row; /* Organise les colonnes horizontalement */
-    justify-content: flex-start; /* Aligne les colonnes à gauche */
-    align-items: flex-start; /* Aligne les colonnes en haut */
-}
-
-/* Positionnement fixe pour le menu déroulant des chats */
-.navbar-secondary .dropdown:nth-child(2) .dropdown-menu {
-    display: none; /* Assurez-vous que le menu est caché par défaut */
-    position: fixed; /* Rend le menu fixe par rapport à la fenêtre */
-    top: 130px; /* Ajustez cette valeur pour le positionnement vertical */
-    left: 0; /* Fixe le menu tout à gauche de la page */
-    width: 1405px; /* Ajuste la largeur du menu */
-    background-color: #FFF8F0; /* Fond du menu */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
-    padding: 20px; /* Espacement interne */
-    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
-    border-radius: 0 0 10px 10px; /* Coins arrondis */
-    height: 200px;
-}
-
-/* Affiche le menu des chats au survol */
-.navbar-secondary .dropdown:nth-child(2):hover .dropdown-menu {
-    display: flex; /* Affiche le menu */
-    flex-direction: row; /* Organise les colonnes horizontalement */
-    justify-content: flex-start; /* Aligne les colonnes à gauche */
-    align-items: flex-start; /* Aligne les colonnes en haut */
-}
-
+/* Dropdown layout */
 .dropdown-row {
     display: flex;
     gap: 40px;
-    width: auto; /* Ajuste la largeur automatiquement en fonction du contenu */
-    flex-wrap: nowrap; /* Empêche les colonnes de passer à la ligne */
+    flex-wrap: nowrap;
+    width: auto;
 }
 
 .dropdown-column {
     display: flex;
     flex-direction: column;
     min-width: 180px;
-    background-color: #FFF8F0; /* Assure que chaque colonne a un fond */
-    padding: 10px; /* Ajoute un peu d'espace autour du contenu */
-    border-radius: 5px; /* Ajoute un léger arrondi aux colonnes */
-    white-space: normal; /* Permet aux textes de revenir à la ligne */
+    background-color: #FFF8F0;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: normal;
 }
 
 .dropdown-column strong {
@@ -554,47 +480,17 @@ main {
     color: #A44D25;
 }
 
-/* Empêche le menu de disparaître immédiatement */
-.navbar-secondary .dropdown:hover .dropdown-menu,
-.navbar-secondary .dropdown-menu:hover {
-    display: flex; /* Assure que le menu reste visible */
-    visibility: visible; /* Rendre le menu visible */
-    opacity: 1; /* Rendre le menu complètement opaque */
+/* Menus spécifiques : chiens et chats */
+.navbar-secondary .dropdown:nth-child(1) .dropdown-menu,
+.navbar-secondary .dropdown:nth-child(2) .dropdown-menu {
+    position: fixed;
+    top: 130px;
+    left: 0;
+    width: 1405px;
+    height: 200px;
 }
 
-/* Par défaut, le menu est caché */
-.navbar-secondary .dropdown-menu {
-    display: none; /* Cache le menu par défaut */
-    visibility: hidden; /* Par défaut, le menu est invisible */
-    opacity: 0; /* Par défaut, le menu est transparent */
-    position: absolute; /* Positionne le menu par rapport au lien */
-    top: 100%; /* Place le menu juste en dessous du lien */
-    left: 0; /* Aligne le menu à gauche */
-    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
-    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
-}
-
-/* Empêche le menu de disparaître immédiatement */
-.navbar-secondary .dropdown:hover .dropdown-menu,
-.navbar-secondary .dropdown-menu:hover {
-    display: flex; /* Assure que le menu reste visible */
-    visibility: visible; /* Rendre le menu visible */
-    opacity: 1; /* Rendre le menu complètement opaque */
-    transition: visibility 0.5s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
-}
-
-/* Réduit l'écart entre le lien et le menu déroulant */
-.navbar-secondary .dropdown-menu {
-    top: 90%; /* Réduit l'écart pour rapprocher le menu du lien */
-    position: absolute; /* Assure que le menu est positionné par rapport au lien */
-    visibility: hidden; /* Par défaut, le menu est caché */
-    opacity: 0; /* Par défaut, le menu est transparent */
-    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Transition fluide */
-    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
-    pointer-events: auto; /* Permet d'interagir avec le menu */
-}
-
-/* Ajoute une zone tampon pour éviter que le menu disparaisse trop vite */
+/* Zone tampon pour hover stable */
 .navbar-secondary .dropdown {
-    padding-bottom: 5px; /* Ajoute un espace pour faciliter le passage de la souris */
+    padding-bottom: 5px;
 }
