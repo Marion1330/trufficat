@@ -117,18 +117,23 @@ main {
 .dropdown-menu {
     display: none;
     position: absolute;
-    background-color: #FFF8F0;
+    top: 100%; /* Positionne le menu juste en dessous de la navbar-secondary */
+    left: 0; /* Aligne le menu avec le logo */
+    width: 100%; /* Prend toute la largeur de l'écran */
+    background-color: #FFF8F0; /* Assure un fond uniforme */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    padding: 10px;
-    top: 100%;
-    left: 0;
+    padding: 20px;
     z-index: 1000;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
+    overflow-x: auto; /* Ajoute un défilement horizontal si le contenu dépasse */
+    overflow-y: hidden; /* Désactive le défilement vertical */
+    white-space: nowrap; /* Empêche les colonnes de passer à la ligne */
 }
 
 .dropdown:hover .dropdown-menu {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .dropdown-menu li {
@@ -338,15 +343,21 @@ main {
     background-color: #F2C078;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
+    position: relative; /* Définit la navbar secondaire comme référence */
+    text-align: left; /* Aligne les éléments à gauche */
 }
 
 .nav-links-secondary {
     list-style: none;
     display: flex;
+    justify-content: flex-start; /* Aligne les liens à gauche */
     gap: 30px;
     margin: 0;
     padding: 0;
+}
+
+.nav-links-secondary li {
+    position: relative; /* Nécessaire pour positionner le menu déroulant */
 }
 
 .nav-links-secondary li a {
@@ -360,37 +371,44 @@ main {
     color: #A44D25;
 }
 
-.nav-links-secondary .dropdown {
-    position: relative;
-}
-
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #FFF8F0;
+    top: 100%; /* Positionne le menu juste en dessous de la navbar-secondary */
+    left: 0; /* Aligne le menu avec le logo */
+    width: 1000px; /* Prend toute la largeur de l'écran */
+    background-color: #FFF8F0; /* Assure un fond uniforme */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
     padding: 20px;
     z-index: 1000;
-    min-width: 600px;
+    border-radius: 0 0 10px 10px;
+    overflow-x: auto; /* Ajoute un défilement horizontal si le contenu dépasse */
+    overflow-y: hidden; /* Désactive le défilement vertical */
+    white-space: nowrap; /* Empêche les colonnes de passer à la ligne */
 }
 
-.dropdown:hover .dropdown-menu {
-    display: block;
+.navbar-secondary .dropdown:hover .dropdown-menu {
+    display: flex;
+    flex-direction: row; /* Organise les colonnes horizontalement */
+    justify-content: flex-start; /* Aligne les colonnes à gauche */
+    align-items: flex-start; /* Aligne les colonnes en haut */
 }
 
-/* Structure en colonnes */
-.dropdown-columns {
+.dropdown-row {
     display: flex;
     gap: 40px;
+    width: auto; /* Ajuste la largeur automatiquement en fonction du contenu */
+    flex-wrap: nowrap; /* Empêche les colonnes de passer à la ligne */
 }
 
 .dropdown-column {
     display: flex;
     flex-direction: column;
     min-width: 180px;
+    background-color: #FFF8F0; /* Assure que chaque colonne a un fond */
+    padding: 10px; /* Ajoute un peu d'espace autour du contenu */
+    border-radius: 5px; /* Ajoute un léger arrondi aux colonnes */
+    white-space: normal; /* Permet aux textes de revenir à la ligne */
 }
 
 .dropdown-column strong {

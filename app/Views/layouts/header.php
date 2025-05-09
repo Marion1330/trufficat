@@ -37,38 +37,40 @@
     <li class="dropdown">
       <a href="#">Produits pour chiens</a>
       <div class="dropdown-menu">
-        <div class="dropdown-columns">
+        <div class="dropdown-row">
           <div class="dropdown-column">
             <strong>Alimentation</strong>
-            <a href="#">Sans céréales</a>
-            <a href="#">Bio</a>
+            <a href="#">Alimentation sans céréales</a>
+            <a href="#">Alimentation Bio</a>
             <a href="#">Croquettes</a>
-            <a href="#">Croquettes stérilisé</a>
+            <a href="#">Croquettes pour chiens stérilisé</a>
             <a href="#">Boites et sachets</a>
             <a href="#">Friandises</a>
           </div>
           <div class="dropdown-column">
             <strong>Jouets</strong>
-            <br><br>
             <strong>Niche et couchage</strong>
             <a href="#">Paniers et coussins</a>
             <a href="#">Niches et chenils</a>
-            <strong>Hygiène et soins</strong>
-            <a href="#">Antiparasitaires</a>
-            <a href="#">Entretien du poil</a>
-            <a href="#">Sacs de propreté</a>
           </div>
           <div class="dropdown-column">
-            <strong>Transport</strong>
-            <a href="#">Caisses et sacs</a>
-            <a href="#">Accessoires voyage</a>
+            <strong>Hygiène et soins</strong>
+            <a href="#">Produits antiparasitaires</a>
+            <a href="#">Entretien du poil</a>
+            <a href="#">Sacs de propreté</a>
+            <strong>Paniers et transports</strong>
+            <a href="#">Caisses et sacs de transport</a>
+            <a href="#">Accessoires de voyage</a>
+          </div>
+          <div class="dropdown-column">
             <strong>Sellerie</strong>
             <a href="#">Laisses</a>
+            <a href="#">Laisses à enrouleur</a>
             <a href="#">Colliers</a>
             <a href="#">Harnais</a>
             <a href="#">Muselières</a>
             <strong>Accessoires</strong>
-            <a href="#">Gamelles</a>
+            <a href="#">Gamelles et accessoires</a>
           </div>
         </div>
       </div>
@@ -77,39 +79,41 @@
     <li class="dropdown">
       <a href="#">Produits pour chats</a>
       <div class="dropdown-menu">
-        <div class="dropdown-columns">
+        <div class="dropdown-row">
           <div class="dropdown-column">
             <strong>Alimentation</strong>
-            <a href="#">Sans céréales</a>
-            <a href="#">Bio</a>
+            <a href="#">Alimentation sans céréales</a>
+            <a href="#">Alimentation Bio</a>
             <a href="#">Croquettes</a>
-            <a href="#">Croquettes stérilisé</a>
+            <a href="#">Croquettes pour chat stérilisé</a>
             <a href="#">Boites et sachets</a>
             <a href="#">Friandises</a>
           </div>
           <div class="dropdown-column">
+            <strong>Chatières</strong>
+            <strong>Sellerie</strong>
             <strong>Couchage</strong>
             <a href="#">Hamac</a>
             <a href="#">Maison</a>
-            <a href="#">Cabane</a>
-            <a href="#">Panier</a>
-            <strong>Hygiène</strong>
-            <a href="#">Antiparasitaires</a>
-            <a href="#">Litières</a>
-            <a href="#">Bacs</a>
-            <a href="#">Accessoires</a>
+            <a href="#">Niche et cabane</a>
+            <a href="#">Panier et coussin</a>
           </div>
           <div class="dropdown-column">
-            <strong>Transport</strong>
-            <a href="#">Sacs</a>
-            <a href="#">Caisses</a>
+            <strong>Hygiène et soins</strong>
+            <a href="#">Produits antiparasitaires</a>
+            <a href="#">Litières</a>
+            <a href="#">Bacs à litière</a>
+            <a href="#">Accessoires de litières</a>
+            <a href="#">Maison de toilette</a>
+            <a href="#">Entretien du poil</a>
+          </div>
+          <div class="dropdown-column">
+            <strong>Paniers et transports</strong>
+            <a href="#">Sac de transport</a>
+            <a href="#">Caisse de transport</a>
             <strong>Jouets</strong>
-            <br><br>
-            <strong>Griffoirs</strong>
-            <br><br>
-            <strong>Sellerie</strong>
-            <br><br>
-            <strong>Gamelles</strong>
+            <strong>Arbres à chat et griffoirs</strong>
+            <strong>Gamelles et accessoires</strong>
           </div>
         </div>
       </div>
