@@ -342,7 +342,6 @@ main {
 .navbar-secondary {
     background-color: #F2C078;
     padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative; /* Définit la navbar secondaire comme référence */
     text-align: left; /* Aligne les éléments à gauche */
 }
