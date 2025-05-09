@@ -406,6 +406,7 @@ main {
     padding: 20px; /* Espacement interne */
     z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
     border-radius: 0 0 10px 10px; /* Coins arrondis */
+    height: 200px;
 }
 
 /* Affiche le menu des chiens au survol */
@@ -428,6 +429,7 @@ main {
     padding: 20px; /* Espacement interne */
     z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
     border-radius: 0 0 10px 10px; /* Coins arrondis */
+    height: 200px;
 }
 
 /* Affiche le menu des chats au survol */
