@@ -156,7 +156,8 @@ main {
 }
 
 .dropdown-menu {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     top: 100%;
     left: 0;
@@ -166,9 +167,12 @@ main {
     padding: 20px;
     z-index: 1000;
     border-radius: 0 0 10px 10px;
-    visibility: hidden;
-    opacity: 0;
     transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.dropdown:hover .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
 }
 
 .dropdown:hover .dropdown-menu,
@@ -188,6 +192,7 @@ main {
     padding: 10px;
     background-color: #FFF8F0;
     border-radius: 5px;
+    white-space: normal;
 }
 
 .dropdown-column strong {
@@ -439,20 +444,23 @@ main {
 
 /* Dropdown menu (générique) */
 .dropdown-menu {
-    display: none;
     visibility: hidden;
     opacity: 0;
     position: absolute;
-    top: 90%;
+    top: 100%;
     left: 0;
-    width: 1000px;
+    width: auto;
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-radius: 0 0 10px 10px;
     z-index: 1000;
+    border-radius: 0 0 10px 10px;
     transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    pointer-events: auto;
+}
+
+.dropdown:hover .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Dropdown hover */
@@ -478,8 +486,8 @@ main {
     display: flex;
     flex-direction: column;
     min-width: 180px;
-    background-color: #FFF8F0;
     padding: 10px;
+    background-color: #FFF8F0;
     border-radius: 5px;
     white-space: normal;
 }
@@ -501,14 +509,36 @@ main {
     color: #A44D25;
 }
 
+.navbar-secondary .dropdown-menu a {
+    text-decoration: none;
+    color: #4A3A2D;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.navbar-secondary .dropdown-menu a:hover {
+    color: #A44D25;
+}
+
+.navbar-secondary .dropdown-menu a strong {
+    font-weight: bold;
+}
+
+.navbar-secondary .dropdown-menu a strong:hover {
+    color: #A44D25;
+}
+
 /* Menus spécifiques : chiens et chats */
 .navbar-secondary .dropdown:nth-child(1) .dropdown-menu,
 .navbar-secondary .dropdown:nth-child(2) .dropdown-menu {
     position: fixed;
     top: 130px;
     left: 0;
-    width: 1405px;
-    height: 200px;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 /* Zone tampon pour hover stable */
