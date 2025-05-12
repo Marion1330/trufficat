@@ -508,3 +508,16 @@ main {
 .navbar-secondary .dropdown-menu a:not(strong):hover {
     color: #A44D25; /* Couleur au survol similaire à "Panier" */
 }
+
+/* Style des liens en <strong> dans les menus déroulants */
+.navbar-secondary .dropdown-menu a strong {
+    color: #4A3A2D; /* Même couleur que "Produits pour chiens" */
+    font-weight: bold; /* Conserve le style gras */
+    text-decoration: none; /* Supprime le soulignement */
+    transition: color 0.3s ease; /* Transition fluide pour le changement de couleur */
+}
+
+/* Changement de couleur au survol des liens en <strong> */
+.navbar-secondary .dropdown-menu a strong:hover {
+    color: #A44D25; /* Couleur au survol similaire à "Produits pour chiens" */
+}
