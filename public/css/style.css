@@ -494,3 +494,17 @@ main {
 .navbar-secondary .dropdown {
     padding-bottom: 5px;
 }
+
+/* Style des liens dans les menus déroulants (hors <strong>) */
+.navbar-secondary .dropdown-menu a:not(strong) {
+    text-decoration: none; /* Supprime le soulignement */
+    color: #4A3A2D; /* Même couleur que "Panier" */
+    font-weight: 500; /* Même épaisseur que "Panier" */
+    font-size: 14px; /* Ajuste la taille de la police si nécessaire */
+    transition: color 0.3s ease; /* Transition fluide pour le changement de couleur */
+}
+
+/* Changement de couleur au survol des liens (hors <strong>) */
+.navbar-secondary .dropdown-menu a:not(strong):hover {
+    color: #A44D25; /* Couleur au survol similaire à "Panier" */
+}

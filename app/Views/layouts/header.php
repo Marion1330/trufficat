@@ -42,7 +42,7 @@
         <div class="dropdown-menu">
           <div class="dropdown-row">
             <div class="dropdown-column">
-              <strong>Alimentation</strong>
+              <a href="#"><strong>Alimentation</strong></a>
               <a href="#">Alimentation sans céréales</a>
               <a href="#">Alimentation Bio</a>
               <a href="#">Croquettes</a>
@@ -51,28 +51,28 @@
               <a href="#">Friandises</a>
             </div>
             <div class="dropdown-column">
-              <strong>Jouets</strong>
-              <strong>Niche et couchage</strong>
+              <a href="#"><strong>Jouets</strong></a>
+              <a href="#"><strong>Niche et couchage</strong></a>
               <a href="#">Paniers et coussins</a>
               <a href="#">Niches et chenils</a>
             </div>
             <div class="dropdown-column">
-              <strong>Hygiène et soins</strong>
+              <a href="#"><strong>Hygiène et soins</strong></a>
               <a href="#">Produits antiparasitaires</a>
               <a href="#">Entretien du poil</a>
               <a href="#">Sacs de propreté</a>
-              <strong>Paniers et transports</strong>
+              <a href="#"><strong>Paniers et transports</strong></a>
               <a href="#">Caisses et sacs de transport</a>
               <a href="#">Accessoires de voyage</a>
             </div>
             <div class="dropdown-column">
-              <strong>Sellerie</strong>
+              <a href="#"><strong>Sellerie</strong></a>
               <a href="#">Laisses</a>
               <a href="#">Laisses à enrouleur</a>
               <a href="#">Colliers</a>
               <a href="#">Harnais</a>
               <a href="#">Muselières</a>
-              <strong>Accessoires</strong>
+              <a href="#"><strong>Accessoires</strong></a>
               <a href="#">Gamelles et accessoires</a>
             </div>
           </div>
@@ -85,7 +85,7 @@
         <div class="dropdown-menu">
           <div class="dropdown-row">
             <div class="dropdown-column">
-              <strong>Alimentation</strong>
+              <a href="#"><strong>Alimentation</strong></a>
               <a href="#">Alimentation sans céréales</a>
               <a href="#">Alimentation Bio</a>
               <a href="#">Croquettes</a>
@@ -94,16 +94,16 @@
               <a href="#">Friandises</a>
             </div>
             <div class="dropdown-column">
-              <strong>Chatières</strong>
-              <strong>Sellerie</strong>
-              <strong>Couchage</strong>
+              <a href="#"><strong>Chatières</strong></a>
+              <a href="#"><strong>Sellerie</strong></a>
+              <a href="#"><strong>Couchage</strong></a>
               <a href="#">Hamac</a>
               <a href="#">Maison</a>
               <a href="#">Niche et cabane</a>
               <a href="#">Panier et coussin</a>
             </div>
             <div class="dropdown-column">
-              <strong>Hygiène et soins</strong>
+              <a href="#"><strong>Hygiène et soins</strong></a>
               <a href="#">Produits antiparasitaires</a>
               <a href="#">Litières</a>
               <a href="#">Bacs à litière</a>
@@ -112,12 +112,12 @@
               <a href="#">Entretien du poil</a>
             </div>
             <div class="dropdown-column">
-              <strong>Paniers et transports</strong>
+              <a href="#"><strong>Paniers et transports</strong></a>
               <a href="#">Sac de transport</a>
               <a href="#">Caisse de transport</a>
-              <strong>Jouets</strong>
-              <strong>Arbres à chat et griffoirs</strong>
-              <strong>Gamelles et accessoires</strong>
+              <a href="#"><strong>Jouets</strong></a>
+              <a href="#"><strong>Arbres à chat et griffoirs</strong></a>
+              <a href="#"><strong>Gamelles et accessoires</strong></a>
             </div>
           </div>
         </div>
