@@ -517,16 +517,13 @@ main {
     transition: color 0.3s ease;
 }
 
-.navbar-secondary .dropdown-menu a:hover {
+.navbar-secondary .dropdown-menu a:hover,
+.navbar-secondary .dropdown-menu a strong:hover {
     color: #A44D25;
 }
 
 .navbar-secondary .dropdown-menu a strong {
     font-weight: bold;
-}
-
-.navbar-secondary .dropdown-menu a strong:hover {
-    color: #A44D25;
 }
 
 /* Menus spécifiques : chiens et chats */
@@ -571,4 +568,14 @@ main {
 /* Changement de couleur au survol des liens en <strong> */
 .navbar-secondary .dropdown-menu a strong:hover {
     color: #A44D25; /* Couleur au survol similaire à "Produits pour chiens" */
+}
+
+.navbar-secondary .dropdown-menu {
+    position: fixed;
+    top: 130px;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    overflow-y: auto;
 }
