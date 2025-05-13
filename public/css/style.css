@@ -28,7 +28,7 @@ header {
 }
 
 .logo-img {
-    height: 80px;
+    height: 100px;
     width: auto;
     object-fit: contain;
 }
@@ -59,16 +59,18 @@ header {
 }
 
 .dropdown-menu {
+    list-style: none; /* Supprime les puces */
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
+    left: 0; /* S'assure qu'il reste aligné avec le parent */
+    right: auto;
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     z-index: 1000;
     border-radius: 5px;
-    width: 125px;
+    width: auto; /* Adapte la largeur au contenu */
     max-height: 300px;
     overflow-y: auto;
     visibility: hidden;
@@ -100,19 +102,18 @@ main {
     padding: 20px;
 }
 
-.titre-accueil, .intro {
-    text-align: center;
-}
 
 .titre-accueil {
     font-size: 2em;
     color: #A44D25;
     margin: 20px 0;
+    text-align: center;
 }
 
 .intro {
     color: #5C4B3D;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 /* 🌿 CTA */
@@ -139,7 +140,7 @@ main {
 
 /* 🌿 Search bar */
 .search-bar input {
-    width: 100%;
+    width: 1000px;
     padding: 8px 15px;
     border-radius: 20px;
     border: 1px solid #ccc;
