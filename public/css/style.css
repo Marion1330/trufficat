@@ -14,7 +14,7 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.navbar {
+.navbar, .navbar-secondary {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,10 +31,9 @@ header {
     height: 80px;
     width: auto;
     object-fit: contain;
-    display: block;
 }
 
-.nav-links {
+.nav-links, .nav-links-secondary {
     list-style: none;
     display: flex;
     gap: 15px;
@@ -43,44 +42,47 @@ header {
     flex-wrap: wrap;
 }
 
-.nav-links li a {
+.nav-links li a, .nav-links-secondary li a {
     text-decoration: none;
     color: #4A3A2D;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-.nav-links li a:hover {
+.nav-links li a:hover, .nav-links-secondary li a:hover {
     color: #A44D25;
 }
 
-/* Menu déroulant pour le Compte */
-.navbar .dropdown-menu {
-    display: none; /* Cache le menu par défaut */
+/* Menu déroulant */
+.navbar .dropdown, .navbar-secondary .dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
     position: absolute;
-    top: 100%; /* Place le menu juste en dessous du lien */
-    left: 0; /* Aligne le menu avec le lien parent */
-    background-color: #FFF8F0; /* Fond du menu */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    top: 100%;
+    left: 0;
+    background-color: #FFF8F0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
-    border-radius: 5px; /* Coins arrondis */
-    list-style: none;
-    width: 125px; /* Largeur du menu ajustée */
-     /* Assure que le menu ne dépasse pas sur les petits écrans */
-    height: auto; /* Laisse la hauteur s'adapter au contenu */
-    max-height: 300px; /* Hauteur maximale du menu */
-    overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+    z-index: 1000;
+    border-radius: 5px;
+    width: 125px;
+    max-height: 300px;
+    overflow-y: auto;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
 }
 
-/* Affiche le menu au survol */
-.navbar .dropdown:hover .dropdown-menu,
-.navbar .dropdown-menu:hover {
-    display: block; /* Affiche le menu */
+.navbar .dropdown:hover .dropdown-menu, .navbar-secondary .dropdown:hover .dropdown-menu {
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
-/* Style des liens dans le menu déroulant */
-.navbar .dropdown-menu li a {
+.navbar .dropdown-menu li a, .navbar-secondary .dropdown-menu a {
     text-decoration: none;
     color: #4A3A2D;
     padding: 10px;
@@ -88,27 +90,27 @@ header {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Changement de couleur au survol des liens */
-.navbar .dropdown-menu li a:hover {
+.navbar .dropdown-menu li a:hover, .navbar-secondary .dropdown-menu a:hover {
     background-color: #F2C078;
     color: #A44D25;
 }
-
 
 /* 🌿 Main content */
 main {
     padding: 20px;
 }
 
-.titre-accueil {
+.titre-accueil, .intro {
     text-align: center;
+}
+
+.titre-accueil {
     font-size: 2em;
     color: #A44D25;
     margin: 20px 0;
 }
 
 .intro {
-    text-align: center;
     color: #5C4B3D;
     margin-bottom: 30px;
 }
@@ -136,11 +138,6 @@ main {
 }
 
 /* 🌿 Search bar */
-.search-bar {
-    flex-grow: 1;
-    margin: 0 20px;
-}
-
 .search-bar input {
     width: 100%;
     padding: 8px 15px;
@@ -150,180 +147,12 @@ main {
     box-sizing: border-box;
 }
 
-/* 🌿 Dropdown */
-.dropdown {
-    position: relative;
-}
 
-.dropdown-menu {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: auto;
-    background-color: #FFF8F0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    z-index: 1000;
-    border-radius: 0 0 10px 10px;
-    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
-}
-
-.dropdown:hover .dropdown-menu {
-    visibility: visible;
-    opacity: 1;
-}
-
-.dropdown:hover .dropdown-menu,
-.dropdown-menu:hover {
-    display: flex;
-    visibility: visible;
-    opacity: 1;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
-/* Colonnes dans les menus déroulants */
-.dropdown-column {
-    display: flex;
-    flex-direction: column;
-    min-width: 180px;
-    padding: 10px;
-    background-color: #FFF8F0;
-    border-radius: 5px;
-    white-space: normal;
-}
-
-.dropdown-column strong {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #6B3F1D;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.dropdown-column strong:hover {
-    color: #A44D25;
-}
-
-.dropdown-column a {
-    text-decoration: none;
-    color: #4A3A2D;
-    padding: 2px 0;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.dropdown-column a:hover {
-    color: #A44D25;
-}
-
-/* 🌿 Produits */
-.produits {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.carte {
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px;
-    width: 250px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
-    flex-shrink: 0;
-    text-align: center;
-    transition: transform 0.2s ease;
-}
-
-.carte:hover {
-    transform: translateY(-5px);
-}
-
-.chien {
-    background-color: #FFE8C6;
-}
-
-.chat {
-    background-color: #FDD4B0;
-}
-
-.produit-img {
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-    border-radius: 10px;
-    margin: 0 auto 10px;
-    display: block;
-    background-color: #fff;
-}
-
-/* 🌿 Footer */
-.footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #F2C078;
-    color: #4A3A2D;
-    margin-top: 40px;
-}
-
-/* 🌿 Carrousel produits vedettes */
-.carrousel-wrapper {
-    position: relative;
-    overflow: hidden;
-    margin: 40px auto;
-    max-width: 100%;
-}
-
-.carrousel {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px;
-    scrollbar-width: none;
-}
-
-.carrousel::-webkit-scrollbar {
-    display: none;
-}
-
-.carrousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    cursor: pointer;
-    z-index: 2;
-    font-size: 22px;
-    border-radius: 50%;
-    transition: background 0.3s;
-}
-
-.carrousel-btn:hover {
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.carrousel-btn.left {
-    left: 10px;
-}
-
-.carrousel-btn.right {
-    right: 10px;
-}
 
 /* 🌿 Carrousel publicité */
 .pub-carousel-container {
     position: relative;
-    width: 100%;
+    width: 1000px;
     max-width: 1000px;
     margin: 30px auto;
     overflow: hidden;
@@ -379,7 +208,7 @@ main {
         align-items: center;
     }
 
-    .carrousel, .carrousel-2 {
+    .carrousel {
         gap: 10px;
         padding: 10px;
     }
@@ -396,8 +225,7 @@ main {
         max-height: 160px;
     }
 
-    .carrousel-btn,
-    .carrousel-btn-2 {
+    .carrousel-btn {
         display: none;
     }
 
@@ -410,6 +238,165 @@ main {
         height: 220px;
     }
 }
+
+
+
+
+
+/* 🌿 Produits */
+.produits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.carte {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    width: 250px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.carte:hover {
+    transform: translateY(-5px);
+}
+
+.chien { background-color: #FFE8C6; }
+.chat { background-color: #FDD4B0; }
+
+.produit-img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin: 0 auto 10px;
+    display: block;
+    background-color: #fff;
+}
+
+/* 🌿 Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #F2C078;
+    color: #4A3A2D;
+    margin-top: 40px;
+}
+
+/* 🌿 Carrousels */
+.carrousel-wrapper, .pub-carousel-container {
+    position: relative;
+    overflow: hidden;
+    margin: 30px auto;
+    border-radius: 12px;
+    max-width: 100%;
+}
+
+.carrousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px;
+    scrollbar-width: none;
+}
+
+.carrousel::-webkit-scrollbar { display: none; }
+
+.carrousel-btn, .pub-prev, .pub-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 22px;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.carrousel-btn:hover, .pub-prev:hover, .pub-next:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.carrousel-btn.left, .pub-prev { left: 10px; }
+.carrousel-btn.right, .pub-next { right: 10px; }
+
+.pub-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.pub-slide img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+/* 🌿 Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carrousel {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .carte {
+        min-width: 200px;
+        width: 80%;
+        padding: 10px;
+    }
+
+    .produit-img {
+        width: 100%;
+        height: auto;
+        max-height: 160px;
+    }
+
+    .carrousel-btn, .pub-prev, .pub-next {
+        display: none;
+    }
+
+    .search-bar {
+        margin: 10px auto;
+        max-width: 90%;
+    }
+
+    .pub-slide img {
+        height: 220px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Navbar secondaire */
 .navbar-secondary {
     background-color: #F2C078;
@@ -442,7 +429,7 @@ main {
     color: #A44D25;
 }
 
-/* Dropdown menu (générique) */
+/* Dropdown menu générique */
 .dropdown-menu {
     visibility: hidden;
     opacity: 0;
@@ -453,28 +440,27 @@ main {
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    z-index: 1000;
     border-radius: 0 0 10px 10px;
-    transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+    height: auto;
+    max-height: 1300px; /* Agrandissement */
+    overflow-y: auto;
+    z-index: 9999;
 }
 
-.dropdown:hover .dropdown-menu {
+/* Affichage au survol */
+.navbar-secondary .dropdown:hover .dropdown-menu {
     visibility: visible;
     opacity: 1;
+    transition-delay: 0s;
 }
 
-/* Dropdown hover */
-.navbar-secondary .dropdown:hover .dropdown-menu,
-.navbar-secondary .dropdown-menu:hover {
-    display: flex;
-    visibility: visible;
-    opacity: 1;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+/* Zone tampon pour hover stable */
+.navbar-secondary .dropdown {
+    padding-bottom: 5px;
 }
 
-/* Dropdown layout */
+/* Layout */
 .dropdown-row {
     display: flex;
     gap: 40px;
@@ -485,7 +471,7 @@ main {
 .dropdown-column {
     display: flex;
     flex-direction: column;
-    min-width: 180px;
+    min-width: 220px; /* Agrandissement */
     padding: 10px;
     background-color: #FFF8F0;
     border-radius: 5px;
@@ -502,80 +488,21 @@ main {
     text-decoration: none;
     color: #4A3A2D;
     padding: 2px 0;
+    font-weight: 500;
+    font-size: 14px;
     transition: color 0.3s;
 }
 
-.dropdown-column a:hover {
-    color: #A44D25;
-}
-
-.navbar-secondary .dropdown-menu a {
-    text-decoration: none;
-    color: #4A3A2D;
-    font-weight: 500;
-    font-size: 14px;
-    transition: color 0.3s ease;
-}
-
+.dropdown-column a:hover,
 .navbar-secondary .dropdown-menu a:hover,
 .navbar-secondary .dropdown-menu a strong:hover {
     color: #A44D25;
 }
 
+/* Style spécifique aux <strong> dans les liens */
 .navbar-secondary .dropdown-menu a strong {
+    color: #4A3A2D;
     font-weight: bold;
-}
-
-/* Menus spécifiques : chiens et chats */
-.navbar-secondary .dropdown:nth-child(1) .dropdown-menu,
-.navbar-secondary .dropdown:nth-child(2) .dropdown-menu {
-    position: fixed;
-    top: 130px;
-    left: 0;
-    width: 100%;
-    height: auto;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-/* Zone tampon pour hover stable */
-.navbar-secondary .dropdown {
-    padding-bottom: 5px;
-}
-
-/* Style des liens dans les menus déroulants (hors <strong>) */
-.navbar-secondary .dropdown-menu a:not(strong) {
-    text-decoration: none; /* Supprime le soulignement */
-    color: #4A3A2D; /* Même couleur que "Panier" */
-    font-weight: 500; /* Même épaisseur que "Panier" */
-    font-size: 14px; /* Ajuste la taille de la police si nécessaire */
-    transition: color 0.3s ease; /* Transition fluide pour le changement de couleur */
-}
-
-/* Changement de couleur au survol des liens (hors <strong>) */
-.navbar-secondary .dropdown-menu a:not(strong):hover {
-    color: #A44D25; /* Couleur au survol similaire à "Panier" */
-}
-
-/* Style des liens en <strong> dans les menus déroulants */
-.navbar-secondary .dropdown-menu a strong {
-    color: #4A3A2D; /* Même couleur que "Produits pour chiens" */
-    font-weight: bold; /* Conserve le style gras */
-    text-decoration: none; /* Supprime le soulignement */
-    transition: color 0.3s ease; /* Transition fluide pour le changement de couleur */
-}
-
-/* Changement de couleur au survol des liens en <strong> */
-.navbar-secondary .dropdown-menu a strong:hover {
-    color: #A44D25; /* Couleur au survol similaire à "Produits pour chiens" */
-}
-
-.navbar-secondary .dropdown-menu {
-    position: fixed;
-    top: 130px;
-    left: 0;
-    width: 100%;
-    height: auto;
-    max-height: 200px;
-    overflow-y: auto;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
