@@ -55,17 +55,18 @@
               <a href="#">Friandises</a>
             </div>
             <div class="dropdown-column">
-              <a href="#"><strong>Jouets</strong></a>
-              <a href="#"><strong>Niche et couchage</strong></a>
-              <a href="#">Paniers et coussins</a>
-              <a href="#">Niches et chenils</a>
-            </div>
-            <div class="dropdown-column">
               <a href="#"><strong>Hygiène et soins</strong></a>
               <a href="#">Produits antiparasitaires</a>
               <a href="#">Entretien du poil</a>
               <a href="#">Sacs de propreté</a>
-              <a href="#"><strong>Paniers et transports</strong></a>
+              <a href="#"><strong>Accessoires</strong></a>
+              <a href="#">Gamelles</a>
+            </div>
+            <div class="dropdown-column">
+            <a href="#"><strong>Niche et couchage</strong></a>
+              <a href="#">Paniers et coussins</a>
+              <a href="#">Niches et chenils</a>
+              <a href="#"><strong>Transports</strong></a>
               <a href="#">Caisses et sacs de transport</a>
               <a href="#">Accessoires de voyage</a>
             </div>
@@ -76,8 +77,9 @@
               <a href="#">Colliers</a>
               <a href="#">Harnais</a>
               <a href="#">Muselières</a>
-              <a href="#"><strong>Accessoires</strong></a>
-              <a href="#">Gamelles et accessoires</a>
+            </div>
+            <div class="dropdown-column">
+              <a href="#"><strong>Jouets</strong></a>
             </div>
           </div>
         </div>
@@ -98,15 +100,6 @@
               <a href="#">Friandises</a>
             </div>
             <div class="dropdown-column">
-              <a href="#"><strong>Chatières</strong></a>
-              <a href="#"><strong>Sellerie</strong></a>
-              <a href="#"><strong>Couchage</strong></a>
-              <a href="#">Hamac</a>
-              <a href="#">Maison</a>
-              <a href="#">Niche et cabane</a>
-              <a href="#">Panier et coussin</a>
-            </div>
-            <div class="dropdown-column">
               <a href="#"><strong>Hygiène et soins</strong></a>
               <a href="#">Produits antiparasitaires</a>
               <a href="#">Litières</a>
@@ -116,13 +109,24 @@
               <a href="#">Entretien du poil</a>
             </div>
             <div class="dropdown-column">
+            <a href="#"><strong>Couchage</strong></a>
+              <a href="#">Hamac</a>
+              <a href="#">Niche et cabane</a>
+              <a href="#">Panier et coussin</a>
               <a href="#"><strong>Paniers et transports</strong></a>
               <a href="#">Sac de transport</a>
               <a href="#">Caisse de transport</a>
-              <a href="#"><strong>Jouets</strong></a>
-              <a href="#"><strong>Arbres à chat et griffoirs</strong></a>
-              <a href="#"><strong>Gamelles et accessoires</strong></a>
             </div>
+            
+            <div class="dropdown-column">
+            <a href="#"><strong>Accessoires</strong></a>
+            <a href="#">Gamelles</a>
+              <a href="#"><strong>Sellerie</strong></a>
+              <a href="#"><strong>Chatières</strong></a>
+            </div>
+            <div class="dropdown-column">
+             <a href="#"><strong>Jouets</strong></a>
+             <a href="#"><strong>Arbres à chat & griffoirs</strong></a>
           </div>
         </div>
       </li>
