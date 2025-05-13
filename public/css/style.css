@@ -1,4 +1,27 @@
+/* 🌿 Base */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #FFF8F0;
+    margin: 0;
+    padding: 0;
+    color: #4A3A2D;
+}
 
+
+/* 🌿 HEADER & NAV PRINCIPALE */
+header {
+    background-color: #F2C078;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar, .navbar-secondary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    }
+    
     .logo {
     font-size: 1.8em;
     font-weight: bold;
