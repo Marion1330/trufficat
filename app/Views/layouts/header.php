@@ -21,14 +21,17 @@
 
     <ul class="nav-links">
       <li><a href="/">Accueil</a></li>
-      <li class="dropdown">
+      
+      <!-- Menu Compte avec classe spécifique -->
+      <li class="dropdown dropdown-compte">
         <a href="#">Compte</a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-compte">
           <li><a href="/login">Connexion</a></li>
           <li><a href="/register">Inscription</a></li>
           <li><a href="/logout">Déconnexion</a></li>
         </ul>
       </li>
+
       <li><a href="/panier">Panier</a></li>
     </ul>
   </nav>
@@ -36,10 +39,11 @@
   <!-- Barre de navigation secondaire -->
   <nav class="navbar-secondary">
     <ul class="nav-links-secondary">
+
       <!-- Produits pour chiens -->
-      <li class="dropdown">
+      <li class="dropdown dropdown-chiens">
         <a href="#">Produits pour chiens</a>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu dropdown-menu-chiens">
           <div class="dropdown-row">
             <div class="dropdown-column">
               <a href="#"><strong>Alimentation</strong></a>
@@ -80,9 +84,9 @@
       </li>
 
       <!-- Produits pour chats -->
-      <li class="dropdown">
+      <li class="dropdown dropdown-chats">
         <a href="#">Produits pour chats</a>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu dropdown-menu-chats">
           <div class="dropdown-row">
             <div class="dropdown-column">
               <a href="#"><strong>Alimentation</strong></a>
@@ -122,6 +126,7 @@
           </div>
         </div>
       </li>
+
     </ul>
   </nav>
 </header>

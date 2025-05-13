@@ -7,84 +7,85 @@ body {
     color: #4A3A2D;
 }
 
-/* 🌿 Header & Nav */
+
+/* 🌿 HEADER & NAV PRINCIPALE */
 header {
     background-color: #F2C078;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.navbar, .navbar-secondary {
+    }
+    
+    .navbar, .navbar-secondary {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-}
-
-.logo {
+    }
+    
+    .logo {
     font-size: 1.8em;
     font-weight: bold;
     color: #6B3F1D;
-}
-
-.logo-img {
+    }
+    
+    .logo-img {
     height: 100px;
     width: auto;
     object-fit: contain;
-}
-
-.nav-links, .nav-links-secondary {
+    }
+    
+    .nav-links, .nav-links-secondary {
     list-style: none;
     display: flex;
     gap: 15px;
     margin: 0;
     padding: 0;
     flex-wrap: wrap;
-}
-
-.nav-links li a, .nav-links-secondary li a {
+    }
+    
+    .nav-links li a,
+    .nav-links-secondary li a {
     text-decoration: none;
     color: #4A3A2D;
     font-weight: 500;
     transition: color 0.3s ease;
-}
-
-.nav-links li a:hover, .nav-links-secondary li a:hover {
+    }
+    
+    .nav-links li a:hover,
+    .nav-links-secondary li a:hover {
     color: #A44D25;
-}
+    }
 
-/* Menu déroulant */
-.navbar .dropdown, .navbar-secondary .dropdown {
+
+
+/* 🌿 Menu déroulant - Compte */
+.dropdown-compte {
     position: relative;
 }
 
-.dropdown-menu {
-    list-style: none; /* Supprime les puces */
+.dropdown-menu-compte {
+    list-style: none;
     display: none;
     position: absolute;
     top: 100%;
-    left: 0; /* S'assure qu'il reste aligné avec le parent */
-    right: auto;
+    left: 0;
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     z-index: 1000;
     border-radius: 5px;
-    width: auto; /* Adapte la largeur au contenu */
-    max-height: 300px;
-    overflow-y: auto;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.3s, opacity 0.3s;
 }
 
-.navbar .dropdown:hover .dropdown-menu, .navbar-secondary .dropdown:hover .dropdown-menu {
+.navbar .dropdown-compte:hover .dropdown-menu-compte {
     display: block;
     visibility: visible;
     opacity: 1;
 }
 
-.navbar .dropdown-menu li a, .navbar-secondary .dropdown-menu a {
+.dropdown-menu-compte li a {
     text-decoration: none;
     color: #4A3A2D;
     padding: 10px;
@@ -92,10 +93,15 @@ header {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.navbar .dropdown-menu li a:hover, .navbar-secondary .dropdown-menu a:hover {
+.dropdown-menu-compte li a:hover {
     background-color: #F2C078;
     color: #A44D25;
 }
+
+
+
+
+
 
 /* 🌿 Main content */
 main {
@@ -397,113 +403,158 @@ main {
 
 
 
-
-/* Navbar secondaire */
+/* 🐾 NAVBAR SECONDAIRE (Chiens / Chats par ex.) */
 .navbar-secondary {
     background-color: #F2C078;
     padding: 10px 20px;
     position: relative;
-    text-align: left;
-}
-
-.nav-links-secondary {
+    text-align: flex-start;
+    
+    
+    }
+    
+    .nav-links-secondary {
     list-style: none;
-    display: flex;
-    justify-content: flex-start;
+    display: inline-flex;
+    justify-content: center;
     gap: 30px;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
-}
-
-.nav-links-secondary li {
+    }
+    
+    .nav-links-secondary li {
     position: relative;
-}
-
-.nav-links-secondary li a {
-    text-decoration: none;
-    color: #4A3A2D;
+    }
+    
+    .nav-links-secondary li a {
     font-weight: 600;
-    transition: color 0.3s ease;
+    }
+
+  /* 🌿 Menu déroulant - Produits pour chiens */
+.dropdown-chiens {
+    position: relative;
+    padding-bottom: 5px;
 }
 
-.nav-links-secondary li a:hover {
-    color: #A44D25;
-}
-
-/* Dropdown menu générique */
-.dropdown-menu {
+.dropdown-menu-chiens {
     visibility: hidden;
     opacity: 0;
     position: absolute;
     top: 100%;
-    left: 0;
-    width: auto;
+    left: 42%;
+    transform: translateX(-42%); /* Centre le menu sous le parent */
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     border-radius: 0 0 10px 10px;
     transition: visibility 0s linear 0.3s, opacity 0.3s ease;
-    height: auto;
-    max-height: 1300px; /* Agrandissement */
+    height: 200px;
     overflow-y: auto;
     z-index: 9999;
+    width: 1411px; /* Ajustez cette largeur pour agrandir */
+
 }
 
-/* Affichage au survol */
-.navbar-secondary .dropdown:hover .dropdown-menu {
+.dropdown-chiens:hover .dropdown-menu-chiens {
     visibility: visible;
     opacity: 1;
     transition-delay: 0s;
 }
 
-/* Zone tampon pour hover stable */
-.navbar-secondary .dropdown {
-    padding-bottom: 5px;
-}
-
-/* Layout */
-.dropdown-row {
+.dropdown-menu-chiens .dropdown-row {
     display: flex;
     gap: 40px;
     flex-wrap: nowrap;
-    width: auto;
 }
 
-.dropdown-column {
+.dropdown-menu-chiens .dropdown-column {
     display: flex;
     flex-direction: column;
-    min-width: 220px; /* Agrandissement */
+    min-width: 220px;
     padding: 10px;
     background-color: #FFF8F0;
     border-radius: 5px;
-    white-space: normal;
 }
 
-.dropdown-column strong {
+.dropdown-menu-chiens .dropdown-column strong {
     margin-bottom: 5px;
     font-weight: bold;
     color: #6B3F1D;
 }
 
-.dropdown-column a {
+.dropdown-menu-chiens .dropdown-column a {
     text-decoration: none;
     color: #4A3A2D;
     padding: 2px 0;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
     transition: color 0.3s;
 }
 
-.dropdown-column a:hover,
-.navbar-secondary .dropdown-menu a:hover,
-.navbar-secondary .dropdown-menu a strong:hover {
+.dropdown-menu-chiens .dropdown-column a:hover {
     color: #A44D25;
 }
 
-/* Style spécifique aux <strong> dans les liens */
-.navbar-secondary .dropdown-menu a strong {
-    color: #4A3A2D;
+/* 🌿 Menu déroulant - Produits pour chats */
+.dropdown-chats {
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.dropdown-menu-chats {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: 59%;
+    transform: translateX(-59%); /* Centre le menu sous le parent */
+    background-color: #FFF8F0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+    height: 200px;
+    overflow-y: auto;
+    z-index: 9999;
+    width: 1411px; /* Ajustez cette largeur pour agrandir */
+}
+
+.dropdown-chats:hover .dropdown-menu-chats {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.dropdown-menu-chats .dropdown-row {
+    display: flex;
+    gap: 40px;
+    flex-wrap: nowrap;
+}
+
+.dropdown-menu-chats .dropdown-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+    padding: 10px;
+    background-color: #FFF8F0;
+    border-radius: 5px;
+}
+
+.dropdown-menu-chats .dropdown-column strong {
+    margin-bottom: 5px;
     font-weight: bold;
+    color: #6B3F1D;
+}
+
+.dropdown-menu-chats .dropdown-column a {
     text-decoration: none;
-    transition: color 0.3s ease;
+    color: #4A3A2D;
+    padding: 2px 0;
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.dropdown-menu-chats .dropdown-column a:hover {
+    color: #A44D25;
 }
