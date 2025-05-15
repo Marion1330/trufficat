@@ -146,7 +146,8 @@ main {
 
 /* 🌿 Search bar */
 .search-bar input {
-    width: 1000px;
+    width: 300px;
+    max-width: 100%;
     padding: 8px 15px;
     border-radius: 20px;
     border: 1px solid #ccc;
@@ -557,4 +558,85 @@ main {
 
 .dropdown-menu-chats .dropdown-column a strong:hover {
     color: #A44D25;
+}
+
+/* 🌿 Formulaire spécifique pour insciption et connexion */
+.form-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-container h1 {
+  text-align: center;
+  color: #A44D25;
+  margin-bottom: 20px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-container label {
+  font-weight: bold;
+}
+
+.form-container input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.form-container button.btn {
+  background-color: #D97B29;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button.btn:hover {
+  background-color: #B45B19;
+}
+
+.form-container .form-footer {
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.form-container .form-footer a {
+  color: #A44D25;
+  text-decoration: none;
+}
+
+.form-container .form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* 🌿 Alertes success / error */
+.alert {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
 }

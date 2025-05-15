@@ -1,4 +1,4 @@
-<?php include(APPPATH . 'Views/layouts/header.php'); ?>
+<?= $this->include('layouts/header') ?>
 
 <h1 class="titre-accueil">Bienvenue sur Trufficat</h1>
 <p class="intro">Votre boutique dédiée aux chiens et chats, tout en douceur.</p>
@@ -9,7 +9,7 @@
         <?php foreach ($publicites as $pub): ?>
             <div class="pub-slide">
                 <a href="<?= esc($pub['url'] ?? '#') ?>" target="_blank">
-                    <img src="/trufficat/public/images/pubs/<?= esc($pub['image']) ?>" alt="<?= esc($pub['alt_text'] ?? 'Publicité') ?>">
+                    <img src="<?= base_url('images/pubs/' . esc($pub['image'])) ?>" alt="<?= esc($pub['alt_text'] ?? 'Publicité') ?>">
                 </a>
             </div>
         <?php endforeach; ?>
@@ -26,7 +26,7 @@
             <?php foreach ($produitsVedettes as $produit): ?>
                 <div class="carte <?= esc($produit['animal']) ?>">
                     <?php if (!empty($produit['image'])): ?>
-                        <img src="/trufficat/public/images/<?= esc($produit['image']) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
+                        <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
                     <?php endif; ?>
                     <h2><?= esc($produit['nom']) ?></h2>
                     <p><?= esc($produit['description']) ?></p>
@@ -39,13 +39,11 @@
     <button class="carrousel-btn right">&#10095;</button>
 </div>
 
-</div>
-
 <div class="produits">
     <?php foreach ($produits as $produit): ?>
         <div class="carte <?= esc($produit['animal']) ?>">
             <?php if (!empty($produit['image'])): ?>
-                <img src="/trufficat/public/images/<?= esc($produit['image']) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
+                <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
             <?php endif; ?>
             <h2><?= esc($produit['nom']) ?></h2>
             <p><?= esc($produit['description']) ?></p>
@@ -53,9 +51,9 @@
     <?php endforeach; ?>
 </div>
 
-<?php include(APPPATH . 'Views/layouts/footer.php'); ?>
+<?= $this->include('layouts/footer') ?>
 
 <!-- JavaScript centralisé -->
-<script src="/trufficat/public/js/carrousel.js"></script>
+<script src="<?= base_url('js/carrousel.js') ?>"></script>
 </body>
 </html>

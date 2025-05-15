@@ -6,11 +6,14 @@ use App\Models\ProduitModel;
 
 class Admin extends BaseController
 {
-    public function index()
-    {
-        // Page d'accueil de l'admin
-        return view('admin/index');
+   public function index()
+{
+    if (session()->get('role') !== 'admin') {
+        return redirect()->to('/')->with('error', 'Accès refusé');
     }
+
+    return view('admin/index');
+}
 
     public function produits()
     {

@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trufficat</title>
-  <link rel="stylesheet" href="/trufficat/public/css/style.css" />
+<link rel="stylesheet" href="<?= base_url('css/style.css') ?>" />
+<link rel="icon" type="image/png" href="<?= base_url('images/logo.png') ?>" sizes="32x32">
 </head>
 <body>
 
@@ -12,26 +13,29 @@
   <!-- Barre de navigation principale -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/"><img src="/trufficat/public/images/logo.png" alt="Trufficat" class="logo-img" /></a>
+      <a href="<?= base_url() ?>"><img src="<?= base_url('images/logo.png') ?>" alt="Trufficat" class="logo-img" /></a>
     </div>
-
     <form action="/recherche" method="get" class="search-bar">
       <input type="text" name="q" placeholder="Rechercher un produit..." />
     </form>
 
     <ul class="nav-links">
-      <li><a href="/">Accueil</a></li>
-      
+      <li><a href="<?= base_url() ?>">Accueil</a></li>
+      <?php if (session('role') === 'admin'): ?>
+        <li><a href="<?= base_url('admin') ?>">Tableau de bord</a></li>
+      <?php endif; ?>
       <!-- Menu Compte avec classe spécifique -->
       <li class="dropdown dropdown-compte">
         <a href="#">Compte</a>
         <ul class="dropdown-menu dropdown-menu-compte">
-          <li><a href="/login">Connexion</a></li>
-          <li><a href="/register">Inscription</a></li>
-          <li><a href="/logout">Déconnexion</a></li>
+          <?php if (!session('role')): ?>
+            <li><a href="<?= base_url('connexion') ?>">Connexion</a></li>
+            <li><a href="<?= base_url('inscription') ?>">Inscription</a></li>
+          <?php else: ?>
+            <li><a href="<?= base_url('deconnexion') ?>">Déconnexion</a></li>
+          <?php endif; ?>
         </ul>
       </li>
-
       <li><a href="/panier">Panier</a></li>
     </ul>
   </nav>

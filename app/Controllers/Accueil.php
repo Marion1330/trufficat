@@ -32,3 +32,4 @@ class Accueil extends BaseController
         ]);
     }
 }
+
