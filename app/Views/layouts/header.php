@@ -32,6 +32,7 @@
             <li><a href="<?= base_url('connexion') ?>">Connexion</a></li>
             <li><a href="<?= base_url('inscription') ?>">Inscription</a></li>
           <?php else: ?>
+            <li><a href="<?= base_url('profil') ?>">Profil</a></li>
             <li><a href="<?= base_url('deconnexion') ?>">Déconnexion</a></li>
           <?php endif; ?>
         </ul>

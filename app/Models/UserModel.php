@@ -9,7 +9,12 @@ class UserModel extends Model
     protected $table      = 'users';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['email', 'password', 'role', 'nom', 'prenom'];
+    protected $allowedFields = [
+        'email', 'password', 'role', 'nom', 'prenom',
+        'adresse', 'complement', 'code_postal', 'ville',
+        'departement', // ← ajoute cette ligne
+        'pays', 'telephone'
+    ];
 
     protected $useTimestamps = false;
 
@@ -23,7 +28,10 @@ class UserModel extends Model
             return $data;
         }
 
-        $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        // Ne re-hache que si ce n'est pas déjà un hash bcrypt
+        if (strlen($data['data']['password']) < 60 || !preg_match('/^\$2y\$/', $data['data']['password'])) {
+            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        }
 
         return $data;
     }

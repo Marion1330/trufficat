@@ -13,50 +13,60 @@ header {
     background-color: #F2C078;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .navbar, .navbar-secondary {
+}
+
+.navbar, .navbar-secondary {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    }
-    
-    .logo {
+    justify-content: flex-start; /* modifié */
+    gap: 20px;                  /* ajouté */
+    flex-wrap: nowrap;          /* modifié */
+}
+
+.logo {
     font-size: 1.8em;
     font-weight: bold;
     color: #6B3F1D;
-    }
-    
-    .logo-img {
+    flex: 0 0 auto; /* ajouté */
+}
+
+.logo-img {
     height: 100px;
     width: auto;
     object-fit: contain;
-    }
-    
-    .nav-links, .nav-links-secondary {
+}
+
+
+.nav-links, .nav-links-secondary {
     list-style: none;
     display: flex;
-    gap: 15px;
     margin: 0;
     padding: 0;
     flex-wrap: wrap;
-    }
-    
-    .nav-links li a,
-    .nav-links-secondary li a {
+}
+
+.nav-links {
+    flex: 1 1 auto;          /* ajouté */
+    justify-content: flex-end; /* ajouté */
+    gap: 15px;               /* déjà présent */
+}
+
+.nav-links-secondary {
+    gap: 15px;
+}
+
+.nav-links li a,
+.nav-links-secondary li a {
     text-decoration: none;
     color: #4A3A2D;
     font-weight: 500;
     transition: color 0.3s ease;
-    }
-    
-    .nav-links li a:hover,
-    .nav-links-secondary li a:hover {
+}
+
+.nav-links li a:hover,
+.nav-links-secondary li a:hover {
     color: #A44D25;
-    }
-
-
+}
 
 /* 🌿 Menu déroulant - Compte */
 .dropdown-compte {
@@ -97,10 +107,6 @@ header {
     background-color: #F2C078;
     color: #A44D25;
 }
-
-
-
-
 
 
 /* 🌿 Main content */
@@ -146,7 +152,7 @@ main {
 
 /* 🌿 Search bar */
 .search-bar input {
-    width: 300px;
+    width: 900px;
     max-width: 100%;
     padding: 8px 15px;
     border-radius: 20px;
@@ -639,4 +645,24 @@ main {
 .alert-success {
   background-color: #d4edda;
   color: #155724;
+}
+
+
+/* Centrer les boutons dans VueProfil */
+.profil-btns,
+.adresse-bloc .adresse-btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Couleur des adresses dans Profil*/
+.adresse-bloc {
+    background-color: #FFE8C6;
+    border: 2px solid #D97B29;
+    border-radius: 12px;
+    padding: 1.2em;
+    margin-bottom: 1.5em;
+    box-shadow: 0 2px 8px rgba(217,123,41,0.07);
 }
