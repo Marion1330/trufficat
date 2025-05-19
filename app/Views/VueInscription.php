@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?= base_url('css/style.css') ?>" />
 
 <main class="form-container">
-  <h1>Inscription</h1>
+<h2>Inscription</h2>
 
   <?php if (session()->getFlashdata('error')) : ?>
     <div class="alert alert-danger">
@@ -17,22 +17,48 @@
   <?php endif; ?>
 
   <form action="<?= base_url('inscription') ?>" method="POST">
-    <label for="nom">Nom</label>
-    <input type="text" id="nom" name="nom" required>
+    <?= csrf_field() ?>
 
-    <label for="prenom">Prénom</label>
-    <input type="text" id="prenom" name="prenom" required>
+    <label for="nom">Nom :</label>
+    <input type="text" name="nom" id="nom" value="<?= esc(set_value('nom')) ?>" required><br>
 
-    <label for="email">Adresse e-mail</label>
-    <input type="email" id="email" name="email" required>
+    <label for="prenom">Prénom :</label>
+    <input type="text" name="prenom" id="prenom" value="<?= esc(set_value('prenom')) ?>" required><br>
 
-    <label for="password">Mot de passe</label>
-    <input type="password" id="password" name="password" required>
+    <label for="email">Email :</label>
+    <input type="email" name="email" id="email" value="<?= esc(set_value('email')) ?>" required><br>
 
-    <label for="confirm-password">Confirmer le mot de passe</label>
-    <input type="password" id="confirm-password" name="confirm-password" required>
+    <label for="password">Mot de passe :</label>
+    <input type="password" name="password" id="password" required><br>
 
-    <button type="submit" class="btn">Créer un compte</button>
+    <label for="confirm-password">Confirmer le mot de passe :</label>
+    <input type="password" name="confirm-password" id="confirm-password" required><br>
+
+    <label for="telephone">Téléphone :</label>
+    <input type="text" name="telephone" id="telephone" value="<?= esc(set_value('telephone')) ?>" required><br>
+
+    <hr>
+    <h2>Adresse postale</h2>
+
+    <label for="adresse">Adresse :</label>
+    <input type="text" name="adresse" id="adresse" value="<?= esc(set_value('adresse')) ?>" required><br>
+
+    <label for="complement">Complément :</label>
+    <input type="text" name="complement" id="complement" value="<?= esc(set_value('complement')) ?>"><br>
+
+    <label for="code_postal">Code postal :</label>
+    <input type="text" name="code_postal" id="code_postal" value="<?= esc(set_value('code_postal')) ?>" required><br>
+
+    <label for="ville">Ville :</label>
+    <input type="text" name="ville" id="ville" value="<?= esc(set_value('ville')) ?>" required><br>
+
+    <label for="departement">Département :</label>
+    <input type="text" name="departement" id="departement" value="<?= esc(set_value('departement')) ?>"><br>
+
+    <label for="pays">Pays :</label>
+    <input type="text" name="pays" id="pays" value="<?= esc(set_value('pays')) ?>" required><br>
+
+    <button type="submit" class="btn btn-primary">S'inscrire</button>
   </form>
 </main>
 

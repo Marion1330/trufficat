@@ -10,10 +10,10 @@ class UserModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'email', 'password', 'role', 'nom', 'prenom',
+        'email', 'password', 'role', 'nomcompte', 'prenomcompte',
+        'nom', 'prenom',
         'adresse', 'complement', 'code_postal', 'ville',
-        'departement', // ← ajoute cette ligne
-        'pays', 'telephone'
+        'departement', 'pays', 'telephone'
     ];
 
     protected $useTimestamps = false;
@@ -35,5 +35,5 @@ class UserModel extends Model
 
         return $data;
     }
-
 }
+

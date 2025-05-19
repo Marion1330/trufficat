@@ -9,7 +9,7 @@ class AdresseModel extends Model
     protected $table = 'adresses';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'user_id', 'titre', 'adresse', 'complement', 'code_postal',
+        'user_id', 'nom', 'prenom', 'titre', 'adresse', 'complement', 'code_postal',
         'ville', 'departement', 'pays', 'telephone', 'is_principale'
     ];
 }

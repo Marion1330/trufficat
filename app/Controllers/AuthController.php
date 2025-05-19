@@ -21,23 +21,31 @@ class AuthController extends BaseController
         $confirmPassword = $this->request->getPost('confirm-password');
 
         if ($password !== $confirmPassword) {
-            return redirect()->back()->with('error', 'Les mots de passe ne correspondent pas.');
+            return redirect()->back()->withInput()->with('error', 'Les mots de passe ne correspondent pas.');
         }
 
         $userModel = new UserModel();
 
         // Vérifie si l'e-mail existe déjà
         if ($userModel->where('email', $email)->first()) {
-            return redirect()->back()->with('error', 'Cet e-mail est déjà utilisé.');
+            return redirect()->back()->withInput()->with('error', 'Cet e-mail est déjà utilisé.');
         }
 
         $data = [
+            'nomcompte' => $nom,
+            'prenomcompte' => $prenom,
+            'email' => $email,
+            'password' => $password,
+            'role' => 'client',
             'nom' => $nom,
             'prenom' => $prenom,
-            'username' => $nom . ' ' . $prenom,
-            'email' => $email,
-            'password' => $password, // <-- PAS de password_hash ici !
-            'role' => 'client',
+            'telephone' => $this->request->getPost('telephone'),
+            'adresse' => $this->request->getPost('adresse'),
+            'complement' => $this->request->getPost('complement'),
+            'code_postal' => $this->request->getPost('code_postal'),
+            'ville' => $this->request->getPost('ville'),
+            'departement' => $this->request->getPost('departement'),
+            'pays' => $this->request->getPost('pays'),
         ];
 
         $userModel->save($data);
@@ -74,7 +82,7 @@ class AuthController extends BaseController
             }
         }
 
-        return redirect()->back()->with('error', 'Identifiants invalides.');
+        return redirect()->back()->withInput()->with('error', 'Identifiants invalides.');
     }
 
     public function deconnexion()
@@ -105,23 +113,6 @@ class AuthController extends BaseController
         ]);
     }
 
-    public function updateProfil()
-    {
-        $userModel = new \App\Models\UserModel();
-        $id = session('user_id');
-        $data = [
-            'nom' => $this->request->getPost('nom'),
-            'prenom' => $this->request->getPost('prenom'),
-            'telephone' => $this->request->getPost('telephone'),
-            'adresse' => $this->request->getPost('adresse'),
-            'complement' => $this->request->getPost('complement'),
-            'code_postal' => $this->request->getPost('code_postal'),
-            'ville' => $this->request->getPost('ville'),
-            'pays' => $this->request->getPost('pays'),
-        ];
-        $userModel->update($id, $data);
-        return redirect()->to('/profil')->with('success', 'Profil mis à jour.');
-    }
 
     public function ajouterAdresse()
     {
@@ -135,6 +126,8 @@ class AuthController extends BaseController
 
         $data = [
             'user_id' => $userId,
+            'nom' => $this->request->getPost('nom'),
+            'prenom' => $this->request->getPost('prenom'),
             'titre' => $this->request->getPost('titre'),
             'adresse' => $this->request->getPost('adresse'),
             'complement' => $this->request->getPost('complement'),
@@ -156,7 +149,7 @@ class AuthController extends BaseController
         $adresse = $adresseModel->find($id);
 
         if (!$adresse || $adresse['user_id'] != session()->get('user_id')) {
-            return redirect()->to('/profil')->with('error', 'Adresse non trouvée.');
+            return redirect()->to('/profil')->withInput()->with('error', 'Adresse non trouvée.');
         }
 
         return view('AdresseModifier', ['adresse' => $adresse]);
@@ -219,10 +212,10 @@ class AuthController extends BaseController
 
         // Vérification du mot de passe actuel
         if (!password_verify($ancien, $user['password'])) {
-            return redirect()->back()->with('error', 'Ancien mot de passe incorrect.');
+            return redirect()->back()->withInput()->with('error', 'Ancien mot de passe incorrect.');
         }
         if ($nouveau !== $confirmer) {
-            return redirect()->back()->with('error', 'Les mots de passe ne correspondent pas.');
+            return redirect()->back()->withInput()->with('error', 'Les mots de passe ne correspondent pas.');
         }
 
         // Le hash sera fait automatiquement par UserModel
@@ -253,13 +246,15 @@ class AuthController extends BaseController
 
         $adresse = $adresseModel->where('user_id', $userId)->find($id);
         if (!$adresse) {
-            return redirect()->to('/profil')->with('error', 'Adresse non trouvée.');
+            return redirect()->to('/profil')->withInput()->with('error', 'Adresse non trouvée.');
         }
 
         // Sauvegarde l'ancienne adresse principale dans adresses
         $user = $userModel->find($userId);
         $adresseModel->insert([
             'user_id' => $userId,
+            'nom' => $user['nom'],
+            'prenom' => $user['prenom'],
             'titre' => 'Ancienne principale',
             'adresse' => $user['adresse'],
             'complement' => $user['complement'],
@@ -273,6 +268,8 @@ class AuthController extends BaseController
 
         // Met à jour l'utilisateur avec la nouvelle adresse principale
         $userModel->update($userId, [
+            'nom' => $adresse['nom'],
+            'prenom' => $adresse['prenom'],
             'adresse' => $adresse['adresse'],
             'complement' => $adresse['complement'],
             'code_postal' => $adresse['code_postal'],
@@ -291,6 +288,26 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse principale modifiée.');
     }
 
+    // Quand une adresse devient principale
+    public function adresseDevientPrincipale($adresseId)
+    {
+        $userModel = new \App\Models\UserModel();
+        $adresseModel = new \App\Models\AdresseModel();
+
+        $adresse = $adresseModel->find($adresseId);
+        $userModel->update($adresse['user_id'], [
+            'nom' => $adresse['nom'],
+            'prenom' => $adresse['prenom'],
+            'adresse' => $adresse['adresse'],
+            'complement' => $adresse['complement'],
+            'code_postal' => $adresse['code_postal'],
+            'ville' => $adresse['ville'],
+            'departement' => $adresse['departement'],
+            'pays' => $adresse['pays'],
+            'telephone' => $adresse['telephone'],
+        ]);
+    }
+
     // Pour remettre l'adresse principale comme défaut
     public function definirPrincipaleDefaut()
     {
@@ -303,24 +320,6 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse principale définie par défaut.');
     }
 
-    public function modifierAdressePrincipale()
-    {
-        $userModel = new \App\Models\UserModel();
-        $userId = session()->get('user_id');
-
-        $data = [
-            'adresse' => $this->request->getPost('adresse'),
-            'complement' => $this->request->getPost('complement'),
-            'code_postal' => $this->request->getPost('code_postal'),
-            'ville' => $this->request->getPost('ville'),
-            'departement' => $this->request->getPost('departement'),
-            'pays' => $this->request->getPost('pays'),
-            'telephone' => $this->request->getPost('telephone'),
-        ];
-
-        $userModel->update($userId, $data);
-        return redirect()->to('/profil')->with('success', 'Adresse principale modifiée.');
-    }
 
     public function afficherFormulaireAdressePrincipale()
     {
@@ -328,22 +327,49 @@ class AuthController extends BaseController
         $userId = session()->get('user_id');
         $user = $userModel->find($userId);
 
-        // On passe les données du user sous le nom "adresse" pour réutiliser la vue
+        // On passe les champs de l'adresse principale sous forme de tableau $adresse
+        $adresse = [
+            'nom' => $user['nom'],
+            'prenom' => $user['prenom'],
+            'telephone' => $user['telephone'],
+            'adresse' => $user['adresse'],
+            'complement' => $user['complement'],
+            'code_postal' => $user['code_postal'],
+            'ville' => $user['ville'],
+            'departement' => $user['departement'],
+            'pays' => $user['pays'],
+        ];
+
         return view('AdresseModifier', [
-            'adresse' => [
-                'id' => 'principale',
-                'titre' => 'Adresse principale',
-                'adresse' => $user['adresse'],
-                'complement' => $user['complement'],
-                'code_postal' => $user['code_postal'],
-                'ville' => $user['ville'],
-                'departement' => $user['departement'],
-                'pays' => $user['pays'],
-                'telephone' => $user['telephone'],
-                'is_principale' => true
-            ],
-            'isPrincipale' => true // Pour adapter l'action du formulaire
+            'adresse' => $adresse,
+            'isPrincipale' => true
         ]);
+    }
+
+    public function modifierInfos()
+    {
+        $userModel = new \App\Models\UserModel();
+        $userId = session()->get('user_id');
+        $data = [
+            'nomcompte' => $this->request->getPost('nom'),
+            'prenomcompte' => $this->request->getPost('prenom'),
+            'email' => $this->request->getPost('email'),
+            'telephone' => $this->request->getPost('telephone'),
+        ];
+        $userModel->update($userId, $data);
+        return redirect()->to('/profil')->with('success', 'Informations modifiées.');
+    }
+
+    public function updateInfos()
+    {
+        $userModel = new \App\Models\UserModel();
+        $userId = session()->get('user_id');
+        $data = [
+            'nom' => $this->request->getPost('nom'),
+            'prenom' => $this->request->getPost('prenom'),
+        ];
+        $userModel->update($userId, $data);
+        return redirect()->to('/profil')->with('success', 'Informations modifiées.');
     }
 
     public function afficherFormulaireInfos()
@@ -354,18 +380,22 @@ class AuthController extends BaseController
         return view('InfosModifier', ['user' => $user]);
     }
 
-    public function modifierInfos()
+    public function modifierAdressePrincipale()
     {
         $userModel = new \App\Models\UserModel();
         $userId = session()->get('user_id');
         $data = [
             'nom' => $this->request->getPost('nom'),
             'prenom' => $this->request->getPost('prenom'),
-            'email' => $this->request->getPost('email'),
+            'adresse' => $this->request->getPost('adresse'),
+            'complement' => $this->request->getPost('complement'),
+            'code_postal' => $this->request->getPost('code_postal'),
+            'ville' => $this->request->getPost('ville'),
+            'departement' => $this->request->getPost('departement'),
+            'pays' => $this->request->getPost('pays'),
             'telephone' => $this->request->getPost('telephone'),
         ];
         $userModel->update($userId, $data);
-        return redirect()->to('/profil')->with('success', 'Informations modifiées.');
+        return redirect()->to('/profil')->with('success', 'Adresse principale modifiée.');
     }
-
 }

@@ -18,16 +18,16 @@ header {
 .navbar, .navbar-secondary {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* modifié */
-    gap: 20px;                  /* ajouté */
-    flex-wrap: nowrap;          /* modifié */
+    justify-content: flex-start; 
+    gap: 20px;                  
+    flex-wrap: nowrap;          
 }
 
 .logo {
     font-size: 1.8em;
     font-weight: bold;
     color: #6B3F1D;
-    flex: 0 0 auto; /* ajouté */
+    flex: 0 0 auto; 
 }
 
 .logo-img {
@@ -46,9 +46,9 @@ header {
 }
 
 .nav-links {
-    flex: 1 1 auto;          /* ajouté */
-    justify-content: flex-end; /* ajouté */
-    gap: 15px;               /* déjà présent */
+    flex: 1 1 auto;          
+    justify-content: flex-end; 
+    gap: 15px;               
 }
 
 .nav-links-secondary {
@@ -150,7 +150,9 @@ main {
     background-color: #B45B19;
 }
 
-/* 🌿 Search bar */
+
+
+/* 🌿 Barre de recherche */
 .search-bar input {
     width: 900px;
     max-width: 100%;
@@ -399,17 +401,6 @@ main {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* 🐾 NAVBAR SECONDAIRE (Chiens / Chats par ex.) */
 .navbar-secondary {
     background-color: #F2C078;
@@ -576,7 +567,15 @@ main {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
+/*Titre H1*/
 .form-container h1 {
+  text-align: center;
+  color: #A44D25;
+  margin-bottom: 20px;
+}
+
+/*Titre H2*/
+.form-container h2 {
   text-align: center;
   color: #A44D25;
   margin-bottom: 20px;
@@ -660,32 +659,25 @@ main {
 
 /* Centrage des boutons profil et adresses */
 .profil-btns,
-.adresse-btns {
+.adresse-btns,
+.form-btns { 
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
 }
 
-/* Petits boutons à la taille du texte */
-.btn.btn-sm {
-    padding: 6px 12px;
-    font-size: 1em;
-    min-width: unset;
-    width: auto;
-    border-radius: 6px;
-    margin: 0 2px;
-    box-sizing: border-box;
-}
 
-/* Badge "défaut" */
 .badge-defaut {
-    color: #fff;
-    background: #D97B29;
-    border-radius: 6px;
-    padding: 2px 10px;
+    display: inline-block;
+    background: #FFE8C6;
+    color: #A44D25;
+    border: 1px solid #D97B29;
+    border-radius: 999px;
+    padding: 2px 14px;
     font-size: 0.95em;
-    font-weight: bold;
+    font-weight: 600;
     margin-left: 8px;
     vertical-align: middle;
+    letter-spacing: 0.5px;
 }
