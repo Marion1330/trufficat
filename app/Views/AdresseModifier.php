@@ -35,9 +35,11 @@
             Définir comme adresse principale
         </label><br>
 
-        <button type="submit">Enregistrer les modifications</button>
+        <div class="form-btns">
+            <button type="button" class="btn btn-secondary btn-sm btn-annuler" onclick="window.location.href='<?= base_url('profil') ?>'">Annuler</button>
+            <button type="submit" class="btn btn-primary btn-sm">Enregistrer les modifications</button>
+        </div>
     </form>
-    <a href="<?= base_url('profil') ?>">← Retour au profil</a>
 </main>
 
 <?= $this->include('layouts/footer') ?>

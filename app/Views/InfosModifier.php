@@ -12,10 +12,11 @@
         <input type="email" name="email" value="<?= esc($user['email']) ?>" required><br>
         <label for="telephone">Téléphone* :</label>
         <input type="text" name="telephone" value="<?= esc($user['telephone']) ?>" required><br>
-        <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
-        <a href="<?= base_url('profil') ?>" class="btn btn-secondary btn-sm">Annuler</a>
+        <div class="form-btns">
+            <button type="button" class="btn btn-secondary btn-sm btn-annuler" onclick="window.location.href='<?= base_url('profil') ?>'">Annuler</button>
+            <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+        </div>
     </form>
-    <a href="<?= base_url('profil') ?>">← Retour au profil</a>
 </main>
 
 <?= $this->include('layouts/footer') ?>

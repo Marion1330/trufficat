@@ -648,21 +648,44 @@ main {
 }
 
 
-/* Centrer les boutons dans VueProfil */
+/* Cadre des adresses */
+.adresse-bloc {
+    background-color: #FFE8C6;
+    border: 2px solid #4A3A2D;
+    border-radius: 12px;
+    padding: 1.2em;
+    margin-bottom: 1.5em;
+    box-shadow: 0 2px 8px rgba(217,123,41,0.07);
+}
+
+/* Centrage des boutons profil et adresses */
 .profil-btns,
-.adresse-bloc .adresse-btns {
+.adresse-btns {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
 }
 
-/* Couleur des adresses dans Profil*/
-.adresse-bloc {
-    background-color: #FFE8C6;
-    border: 2px solid #D97B29;
-    border-radius: 12px;
-    padding: 1.2em;
-    margin-bottom: 1.5em;
-    box-shadow: 0 2px 8px rgba(217,123,41,0.07);
+/* Petits boutons à la taille du texte */
+.btn.btn-sm {
+    padding: 6px 12px;
+    font-size: 1em;
+    min-width: unset;
+    width: auto;
+    border-radius: 6px;
+    margin: 0 2px;
+    box-sizing: border-box;
+}
+
+/* Badge "défaut" */
+.badge-defaut {
+    color: #fff;
+    background: #D97B29;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.95em;
+    font-weight: bold;
+    margin-left: 8px;
+    vertical-align: middle;
 }
