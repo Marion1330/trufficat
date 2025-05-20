@@ -170,7 +170,7 @@
         <?php else: ?>
             <div class="products-grid">
                 <?php foreach ($produits as $produit): ?>
-                    <div class="product-card">
+                    <div class="product-card <?= esc($produit['animal']) ?>">
                         <a href="<?= base_url('produits/detail/' . $produit['id']) ?>" class="product-link">
                             <div class="product-image">
                                 <?php if (!empty($produit['image'])): ?>
@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     margin-top: 20px;
 }
@@ -459,6 +459,15 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color: white;
+}
+
+/* Styles spécifiques selon le type d'animal */
+.product-card.chien {
+    background-color: #FFE8C6;
+}
+
+.product-card.chat {
+    background-color: #FDD4B0;
 }
 
 .product-card:hover {
@@ -478,12 +487,20 @@ document.addEventListener('DOMContentLoaded', function() {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background-color: #f8f8f8;
+}
+
+/* Fond spécifique pour chaque type d'animal dans l'image */
+.chien .product-image {
+    background-color: #FFE8C6;
+}
+
+.chat .product-image {
+    background-color: #FDD4B0;
 }
 
 .product-image img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 90%;
+    max-height: 90%;
     object-fit: contain;
 }
 
@@ -509,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .product-price {
-    color: #d9534f;
+    color: #A44D25;
     font-size: 18px;
     margin: 0;
 }
@@ -521,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .btn-add-to-cart {
     width: 100%;
     padding: 8px 15px;
-    background-color: #4a7a8c;
+    background-color: #D97B29;
     color: white;
     border: none;
     border-radius: 4px;
@@ -531,7 +548,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .btn-add-to-cart:hover {
-    background-color: #3d6a78;
+    background-color: #B45B19;
 }
 
 .no-products {
