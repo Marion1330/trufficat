@@ -9,6 +9,8 @@ $routes->get('/', 'Accueil::index');
 
 $routes->get('produits/chiens', 'Produits::chiens');
 $routes->get('produits/chats', 'Produits::chats');
+$routes->get('produits/detail/(:num)', 'Produits::detail/$1');
+$routes->get('produits/categorie/(:any)/(:any)', 'Produits::categorie/$1/$2');
 $routes->get('panier', 'Panier::index');
 
 // Routes d'administration
