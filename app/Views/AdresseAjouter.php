@@ -5,9 +5,6 @@
     <form action="<?= base_url('adresse/ajouter') ?>" method="post">
         <?= csrf_field() ?>
 
-        <label for="titre">Titre de l’adresse (ex. Domicile, Travail) :</label>
-        <input type="text" name="titre" id="titre" required><br>
-
         <label for="nom">Nom :</label>
         <input type="text" name="nom" id="nom" required><br>
 
@@ -16,7 +13,7 @@
         <label for="adresse">Adresse :</label>
         <input type="text" name="adresse" id="adresse" required><br>
 
-        <label for="complement">Complément d’adresse :</label>
+        <label for="complement">Complément d'adresse :</label>
         <input type="text" name="complement" id="complement"><br>
 
         <label for="code_postal">Code postal :</label>
@@ -25,11 +22,15 @@
         <label for="ville">Ville :</label>
         <input type="text" name="ville" id="ville" required><br>
 
-        <label for="ville">Département :</label>
-        <input type="text" name="departement" id="departement" required><br>
-
         <label for="pays">Pays :</label>
-        <input type="text" name="pays" id="pays" required><br>
+        <select name="pays" id="pays" required>
+            <option value="">Sélectionnez un pays</option>
+        </select><br>
+
+        <label for="departement">Département :</label>
+        <select name="departement" id="departement" required disabled>
+            <option value="">Sélectionnez d'abord un pays</option>
+        </select><br>
 
         <label for="telephone">Téléphone :</label>
         <input type="text" name="telephone" id="telephone"><br>
@@ -40,5 +41,8 @@
         </div>
     </form>
 </main>
+
+<!-- Inclure le script pour les sélecteurs dynamiques -->
+<script src="<?= base_url('js/address-manager.js') ?>"></script>
 
 <?= $this->include('layouts/footer') ?>

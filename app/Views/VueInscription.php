@@ -52,14 +52,21 @@
     <label for="ville">Ville :</label>
     <input type="text" name="ville" id="ville" value="<?= esc(set_value('ville')) ?>" required><br>
 
-    <label for="departement">Département :</label>
-    <input type="text" name="departement" id="departement" value="<?= esc(set_value('departement')) ?>"><br>
-
     <label for="pays">Pays :</label>
-    <input type="text" name="pays" id="pays" value="<?= esc(set_value('pays')) ?>" required><br>
+    <select name="pays" id="pays" data-valeur="<?= esc(set_value('pays')) ?>" required>
+      <option value="">Sélectionnez un pays</option>
+    </select><br>
+
+    <label for="departement">Département :</label>
+    <select name="departement" id="departement" data-valeur="<?= esc(set_value('departement')) ?>" required>
+      <option value="">Sélectionnez d'abord un pays</option>
+    </select><br>
 
     <button type="submit" class="btn btn-primary">S'inscrire</button>
   </form>
 </main>
+
+<!-- Inclure le script pour les sélecteurs dynamiques -->
+<script src="<?= base_url('js/address-manager.js') ?>"></script>
 
 <?= $this->include('layouts/footer') ?>

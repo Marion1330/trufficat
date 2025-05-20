@@ -1,15 +1,11 @@
 <?= $this->include('layouts/header') ?>
 
 <main class="form-container">
-    <h2>Modifier l’adresse</h2>
+    <h2>Modifier l'adresse</h2>
 
     <form action="<?= isset($isPrincipale) && $isPrincipale ? base_url('profil/modifier-adresse-principale') : base_url('adresse/modifier/'.$adresse['id']) ?>" method="post">
         <?= csrf_field() ?>
-
         
-        <label for="titre">Titre :</label>
-        <input type="text" name="titre" value="<?= esc(set_value('titre', $adresse['titre'] ?? '')) ?>" required><br>
-
         <label for="nom">Nom :</label>
         <input type="text" name="nom" id="nom" value="<?= esc(set_value('nom', $adresse['nom'] ?? '')) ?>" required><br>
 
@@ -28,11 +24,15 @@
         <label for="ville">Ville :</label>
         <input type="text" name="ville" value="<?= esc(set_value('ville', $adresse['ville'] ?? '')) ?>" required><br>
 
-        <label for="departement">Département :</label>
-        <input type="text" name="departement" value="<?= esc(set_value('departement', $adresse['departement'] ?? '')) ?>"><br>
-
         <label for="pays">Pays :</label>
-        <input type="text" name="pays" value="<?= esc(set_value('pays', $adresse['pays'] ?? '')) ?>" required><br>
+        <select name="pays" id="pays" data-valeur="<?= esc(set_value('pays', $adresse['pays'] ?? '')) ?>" required>
+            <option value="">Sélectionnez un pays</option>
+        </select><br>
+
+        <label for="departement">Département :</label>
+        <select name="departement" id="departement" data-valeur="<?= esc(set_value('departement', $adresse['departement'] ?? '')) ?>" required>
+            <option value="">Sélectionnez d'abord un pays</option>
+        </select><br>
 
         <label for="telephone">Téléphone :</label>
         <input type="text" name="telephone" value="<?= esc(set_value('telephone', $adresse['telephone'] ?? '')) ?>"><br>
@@ -49,6 +49,9 @@
         </div>
     </form>
 </main>
+
+<!-- Inclure le script pour les sélecteurs dynamiques -->
+<script src="<?= base_url('js/address-manager.js') ?>"></script>
 
 <?= $this->include('layouts/footer') ?>
 

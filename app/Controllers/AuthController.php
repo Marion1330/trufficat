@@ -128,7 +128,6 @@ class AuthController extends BaseController
             'user_id' => $userId,
             'nom' => $this->request->getPost('nom'),
             'prenom' => $this->request->getPost('prenom'),
-            'titre' => $this->request->getPost('titre'),
             'adresse' => $this->request->getPost('adresse'),
             'complement' => $this->request->getPost('complement'),
             'code_postal' => $this->request->getPost('code_postal'),
@@ -168,7 +167,6 @@ class AuthController extends BaseController
         }
 
         $data = [
-            'titre' => $this->request->getPost('titre'),
             'adresse' => $this->request->getPost('adresse'),
             'complement' => $this->request->getPost('complement'),
             'code_postal' => $this->request->getPost('code_postal'),
@@ -255,7 +253,6 @@ class AuthController extends BaseController
             'user_id' => $userId,
             'nom' => $user['nom'],
             'prenom' => $user['prenom'],
-            'titre' => 'Ancienne principale',
             'adresse' => $user['adresse'],
             'complement' => $user['complement'],
             'code_postal' => $user['code_postal'],
