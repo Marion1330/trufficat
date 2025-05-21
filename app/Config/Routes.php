@@ -18,6 +18,7 @@ $routes->get('admin', 'Admin::index');
 $routes->get('admin/produits', 'Admin::produits');
 $routes->get('admin/produit/ajouter', 'Admin::ajouterProduit');
 $routes->get('admin/produit/modifier/(:num)', 'Admin::modifierProduit/$1');
+$routes->post('admin/produit/modifier/(:num)', 'Admin::updateProduit/$1');
 $routes->get('admin/produit/supprimer/(:num)', 'Admin::supprimerProduit/$1');
 
 //Route de connexion et inscription et traitement de formulaire 
