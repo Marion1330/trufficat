@@ -46,7 +46,11 @@
             
             <div class="product-price-container">
                 <p class="product-price"><?= number_format($produit['prix'], 2, ',', ' ') ?> €</p>
-                <p class="product-stock">En stock</p>
+                <?php if ($produit['stock'] <= 0): ?>
+                    <p class="rupture-stock">Rupture de stock</p>
+                <?php else: ?>
+                    <p class="stock">En stock (<?= $produit['stock'] ?> disponibles)</p>
+                <?php endif; ?>
             </div>
             
             <?php if (!empty($produit['saveur'])): ?>
@@ -62,11 +66,12 @@
             <?php endif; ?>
             
             <div class="product-buy">
+                <?php if ($produit['stock'] > 0): ?>
                 <div class="quantity-selector">
                     <label for="quantity">Quantité:</label>
                     <div class="quantity-controls">
                         <button type="button" class="quantity-btn" data-action="decrease">-</button>
-                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="10">
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="<?= $produit['stock'] ?>">
                         <button type="button" class="quantity-btn" data-action="increase">+</button>
                     </div>
                 </div>
@@ -74,6 +79,11 @@
                 <button class="add-to-cart-btn" data-product-id="<?= $produit['id'] ?>">
                     Ajouter au panier
                 </button>
+                <?php else: ?>
+                <button class="add-to-cart-btn disabled" disabled>
+                    Produit indisponible
+                </button>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -189,10 +199,20 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-right: 15px;
 }
 
-.product-stock {
-    color: #5cb85c;
-    font-weight: 600;
-    margin: 0;
+.rupture-stock {
+    color: #ff0000;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.stock {
+    color: #28a745;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgba(40, 167, 69, 0.1);
 }
 
 .product-feature {
@@ -271,6 +291,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .add-to-cart-btn:hover {
     background-color: #3d6a78;
+}
+
+.add-to-cart-btn.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 
 .product-description {

@@ -63,6 +63,7 @@
                             <th>Nom</th>
                             <th>Description</th>
                             <th class="th-price">Prix</th>
+                            <th class="th-stock">Stock</th>
                             <th class="th-animal">Animal</th>
                             <th class="th-actions">Actions</th>
                         </tr>
@@ -80,6 +81,11 @@
                                 <td class="td-name"><?= esc($produit['nom']) ?></td>
                                 <td class="td-description"><?= substr(esc($produit['description']), 0, 100) . (strlen($produit['description']) > 100 ? '...' : '') ?></td>
                                 <td class="td-price"><?= isset($produit['prix']) ? number_format($produit['prix'], 2, ',', ' ') . ' €' : 'N/A' ?></td>
+                                <td class="td-stock">
+                                    <span class="stock-badge <?= $produit['stock'] <= 0 ? 'rupture' : 'disponible' ?>">
+                                        <?= $produit['stock'] <= 0 ? 'Rupture' : $produit['stock'] ?>
+                                    </span>
+                                </td>
                                 <td class="td-animal">
                                     <span class="animal-badge <?= esc($produit['animal']) ?>">
                                         <?= $produit['animal'] == 'chien' ? '<i class="fas fa-dog"></i> Chien' : '<i class="fas fa-cat"></i> Chat' ?>
@@ -358,6 +364,11 @@
     text-align: right;
 }
 
+.th-stock, .td-stock {
+    width: 120px;
+    text-align: center;
+}
+
 .th-animal, .td-animal {
     width: 120px;
     text-align: center;
@@ -600,6 +611,25 @@
         text-align: center;
         justify-content: center;
     }
+}
+
+/* Styles pour les badges de stock */
+.stock-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.stock-badge.rupture {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff0000;
+}
+
+.stock-badge.disponible {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
 }
 </style>
 

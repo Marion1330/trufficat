@@ -190,12 +190,17 @@
                                 <p class="product-price">
                                     <strong><?= number_format($produit['prix'], 2, ',', ' ') ?> €</strong>
                                 </p>
+                                <?php if ($produit['stock'] <= 0): ?>
+                                    <p class="rupture-stock">Rupture de stock</p>
+                                <?php else: ?>
+                                    <p class="stock">En stock</p>
+                                <?php endif; ?>
                             </div>
                         </a>
                         
                         <div class="product-actions">
-                            <button class="btn-add-to-cart" data-product-id="<?= $produit['id'] ?>">
-                                Ajouter au panier
+                            <button class="btn-add-to-cart" data-product-id="<?= $produit['id'] ?>" <?= $produit['stock'] <= 0 ? 'disabled' : '' ?>>
+                                <?= $produit['stock'] <= 0 ? 'Indisponible' : 'Ajouter au panier' ?>
                             </button>
                         </div>
                     </div>

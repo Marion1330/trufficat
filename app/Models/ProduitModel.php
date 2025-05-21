@@ -15,6 +15,7 @@ class ProduitModel extends Model
         'categorie', 
         'image', 
         'prix', 
+        'stock',
         'is_vedette',
         'age',
         'saveur',

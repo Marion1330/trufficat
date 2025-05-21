@@ -296,6 +296,28 @@ main {
     background-color: #fff;
 }
 
+.rupture-stock {
+    color: #ff0000;
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 0.9em;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.stock {
+    color: #28a745;
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 0.9em;
+    background-color: rgba(40, 167, 69, 0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
 /* 🌿 Footer */
 .footer {
     text-align: center;
