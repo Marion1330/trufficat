@@ -6,14 +6,21 @@ use App\Models\ProduitModel;
 
 class Admin extends BaseController
 {
-   public function index()
-{
-    if (session()->get('role') !== 'admin') {
-        return redirect()->to('/')->with('error', 'Accès refusé');
+    protected $uploadPath = 'images/produits/';
+
+    public function __construct()
+    {
+        helper('filesystem');
     }
 
-    return view('admin/index');
-}
+    public function index()
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        return view('admin/index');
+    }
 
     public function produits()
     {
@@ -50,11 +57,14 @@ class Admin extends BaseController
         $image = $this->request->getFile('image');
         if ($image && $image->isValid() && !$image->hasMoved()) {
             $newName = $image->getRandomName();
-            $image->move('./images', $newName);
-            $data['image'] = $newName;
+            if (!is_dir($this->uploadPath)) {
+                mkdir($this->uploadPath, 0777, true);
+            }
+            $image->move('./' . $this->uploadPath, $newName);
+            $data['image'] = $this->uploadPath . $newName;
         }
 
-        // Ajout du produit - utiliser exactement la même structure que updateProduit
+        // Ajout du produit
         try {
             $result = $model->insert($data);
             if ($result) {
@@ -102,9 +112,17 @@ class Admin extends BaseController
         // Gestion de l'upload d'image
         $image = $this->request->getFile('image');
         if ($image && $image->isValid() && !$image->hasMoved()) {
+            // Supprimer l'ancienne image si elle existe
+            if (!empty($produit['image']) && file_exists('./' . $produit['image'])) {
+                unlink('./' . $produit['image']);
+            }
+
             $newName = $image->getRandomName();
-            $image->move('./images', $newName);
-            $data['image'] = $newName;
+            if (!is_dir($this->uploadPath)) {
+                mkdir($this->uploadPath, 0777, true);
+            }
+            $image->move('./' . $this->uploadPath, $newName);
+            $data['image'] = $this->uploadPath . $newName;
         }
 
         // Mise à jour du produit
@@ -112,7 +130,6 @@ class Admin extends BaseController
             if ($model->update($id, $data)) {
                 return redirect()->to('/admin/produits')->with('success', 'Produit modifié avec succès');
             } else {
-                // Récupérer les erreurs de validation
                 $errors = $model->errors();
                 return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification du produit: ' . json_encode($errors));
             }
@@ -125,7 +142,18 @@ class Admin extends BaseController
     public function supprimerProduit($id)
     {
         $model = new ProduitModel();
-        $model->delete($id);
-        return redirect()->to('/admin/produits');
+        $produit = $model->find($id);
+
+        if ($produit) {
+            // Supprimer l'image associée si elle existe
+            if (!empty($produit['image']) && file_exists('./' . $produit['image'])) {
+                unlink('./' . $produit['image']);
+            }
+
+            $model->delete($id);
+            return redirect()->to('/admin/produits')->with('success', 'Produit supprimé avec succès');
+        }
+
+        return redirect()->to('/admin/produits')->with('error', 'Produit non trouvé');
     }
 }

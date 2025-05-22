@@ -6,7 +6,7 @@
 <?php foreach ($produits as $produit): ?>
     <div class="carte <?= esc($produit['animal']) ?>">
         <?php if (!empty($produit['image'])): ?>
-            <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
+            <img src="<?= base_url(esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
         <?php endif; ?>
         <h2><?= esc($produit['nom']) ?></h2>
         <p class="description"><?= esc($produit['description']) ?></p>

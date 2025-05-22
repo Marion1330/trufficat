@@ -28,7 +28,7 @@
                     <a href="<?= base_url('produits/detail/' . $produit['id']) ?>" class="product-link">
                         <div class="product-image">
                             <?php if (!empty($produit['image'])): ?>
-                                <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>">
+                                <img src="<?= base_url(esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>">
                             <?php else: ?>
                                 <img src="<?= base_url('images/placeholder.png') ?>" alt="Image non disponible">
                             <?php endif; ?>

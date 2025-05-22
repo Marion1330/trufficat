@@ -5,7 +5,7 @@
         <div class="product-images">
             <div class="main-image">
                 <?php if (!empty($produit['image'])): ?>
-                    <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>">
+                    <img src="<?= base_url(esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>">
                 <?php else: ?>
                     <img src="<?= base_url('images/placeholder.png') ?>" alt="Image non disponible">
                 <?php endif; ?>

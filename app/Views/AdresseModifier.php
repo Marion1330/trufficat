@@ -21,7 +21,7 @@
         <label for="code_postal">Code postal :</label>
         <input type="text" name="code_postal" value="<?= esc(set_value('code_postal', $adresse['code_postal'] ?? '')) ?>" required><br>
 
-        <label for="ville">Villex :</label>
+        <label for="ville">Ville :</label>
         <input type="text" name="ville" value="<?= esc(set_value('ville', $adresse['ville'] ?? '')) ?>" required><br>
 
         <label for="pays">Pays :</label>
