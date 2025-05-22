@@ -735,3 +735,104 @@ select:disabled {
 select option {
     padding: 0.25rem;
 }
+
+/* 🌿 Formulaire Admin */
+.admin-form input[type="file"] {
+    max-width: 100%;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.admin-form .form-group {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.admin-form textarea {
+    width: 100%;
+    max-width: 600px;
+    min-height: 150px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.admin-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.admin-form input[type="text"],
+.admin-form input[type="number"],
+.admin-form select {
+    width: 100%;
+    max-width: 600px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* 🌿 Upload d'image dans le formulaire admin */
+.image-upload-container {
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.current-image {
+    margin-bottom: 15px;
+}
+
+.product-image-preview {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.custom-file-upload {
+    border: 2px dashed #D97B29;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.custom-file-upload:hover {
+    border-color: #B45B19;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    cursor: pointer;
+    display: block;
+    color: #D97B29;
+}
+
+.file-label i {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.file-label span {
+    display: block;
+    margin-top: 5px;
+}
+
+.file-info {
+    margin: 10px 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.form-help {
+    color: #666;
+    font-size: 0.85em;
+    margin-top: 5px;
+}
