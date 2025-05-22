@@ -19,7 +19,6 @@ class ProduitModel extends Model
         'is_vedette',
         'age',
         'saveur',
-        'sans_cereales',
         'sterilise',
         'marque'
     ];

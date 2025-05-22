@@ -17,6 +17,7 @@ $routes->get('panier', 'Panier::index');
 $routes->get('admin', 'Admin::index');
 $routes->get('admin/produits', 'Admin::produits');
 $routes->get('admin/produit/ajouter', 'Admin::ajouterProduit');
+$routes->post('admin/produit/ajouter', 'Admin::saveProduit');
 $routes->get('admin/produit/modifier/(:num)', 'Admin::modifierProduit/$1');
 $routes->post('admin/produit/modifier/(:num)', 'Admin::updateProduit/$1');
 $routes->get('admin/produit/supprimer/(:num)', 'Admin::supprimerProduit/$1');
