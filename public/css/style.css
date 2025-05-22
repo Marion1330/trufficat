@@ -31,7 +31,7 @@ header {
 }
 
 .logo-img {
-    height: 100px;
+    height: 80px;
     width: auto;
     object-fit: contain;
 }
@@ -154,7 +154,7 @@ main {
 
 /* 🌿 Barre de recherche */
 .search-bar input {
-    width: 900px;
+    width: 700px;
     max-width: 100%;
     padding: 8px 15px;
     border-radius: 20px;
@@ -461,8 +461,8 @@ main {
     opacity: 0;
     position: absolute;
     top: 100%;
-    left: 42%;
-    transform: translateX(-42%); /* Centre le menu sous le parent */
+    left: 40.5%;
+    transform: translateX(-40.5%);
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -471,8 +471,7 @@ main {
     height: 200px;
     overflow-y: auto;
     z-index: 9999;
-    width: 1411px; /* Ajustez cette largeur pour agrandir */
-
+    width: 1240px;
 }
 
 .dropdown-chiens:hover .dropdown-menu-chiens {
@@ -490,25 +489,31 @@ main {
 .dropdown-menu-chiens .dropdown-column {
     display: flex;
     flex-direction: column;
-    min-width: 220px;
-    padding: 10px;
+    flex: 1;
+    min-width: 180px;
+    padding: 15px;
     background-color: #FFF8F0;
     border-radius: 5px;
 }
 
 .dropdown-menu-chiens .dropdown-column strong {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
     color: #4A3A2D;
+    font-size: 13px;
+    white-space: nowrap;
 }
 
 .dropdown-menu-chiens .dropdown-column a {
     text-decoration: none;
     color: #4A3A2D;
-    padding: 2px 0;
+    padding: 4px 0;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 12px;
     transition: color 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .dropdown-menu-chiens .dropdown-column a strong:hover {
@@ -526,8 +531,8 @@ main {
     opacity: 0;
     position: absolute;
     top: 100%;
-    left: 58.5%;
-    transform: translateX(-58.5%); /* Centre le menu sous le parent */
+    left: 60%;
+    transform: translateX(-60%);
     background-color: #FFF8F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -536,7 +541,7 @@ main {
     height: 200px;
     overflow-y: auto;
     z-index: 9999;
-    width: 1407px; /* Ajustez cette largeur pour agrandir */
+    width: 1240px;
 }
 
 .dropdown-chats:hover .dropdown-menu-chats {
@@ -547,35 +552,43 @@ main {
 
 .dropdown-menu-chats .dropdown-row {
     display: flex;
-    gap: 40px;
+    gap: 20px;
     flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .dropdown-menu-chats .dropdown-column {
     display: flex;
     flex-direction: column;
-    min-width: 220px;
-    padding: 10px;
+    flex: 1;
+    min-width: 180px;
+    padding: 15px;
     background-color: #FFF8F0;
     border-radius: 5px;
 }
 
 .dropdown-menu-chats .dropdown-column strong {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
-    color:  #4A3A2D;
+    color: #4A3A2D;
+    font-size: 13px;
+    white-space: nowrap;
 }
 
 .dropdown-menu-chats .dropdown-column a {
     text-decoration: none;
     color: #4A3A2D;
-    padding: 2px 0;
+    padding: 4px 0;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 12px;
     transition: color 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.dropdown-menu-chats .dropdown-column a strong:hover {
+.dropdown-menu-chats .dropdown-column a:hover {
     color: #A44D25;
 }
 

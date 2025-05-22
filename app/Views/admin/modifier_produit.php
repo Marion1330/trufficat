@@ -67,12 +67,79 @@
                                 <label for="categorie">Catégorie</label>
                                 <select id="categorie" name="categorie" class="form-control">
                                     <option value="">Sélectionner...</option>
-                                    <option value="alimentation" <?= isset($produit['categorie']) && $produit['categorie'] == 'alimentation' ? 'selected' : '' ?>>Alimentation</option>
-                                    <option value="croquettes" <?= isset($produit['categorie']) && $produit['categorie'] == 'croquettes' ? 'selected' : '' ?>>Croquettes</option>
-                                    <option value="friandises" <?= isset($produit['categorie']) && $produit['categorie'] == 'friandises' ? 'selected' : '' ?>>Friandises</option>
-                                    <option value="hygiene-soins" <?= isset($produit['categorie']) && $produit['categorie'] == 'hygiene-soins' ? 'selected' : '' ?>>Hygiène et soins</option>
-                                    <option value="jouets" <?= isset($produit['categorie']) && $produit['categorie'] == 'jouets' ? 'selected' : '' ?>>Jouets</option>
-                                    <option value="accessoires" <?= isset($produit['categorie']) && $produit['categorie'] == 'accessoires' ? 'selected' : '' ?>>Accessoires</option>
+                                    <!-- Catégories pour chien -->
+                                    <optgroup label="Alimentation" class="chien-categories" style="display: none;">
+                                        <option value="alimentation" <?= isset($produit['categorie']) && $produit['categorie'] == 'alimentation' ? 'selected' : '' ?>>Alimentation</option>
+                                        <option value="alimentation-sans-cereales" <?= isset($produit['categorie']) && $produit['categorie'] == 'alimentation-sans-cereales' ? 'selected' : '' ?>>Alimentation sans céréales</option>
+                                        <option value="alimentation-bio" <?= isset($produit['categorie']) && $produit['categorie'] == 'alimentation-bio' ? 'selected' : '' ?>>Alimentation Bio</option>
+                                        <option value="croquettes" <?= isset($produit['categorie']) && $produit['categorie'] == 'croquettes' ? 'selected' : '' ?>>Croquettes</option>
+                                        <option value="croquettes-sterilise" <?= isset($produit['categorie']) && $produit['categorie'] == 'croquettes-sterilise' ? 'selected' : '' ?>>Croquettes pour chiens stérilisés</option>
+                                        <option value="boites-sachets" <?= isset($produit['categorie']) && $produit['categorie'] == 'boites-sachets' ? 'selected' : '' ?>>Boites et sachets</option>
+                                        <option value="friandises" <?= isset($produit['categorie']) && $produit['categorie'] == 'friandises' ? 'selected' : '' ?>>Friandises</option>
+                                    </optgroup>
+                                    <optgroup label="Hygiène et soins" class="chien-categories" style="display: none;">
+                                        <option value="hygiene-soins" <?= isset($produit['categorie']) && $produit['categorie'] == 'hygiene-soins' ? 'selected' : '' ?>>Hygiène et soins</option>
+                                        <option value="antiparasitaires" <?= isset($produit['categorie']) && $produit['categorie'] == 'antiparasitaires' ? 'selected' : '' ?>>Produits antiparasitaires</option>
+                                        <option value="entretien-poil" <?= isset($produit['categorie']) && $produit['categorie'] == 'entretien-poil' ? 'selected' : '' ?>>Entretien du poil</option>
+                                        <option value="sacs-proprete" <?= isset($produit['categorie']) && $produit['categorie'] == 'sacs-proprete' ? 'selected' : '' ?>>Sacs de propreté</option>
+                                    </optgroup>
+                                    <optgroup label="Accessoires" class="chien-categories" style="display: none;">
+                                        <option value="gamelles" <?= isset($produit['categorie']) && $produit['categorie'] == 'gamelles' ? 'selected' : '' ?>>Gamelles</option>
+                                    </optgroup>
+                                    <optgroup label="Niche et couchage" class="chien-categories" style="display: none;">
+                                        <option value="paniers-coussins" <?= isset($produit['categorie']) && $produit['categorie'] == 'paniers-coussins' ? 'selected' : '' ?>>Paniers et coussins</option>
+                                        <option value="niches-chenils" <?= isset($produit['categorie']) && $produit['categorie'] == 'niches-chenils' ? 'selected' : '' ?>>Niches et chenils</option>
+                                    </optgroup>
+                                    <optgroup label="Transport" class="chien-categories" style="display: none;">
+                                        <option value="caisses-transport" <?= isset($produit['categorie']) && $produit['categorie'] == 'caisses-transport' ? 'selected' : '' ?>>Caisses et sacs de transport</option>
+                                        <option value="accessoires-voyage" <?= isset($produit['categorie']) && $produit['categorie'] == 'accessoires-voyage' ? 'selected' : '' ?>>Accessoires de voyage</option>
+                                    </optgroup>
+                                    <optgroup label="Sellerie" class="chien-categories" style="display: none;">
+                                        <option value="laisses" <?= isset($produit['categorie']) && $produit['categorie'] == 'laisses' ? 'selected' : '' ?>>Laisses</option>
+                                        <option value="laisses-enrouleur" <?= isset($produit['categorie']) && $produit['categorie'] == 'laisses-enrouleur' ? 'selected' : '' ?>>Laisses à enrouleur</option>
+                                        <option value="colliers" <?= isset($produit['categorie']) && $produit['categorie'] == 'colliers' ? 'selected' : '' ?>>Colliers</option>
+                                        <option value="harnais" <?= isset($produit['categorie']) && $produit['categorie'] == 'harnais' ? 'selected' : '' ?>>Harnais</option>
+                                        <option value="muselieres" <?= isset($produit['categorie']) && $produit['categorie'] == 'muselieres' ? 'selected' : '' ?>>Muselières</option>
+                                    </optgroup>
+                                    <option value="jouets" class="chien-categories" style="display: none;" <?= isset($produit['categorie']) && $produit['categorie'] == 'jouets' ? 'selected' : '' ?>>Jouets</option>
+
+                                    <!-- Catégories pour chat -->
+                                    <optgroup label="Alimentation" class="chat-categories" style="display: none;">
+                                        <option value="alimentation" <?= isset($produit['categorie']) && $produit['categorie'] == 'alimentation' ? 'selected' : '' ?>>Alimentation</option>
+                                        <option value="alimentation-sans-cereales" <?= isset($produit['categorie']) && $produit['categorie'] == 'alimentation-sans-cereales' ? 'selected' : '' ?>>Alimentation sans céréales</option>
+                                        <option value="alimentation-bio" <?= isset($produit['categorie']) && $produit['categorie'] == 'alimentation-bio' ? 'selected' : '' ?>>Alimentation Bio</option>
+                                        <option value="croquettes" <?= isset($produit['categorie']) && $produit['categorie'] == 'croquettes' ? 'selected' : '' ?>>Croquettes</option>
+                                        <option value="croquettes-sterilise" <?= isset($produit['categorie']) && $produit['categorie'] == 'croquettes-sterilise' ? 'selected' : '' ?>>Croquettes pour chats stérilisés</option>
+                                        <option value="boites-sachets" <?= isset($produit['categorie']) && $produit['categorie'] == 'boites-sachets' ? 'selected' : '' ?>>Boites et sachets</option>
+                                        <option value="friandises" <?= isset($produit['categorie']) && $produit['categorie'] == 'friandises' ? 'selected' : '' ?>>Friandises</option>
+                                    </optgroup>
+                                    <optgroup label="Hygiène et soins" class="chat-categories" style="display: none;">
+                                        <option value="hygiene-soins" <?= isset($produit['categorie']) && $produit['categorie'] == 'hygiene-soins' ? 'selected' : '' ?>>Hygiène et soins</option>
+                                        <option value="antiparasitaires" <?= isset($produit['categorie']) && $produit['categorie'] == 'antiparasitaires' ? 'selected' : '' ?>>Produits antiparasitaires</option>
+                                        <option value="litieres" <?= isset($produit['categorie']) && $produit['categorie'] == 'litieres' ? 'selected' : '' ?>>Litières</option>
+                                        <option value="bacs-litiere" <?= isset($produit['categorie']) && $produit['categorie'] == 'bacs-litiere' ? 'selected' : '' ?>>Bacs à litière</option>
+                                        <option value="accessoires-litiere" <?= isset($produit['categorie']) && $produit['categorie'] == 'accessoires-litiere' ? 'selected' : '' ?>>Accessoires de litières</option>
+                                        <option value="maison-toilette" <?= isset($produit['categorie']) && $produit['categorie'] == 'maison-toilette' ? 'selected' : '' ?>>Maison de toilette</option>
+                                        <option value="entretien-poil" <?= isset($produit['categorie']) && $produit['categorie'] == 'entretien-poil' ? 'selected' : '' ?>>Entretien du poil</option>
+                                    </optgroup>
+                                    <optgroup label="Couchage" class="chat-categories" style="display: none;">
+                                        <option value="hamac" <?= isset($produit['categorie']) && $produit['categorie'] == 'hamac' ? 'selected' : '' ?>>Hamac</option>
+                                        <option value="niche-cabane" <?= isset($produit['categorie']) && $produit['categorie'] == 'niche-cabane' ? 'selected' : '' ?>>Niche et cabane</option>
+                                        <option value="panier-coussin" <?= isset($produit['categorie']) && $produit['categorie'] == 'panier-coussin' ? 'selected' : '' ?>>Panier et coussin</option>
+                                    </optgroup>
+                                    <optgroup label="Transport" class="chat-categories" style="display: none;">
+                                        <option value="sac-transport" <?= isset($produit['categorie']) && $produit['categorie'] == 'sac-transport' ? 'selected' : '' ?>>Sac de transport</option>
+                                        <option value="caisse-transport" <?= isset($produit['categorie']) && $produit['categorie'] == 'caisse-transport' ? 'selected' : '' ?>>Caisse de transport</option>
+                                    </optgroup>
+                                    <optgroup label="Accessoires" class="chat-categories" style="display: none;">
+                                        <option value="gamelles" <?= isset($produit['categorie']) && $produit['categorie'] == 'gamelles' ? 'selected' : '' ?>>Gamelles</option>
+                                        <option value="sellerie" <?= isset($produit['categorie']) && $produit['categorie'] == 'sellerie' ? 'selected' : '' ?>>Sellerie</option>
+                                        <option value="chatieres" <?= isset($produit['categorie']) && $produit['categorie'] == 'chatieres' ? 'selected' : '' ?>>Chatières</option>
+                                    </optgroup>
+                                    <optgroup label="Jouets et griffoirs" class="chat-categories" style="display: none;">
+                                        <option value="jouets" <?= isset($produit['categorie']) && $produit['categorie'] == 'jouets' ? 'selected' : '' ?>>Jouets</option>
+                                        <option value="arbres-griffoirs" <?= isset($produit['categorie']) && $produit['categorie'] == 'arbres-griffoirs' ? 'selected' : '' ?>>Arbres à chat & griffoirs</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             
@@ -101,35 +168,37 @@
                             </div>
                             
                             <div class="form-group">
+                                <label for="sterilise">Animal stérilisé</label>
+                                <select id="sterilise" name="sterilise" class="form-control">
+                                    <option value="">Non applicable</option>
+                                    <option value="1" <?= isset($produit['sterilise']) && $produit['sterilise'] ? 'selected' : '' ?>>Oui</option>
+                                    <option value="0" <?= isset($produit['sterilise']) && !$produit['sterilise'] ? 'selected' : '' ?>>Non</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label for="saveur">Saveur</label>
-                                <select id="saveur" name="saveur" class="form-control">
+                                <select id="saveur" name="saveur" class="form-control" disabled>
                                     <option value="">Sélectionner...</option>
                                     <option value="Poulet" <?= isset($produit['saveur']) && $produit['saveur'] == 'Poulet' ? 'selected' : '' ?>>Poulet</option>
                                     <option value="Boeuf" <?= isset($produit['saveur']) && $produit['saveur'] == 'Boeuf' ? 'selected' : '' ?>>Boeuf</option>
                                     <option value="Saumon" <?= isset($produit['saveur']) && $produit['saveur'] == 'Saumon' ? 'selected' : '' ?>>Saumon</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="is_vedette">Produit en vedette</label>
+                                <select id="is_vedette" name="is_vedette" class="form-control">
+                                    <option value="0" <?= !isset($produit['is_vedette']) || !$produit['is_vedette'] ? 'selected' : '' ?>>Non</option>
+                                    <option value="1" <?= isset($produit['is_vedette']) && $produit['is_vedette'] ? 'selected' : '' ?>>Oui</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label>Caractéristiques spéciales</label>
-                            <div class="checkbox-group">
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="sans_cereales" name="sans_cereales" value="1" <?= isset($produit['sans_cereales']) && $produit['sans_cereales'] ? 'checked' : '' ?>>
-                                    <label for="sans_cereales">Sans céréales</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="sterilise" name="sterilise" value="1" <?= isset($produit['sterilise']) && $produit['sterilise'] ? 'checked' : '' ?>>
-                                    <label for="sterilise">Pour animal stérilisé</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="bio" name="bio" value="1" <?= isset($produit['bio']) && $produit['bio'] ? 'checked' : '' ?>>
-                                    <label for="bio">Bio</label>
-                                </div>
-                            </div>
-                        </div>
+                    
                         
                         <div class="form-group">
                             <label for="image">Image du produit</label>
@@ -354,7 +423,7 @@
 }
 
 .form-control {
-    width: 100%;
+    width: 300px;
     padding: 10px 15px;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
@@ -501,6 +570,52 @@ textarea.form-control {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const animalSelect = document.getElementById('animal');
+    const categorieSelect = document.getElementById('categorie');
+    const saveurSelect = document.getElementById('saveur');
+
+    // Fonction pour mettre à jour l'affichage des catégories selon l'animal
+    function updateCategories() {
+        const animal = animalSelect.value;
+        const chienCategories = document.querySelectorAll('.chien-categories');
+        const chatCategories = document.querySelectorAll('.chat-categories');
+
+        if (animal === 'chien') {
+            chienCategories.forEach(cat => cat.style.display = '');
+            chatCategories.forEach(cat => cat.style.display = 'none');
+        } else {
+            chienCategories.forEach(cat => cat.style.display = 'none');
+            chatCategories.forEach(cat => cat.style.display = '');
+        }
+    }
+
+    // Fonction pour gérer l'activation du sélecteur de saveur
+    function updateSaveurSelect() {
+        const categorie = categorieSelect.value;
+        const alimentationCategories = [
+            'alimentation',
+            'alimentation-sans-cereales',
+            'alimentation-bio',
+            'croquettes',
+            'croquettes-sterilise',
+            'boites-sachets',
+            'friandises'
+        ];
+
+        saveurSelect.disabled = !alimentationCategories.includes(categorie);
+        if (saveurSelect.disabled) {
+            saveurSelect.value = '';
+        }
+    }
+
+    // Écouter les changements
+    animalSelect.addEventListener('change', updateCategories);
+    categorieSelect.addEventListener('change', updateSaveurSelect);
+
+    // Initialiser l'état au chargement
+    updateCategories();
+    updateSaveurSelect();
+
     // Gestion de l'upload d'image
     const fileInput = document.getElementById('image');
     const fileInfo = document.querySelector('.file-info');
@@ -535,31 +650,6 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.readAsDataURL(this.files[0]);
         } else {
             fileInfo.textContent = 'Aucun fichier sélectionné';
-        }
-    });
-    
-    // Changer dynamiquement les marques selon l'animal sélectionné
-    const animalSelect = document.getElementById('animal');
-    const marqueSelect = document.getElementById('marque');
-    
-    animalSelect.addEventListener('change', function() {
-        const animal = this.value;
-        marqueSelect.innerHTML = '<option value="">Sélectionner...</option>';
-        
-        if (animal === 'chien') {
-            ['Purina', 'Royal Canin', 'Pedigree', 'Hill\'s Science Plan', 'Eukanuba', 'Edgard & Cooper', 'Frolic', 'Carnilove', 'Orijen', 'Acana'].forEach(marque => {
-                const option = document.createElement('option');
-                option.value = marque;
-                option.textContent = marque;
-                marqueSelect.appendChild(option);
-            });
-        } else if (animal === 'chat') {
-            ['Purina', 'Sheba', 'Whiskas', 'Royal Canin', 'Hill\'s Science Plan', 'Almo Nature', 'Edgard & Cooper', 'Carnilove', 'Ultima', 'Perfect Fit'].forEach(marque => {
-                const option = document.createElement('option');
-                option.value = marque;
-                option.textContent = marque;
-                marqueSelect.appendChild(option);
-            });
         }
     });
 });
