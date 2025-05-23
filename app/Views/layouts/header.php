@@ -38,7 +38,7 @@
           <?php endif; ?>
         </ul>
       </li>
-      <li><a href="/panier">Panier</a></li>
+      <li><a href="<?= base_url('panier') ?>">Panier</a></li>
     </ul>
   </nav>
 
@@ -144,6 +144,10 @@
     </ul>
   </nav>
 </header>
+
+<main>
+
+</main>
 
 </body>
 </html>

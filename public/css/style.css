@@ -836,3 +836,132 @@ select option {
     font-size: 0.85em;
     margin-top: 5px;
 }
+
+/* Styles pour le panier */
+.panier-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: calc(100vh - 200px);
+}
+
+.panier-title {
+    color: #A44D25;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.panier-title:after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #D97B29;
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+.panier-empty {
+    background: #FFF8F0;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 3rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.panier-empty:hover {
+    transform: translateY(-5px);
+}
+
+.panier-empty img {
+    max-width: 200px;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.panier-empty:hover img {
+    opacity: 1;
+}
+
+.panier-empty h2 {
+    color: #4A3A2D;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.panier-empty p {
+    color: #6B3F1D;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.panier-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #D97B29;
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid #D97B29;
+}
+
+.panier-btn:hover {
+    background: #FFF8F0;
+    color: #D97B29;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(217, 123, 41, 0.3);
+}
+
+/* Animation pour le panier vide */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.panier-empty {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+    .panier-container {
+        padding: 1rem;
+    }
+    
+    .panier-title {
+        font-size: 2rem;
+    }
+    
+    .panier-empty {
+        padding: 2rem;
+    }
+    
+    .panier-empty img {
+        max-width: 150px;
+    }
+    
+    .panier-empty h2 {
+        font-size: 1.2rem;
+    }
+    
+    .panier-empty p {
+        font-size: 1rem;
+    }
+    
+    .panier-btn {
+        padding: 0.8rem 1.5rem;
+    }
+}

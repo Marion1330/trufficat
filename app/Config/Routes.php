@@ -12,6 +12,10 @@ $routes->get('produits/chats', 'Produits::chats');
 $routes->get('produits/detail/(:num)', 'Produits::detail/$1');
 $routes->get('produits/categorie/(:any)/(:any)', 'Produits::categorie/$1/$2');
 $routes->get('panier', 'Panier::index');
+$routes->post('panier/ajouter/(:num)', 'Panier::ajouter/$1');
+$routes->post('panier/supprimer/(:num)', 'Panier::supprimer/$1');
+$routes->post('panier/modifier/(:num)', 'Panier::modifier/$1');
+$routes->get('panier/vider', 'Panier::vider');
 
 // Routes d'administration
 $routes->get('admin', 'Admin::index');
