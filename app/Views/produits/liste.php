@@ -7,18 +7,26 @@
         <form action="" method="get" id="filter-form">
             <!-- Tri des produits -->
             <div class="filter-group">
-                <label for="tri">Trier par :</label>
                 <select name="tri" id="tri" class="form-control" onchange="this.form.submit()">
                     <option value="">Trier par</option>
-                    <option value="prix_asc" <?= $filtre_tri == 'prix_asc' ? 'selected' : '' ?>>Prix croissant</option>
-                    <option value="prix_desc" <?= $filtre_tri == 'prix_desc' ? 'selected' : '' ?>>Prix décroissant</option>
                     <option value="nom_asc" <?= $filtre_tri == 'nom_asc' ? 'selected' : '' ?>>Nom (A-Z)</option>
+                    <option value="nom_desc" <?= $filtre_tri == 'nom_desc' ? 'selected' : '' ?>>Nom (Z-A)</option>
+                    <option value="prix_asc" <?= $filtre_tri == 'prix_asc' ? 'selected' : '' ?>>Prix (croissant)</option>
+                    <option value="prix_desc" <?= $filtre_tri == 'prix_desc' ? 'selected' : '' ?>>Prix (décroissant)</option>
+                    <option value="category_asc" <?= $filtre_tri == 'category_asc' ? 'selected' : '' ?>>Catégorie (A-Z)</option>
+                    <option value="category_desc" <?= $filtre_tri == 'category_desc' ? 'selected' : '' ?>>Catégorie (Z-A)</option>
+                    <option value="brand_asc" <?= $filtre_tri == 'brand_asc' ? 'selected' : '' ?>>Marque (A-Z)</option>
+                    <option value="brand_desc" <?= $filtre_tri == 'brand_desc' ? 'selected' : '' ?>>Marque (Z-A)</option>
+                    <option value="age_asc" <?= $filtre_tri == 'age_asc' ? 'selected' : '' ?>>Âge (croissant)</option>
+                    <option value="age_desc" <?= $filtre_tri == 'age_desc' ? 'selected' : '' ?>>Âge (décroissant)</option>
+                    <option value="flavor_asc" <?= $filtre_tri == 'flavor_asc' ? 'selected' : '' ?>>Saveur (A-Z)</option>
+                    <option value="flavor_desc" <?= $filtre_tri == 'flavor_desc' ? 'selected' : '' ?>>Saveur (Z-A)</option>
                 </select>
             </div>
             
             <!-- Filtre par marque -->
             <div class="filter-group">
-                <h4><?= $animal == 'chat' ? '🐱 Marques pour chats' : '🐶 Marques pour chiens' ?></h4>
+                <h4><?= $animal == 'chat' ? 'Marques' : ' Marques' ?></h4>
                 <div class="filter-options">
                     <div class="filter-option">
                         <input type="radio" id="marque_all" name="marque" value="" <?= empty($filtre_marque) ? 'checked' : '' ?> onchange="this.form.submit()">
@@ -27,8 +35,49 @@
                     
                     <?php 
                     // Marques spécifiques pour chaque animal
-                    $marques_chats = ['Purina', 'Sheba', 'Royal Canin', 'Hill\'s Science Plan', 'Almo Nature', 'Edgard & Cooper', 'Carnilove', 'Ultima', 'Perfect Fit'];
-                    $marques_chiens = ['Purina', 'Royal Canin', 'Pedigree', 'Hill\'s Science Plan', 'Eukanuba', 'Edgard & Cooper', 'Frolic', 'Carnilove', 'Orijen', 'Acana'];
+                    $marques_chats = [
+                        'Royal Canin',
+                        'Purina',
+                        'True Origins Wild',
+                        'Sheba',
+                        'CATXTREME',
+                        'Nutriva Nature Plus',
+                        'Edgard & Cooper',
+                        'Animalis',
+                        'Leeby',
+                        'Ferplast',
+                        'Beaphar',
+                        'Paradisio',
+                        'Bobby',
+                        'Trixie',
+                        'Turgo',
+                        'Flexi',
+                        'Gotoo',
+                        'Nath Veterinary Diet',
+                        'Yarrah',
+                        'Weenect'
+                    ];
+                    
+                    $marques_chiens = [
+                        'Royal Canin',
+                        'Purina',
+                        'True Origins Wild',
+                        'Nutriva Nature Plus',
+                        'Edgard & Cooper',
+                        'Animalis',
+                        'Leeby',
+                        'Ferplast',
+                        'Beaphar',
+                        'Paradisio',
+                        'Bobby',
+                        'Trixie',
+                        'Turgo',
+                        'Flexi',
+                        'Gotoo',
+                        'Nath Veterinary Diet',
+                        'Yarrah',
+                        'Weenect'
+                    ];
                     
                     // Sélection des marques selon l'animal
                     $marques_affichees = ($animal == 'chat') ? $marques_chats : $marques_chiens;
@@ -36,8 +85,8 @@
                     foreach ($marques_affichees as $marque): 
                     ?>
                         <div class="filter-option">
-                            <input type="radio" id="marque_<?= esc($marque) ?>" name="marque" value="<?= esc($marque) ?>" <?= $filtre_marque == $marque ? 'checked' : '' ?> onchange="this.form.submit()">
-                            <label for="marque_<?= esc($marque) ?>"><?= esc($marque) ?></label>
+                            <input type="radio" id="marque_<?= esc(str_replace(' ', '_', $marque)) ?>" name="marque" value="<?= esc($marque) ?>" <?= $filtre_marque == $marque ? 'checked' : '' ?> onchange="this.form.submit()">
+                            <label for="marque_<?= esc(str_replace(' ', '_', $marque)) ?>"><?= esc($marque) ?></label>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -107,18 +156,28 @@
                 </div>
             </div>
             
-            <!-- Filtre pour animal stérilisé -->
+            <!-- Filtre pour besoins spécifiques -->
             <div class="filter-group">
                 <h4>Besoins spécifiques</h4>
                 <div class="filter-options">
                     <div class="filter-option">
-                        <input type="checkbox" id="sterilise" name="sterilise" value="1" <?= $filtre_sterilise ? 'checked' : '' ?> onchange="this.form.submit()">
-                        <label for="sterilise"><?= $animal == 'chat' ? 'Chat' : 'Chien' ?> stérilisé</label>
+                        <input type="radio" id="besoin_sterilise" name="besoin" value="sterilise" <?= $filtre_besoin == 'sterilise' ? 'checked' : '' ?> onchange="this.form.submit()">
+                        <label for="besoin_sterilise"><?= $animal == 'chat' ? 'Chat stérilisé' : 'Chien stérilisé' ?></label>
                     </div>
                     
                     <div class="filter-option">
-                        <input type="checkbox" id="sans_cereales" name="sans_cereales" value="1" <?= $filtre_sans_cereales ? 'checked' : '' ?> onchange="this.form.submit()">
-                        <label for="sans_cereales">Sans céréales</label>
+                        <input type="radio" id="besoin_sans_cereales" name="besoin" value="sans_cereales" <?= $filtre_besoin == 'sans_cereales' ? 'checked' : '' ?> onchange="this.form.submit()">
+                        <label for="besoin_sans_cereales">Alimentation sans céréales</label>
+                    </div>
+
+                    <div class="filter-option">
+                        <input type="radio" id="besoin_bio" name="besoin" value="bio" <?= $filtre_besoin == 'bio' ? 'checked' : '' ?> onchange="this.form.submit()">
+                        <label for="besoin_bio">Alimentation bio</label>
+                    </div>
+
+                    <div class="filter-option">
+                        <input type="radio" id="besoin_aucun" name="besoin" value="" <?= empty($filtre_besoin) ? 'checked' : '' ?> onchange="this.form.submit()">
+                        <label for="besoin_aucun">Aucun filtre</label>
                     </div>
                 </div>
             </div>
@@ -130,11 +189,11 @@
                     <div class="price-slider-container">
                         <div class="price-values">
                             <span id="price-min-display">0 €</span>
-                            <span id="price-max-display">100 €</span>
+                            <span id="price-max-display"><?= $max_price ?> €</span>
                         </div>
                         <div class="range-slider">
-                            <input type="range" id="price-min-slider" min="0" max="100" step="1" value="<?= $filtre_prix_min ?: 0 ?>">
-                            <input type="range" id="price-max-slider" min="0" max="100" step="1" value="<?= $filtre_prix_max ?: 100 ?>">
+                            <input type="range" id="price-min-slider" min="0" max="<?= $max_price ?>" step="1" value="<?= $filtre_prix_min ?: 0 ?>">
+                            <input type="range" id="price-max-slider" min="0" max="<?= $max_price ?>" step="1" value="<?= $filtre_prix_max ?: $max_price ?>">
                         </div>
                     </div>
                     <input type="hidden" name="prix_min" id="prix_min" value="<?= $filtre_prix_min ?>">

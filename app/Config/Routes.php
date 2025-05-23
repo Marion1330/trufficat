@@ -49,3 +49,4 @@ $routes->get('adresse/defaut/principale', 'AuthController::definirPrincipaleDefa
 
 $routes->get('/changer-mot-de-passe', 'AuthController::changerMotDePasse');
 $routes->post('/changer-mot-de-passe', 'AuthController::traiterChangementMotDePasse');
+

@@ -29,8 +29,7 @@ class Produits extends BaseController
         $marque = $this->request->getGet('marque');
         $age = $this->request->getGet('age');
         $saveur = $this->request->getGet('saveur');
-        $sterilise = $this->request->getGet('sterilise');
-        $sans_cereales = $this->request->getGet('sans_cereales');
+        $besoin = $this->request->getGet('besoin');
         $prix_min = $this->request->getGet('prix_min');
         $prix_max = $this->request->getGet('prix_max');
         $page = $this->request->getGet('page') ? (int)$this->request->getGet('page') : 1;
@@ -134,12 +133,21 @@ class Produits extends BaseController
             $builder->where('saveur', $saveur);
         }
         
-        if ($sterilise) {
-            $builder->where('sterilise', 1);
-        }
-        
-        if ($sans_cereales) {
-            $builder->where('sans_cereales', 1);
+        if ($besoin) {
+            switch ($besoin) {
+                case 'sterilise':
+                    $builder->groupStart()
+                        ->where('sterilise', 1)
+                        ->orWhere('categorie', 'croquettes-sterilise')
+                    ->groupEnd();
+                    break;
+                case 'sans_cereales':
+                    $builder->like('categorie', 'sans-cereales');
+                    break;
+                case 'bio':
+                    $builder->like('categorie', 'bio');
+                    break;
+            }
         }
         
         if ($prix_min) {
@@ -163,12 +171,47 @@ class Produits extends BaseController
                 case 'nom_asc':
                     $builder->orderBy('nom', 'ASC');
                     break;
+                case 'nom_desc':
+                    $builder->orderBy('nom', 'DESC');
+                    break;
+                case 'category_asc':
+                    $builder->orderBy('categorie', 'ASC');
+                    break;
+                case 'category_desc':
+                    $builder->orderBy('categorie', 'DESC');
+                    break;
+                case 'brand_asc':
+                    $builder->orderBy('marque', 'ASC');
+                    break;
+                case 'brand_desc':
+                    $builder->orderBy('marque', 'DESC');
+                    break;
+                case 'age_asc':
+                    $builder->orderBy('age', 'ASC');
+                    break;
+                case 'age_desc':
+                    $builder->orderBy('age', 'DESC');
+                    break;
+                case 'flavor_asc':
+                    $builder->orderBy('saveur', 'ASC');
+                    break;
+                case 'flavor_desc':
+                    $builder->orderBy('saveur', 'DESC');
+                    break;
                 default:
                     $builder->orderBy('id', 'DESC');
             }
         } else {
             $builder->orderBy('id', 'DESC');
         }
+        
+        // Récupérer le prix maximum pour l'animal spécifique
+        $maxPrice = $db->table('produits')
+            ->where('animal', $animal)
+            ->selectMax('prix')
+            ->get()
+            ->getRow()
+            ->prix;
         
         // Compter le nombre total de produits (pour la pagination)
         $totalProduits = $builder->countAllResults(false);
@@ -192,8 +235,7 @@ class Produits extends BaseController
         if ($marque) $queryParams['marque'] = $marque;
         if ($age) $queryParams['age'] = $age;
         if ($saveur) $queryParams['saveur'] = $saveur;
-        if ($sterilise) $queryParams['sterilise'] = $sterilise;
-        if ($sans_cereales) $queryParams['sans_cereales'] = $sans_cereales;
+        if ($besoin) $queryParams['besoin'] = $besoin;
         if ($prix_min) $queryParams['prix_min'] = $prix_min;
         if ($prix_max) $queryParams['prix_max'] = $prix_max;
         if ($tri) $queryParams['tri'] = $tri;
@@ -202,6 +244,7 @@ class Produits extends BaseController
         $data['produits'] = $produits;
         $data['animal'] = $animal;
         $data['categorie'] = $categorie;
+        $data['max_price'] = ceil($maxPrice); // Arrondir au nombre entier supérieur
         
         // Informations de pagination pour la vue
         $data['pagination'] = [
@@ -222,8 +265,7 @@ class Produits extends BaseController
         $data['filtre_marque'] = $marque;
         $data['filtre_age'] = $age;
         $data['filtre_saveur'] = $saveur;
-        $data['filtre_sterilise'] = $sterilise;
-        $data['filtre_sans_cereales'] = $sans_cereales;
+        $data['filtre_besoin'] = $besoin;
         $data['filtre_prix_min'] = $prix_min;
         $data['filtre_prix_max'] = $prix_max;
         $data['filtre_tri'] = $tri;

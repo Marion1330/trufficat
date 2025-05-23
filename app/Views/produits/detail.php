@@ -76,9 +76,18 @@
                     </div>
                 </div>
                 
-                <button class="add-to-cart-btn" data-product-id="<?= $produit['id'] ?>">
-                    Ajouter au panier
-                </button>
+                <div class="product-actions mt-4">
+                    <form action="<?= base_url('panier/ajouter') ?>" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="produit_id" value="<?= $produit['id'] ?>">
+                        <div class="me-3">
+                            <label for="quantite" class="form-label">Quantité :</label>
+                            <input type="number" name="quantite" id="quantite" value="1" min="1" max="<?= $produit['stock'] ?>" class="form-control" style="width: 100px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart me-2"></i>Ajouter au panier
+                        </button>
+                    </form>
+                </div>
                 <?php else: ?>
                 <button class="add-to-cart-btn disabled" disabled>
                     Produit indisponible
