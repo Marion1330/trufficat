@@ -26,6 +26,12 @@ $routes->get('admin/produit/modifier/(:num)', 'Admin::modifierProduit/$1');
 $routes->post('admin/produit/modifier/(:num)', 'Admin::updateProduit/$1');
 $routes->get('admin/produit/supprimer/(:num)', 'Admin::supprimerProduit/$1');
 
+// Routes pour la gestion des clients dans l'admin
+$routes->get('admin/clients', 'Admin::clients');
+$routes->get('admin/modifier-client/(:num)', 'Admin::modifierClient/$1');
+$routes->post('admin/update-client/(:num)', 'Admin::updateClient/$1');
+$routes->get('admin/supprimer-client/(:num)', 'Admin::supprimerClient/$1');
+
 //Route de connexion et inscription et traitement de formulaire 
 $routes->get('/connexion', 'AuthController::connexion');
 $routes->post('/connexion', 'AuthController::traitementConnexion'); 

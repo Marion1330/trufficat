@@ -159,4 +159,96 @@ class Admin extends BaseController
 
         return redirect()->to('/admin/produits')->with('error', 'Produit non trouvé');
     }
+
+    public function clients()
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        $model = new \App\Models\UserModel();
+        $data['clients'] = $model->where('role', 'client')->findAll();
+        return view('admin/clients', $data);
+    }
+
+    public function modifierClient($id)
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        $model = new \App\Models\UserModel();
+        $data['client'] = $model->find($id);
+        
+        if (!$data['client'] || $data['client']['role'] !== 'client') {
+            return redirect()->to('/admin/clients')->with('error', 'Client non trouvé');
+        }
+
+        return view('admin/modifier_client', $data);
+    }
+
+    public function updateClient($id)
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        $model = new \App\Models\UserModel();
+        $client = $model->find($id);
+
+        if (!$client || $client['role'] !== 'client') {
+            return redirect()->to('/admin/clients')->with('error', 'Client non trouvé');
+        }
+
+        $data = [
+            'email' => $this->request->getPost('email'),
+            'nomcompte' => $this->request->getPost('nomcompte'),
+            'prenomcompte' => $this->request->getPost('prenomcompte'),
+            'nom' => $this->request->getPost('nom'),
+            'prenom' => $this->request->getPost('prenom'),
+            'adresse' => $this->request->getPost('adresse'),
+            'complement' => $this->request->getPost('complement'),
+            'code_postal' => $this->request->getPost('code_postal'),
+            'ville' => $this->request->getPost('ville'),
+            'departement' => $this->request->getPost('departement'),
+            'pays' => $this->request->getPost('pays'),
+            'telephone' => $this->request->getPost('telephone')
+        ];
+
+        // Si un nouveau mot de passe est fourni
+        if ($password = $this->request->getPost('password')) {
+            $data['password'] = $password;
+        }
+
+        try {
+            if ($model->update($id, $data)) {
+                return redirect()->to('/admin/clients')->with('success', 'Client modifié avec succès');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification du client');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification du client: ' . $e->getMessage());
+        }
+    }
+
+    public function supprimerClient($id)
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        $model = new \App\Models\UserModel();
+        $client = $model->find($id);
+
+        if (!$client || $client['role'] !== 'client') {
+            return redirect()->to('/admin/clients')->with('error', 'Client non trouvé');
+        }
+
+        try {
+            $model->delete($id);
+            return redirect()->to('/admin/clients')->with('success', 'Client supprimé avec succès');
+        } catch (\Exception $e) {
+            return redirect()->to('/admin/clients')->with('error', 'Erreur lors de la suppression du client');
+        }
+    }
 }
