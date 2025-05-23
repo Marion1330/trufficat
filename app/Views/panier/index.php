@@ -84,46 +84,110 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             input.value = value;
-            updateQuantite(this.closest('.panier-item').dataset.id, value);
+            const produitId = this.closest('.panier-item').dataset.id;
+            updateQuantite(produitId, value);
         });
     });
     
     // Gestion de la suppression
     document.querySelectorAll('.btn-supprimer').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             if (confirm('Voulez-vous vraiment supprimer ce produit du panier ?')) {
-                supprimerProduit(this.dataset.id);
+                const produitId = this.dataset.id;
+                supprimerProduit(produitId);
             }
         });
     });
 });
 
 function updateQuantite(produitId, quantite) {
-    fetch(`/panier/modifier/${produitId}`, {
+    fetch(`/index.php/panier/modifier/${produitId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
         },
         body: `quantite=${quantite}`
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            location.reload();
+            // Mise à jour du prix total du produit
+            const item = document.querySelector(`.panier-item[data-id="${produitId}"]`);
+            const prixUnitaire = parseFloat(item.querySelector('.prix').textContent.replace('€', '').trim());
+            const nouveauTotal = (prixUnitaire * quantite).toFixed(2);
+            item.querySelector('.panier-item-total').textContent = nouveauTotal + ' €';
+
+            // Mise à jour du résumé
+            updateResume();
+        } else {
+            console.error('Erreur lors de la mise à jour de la quantité');
         }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la mise à jour:', error);
     });
 }
 
 function supprimerProduit(produitId) {
-    fetch(`/panier/supprimer/${produitId}`, {
-        method: 'POST'
+    fetch(`/index.php/panier/supprimer/${produitId}`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            location.reload();
+            // Supprimer l'élément du DOM
+            const item = document.querySelector(`.panier-item[data-id="${produitId}"]`);
+            if (item) {
+                item.remove();
+                
+                // Mettre à jour le résumé
+                updateResume();
+                
+                // Si le panier est vide, recharger la page
+                if (document.querySelectorAll('.panier-item').length === 0) {
+                    window.location.reload();
+                }
+            }
+        } else {
+            throw new Error('La suppression a échoué');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la suppression:', error);
+        alert('Une erreur est survenue lors de la suppression du produit');
+    });
+}
+
+function updateResume() {
+    // Calculer le sous-total
+    let sousTotal = 0;
+    document.querySelectorAll('.panier-item').forEach(item => {
+        const totalText = item.querySelector('.panier-item-total').textContent;
+        const total = parseFloat(totalText.replace('€', '').trim());
+        if (!isNaN(total)) {
+            sousTotal += total;
         }
     });
+
+    // Frais d'expédition fixes
+    const fraisExpedition = 4.99;
+    
+    // Calculer la TVA (20%)
+    const tva = sousTotal * 0.20;
+    
+    // Calculer le total TTC
+    const totalTTC = sousTotal + fraisExpedition + tva;
+
+    // Mettre à jour l'affichage
+    document.querySelector('.resume-ligne:nth-child(1) span:last-child').textContent = sousTotal.toFixed(2) + ' €';
+    document.querySelector('.resume-ligne:nth-child(3) span:last-child').textContent = tva.toFixed(2) + ' €';
+    document.querySelector('.resume-ligne.total span:last-child').textContent = totalTTC.toFixed(2) + ' €';
 }
 </script>
 
