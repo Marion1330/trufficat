@@ -68,28 +68,19 @@
             <div class="product-buy">
                 <?php if ($produit['stock'] > 0): ?>
                 <div class="quantity-selector">
-                    <label for="quantity">Quantité:</label>
+                    <label for="quantite">Quantité :</label>
                     <div class="quantity-controls">
                         <button type="button" class="quantity-btn" data-action="decrease">-</button>
-                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="<?= $produit['stock'] ?>">
+                        <input type="number" id="quantite" name="quantite" value="1" min="1" max="<?= $produit['stock'] ?>">
                         <button type="button" class="quantity-btn" data-action="increase">+</button>
                     </div>
                 </div>
                 
-                <div class="product-actions mt-4">
-                    <form action="<?= base_url('panier/ajouter') ?>" method="post" class="d-flex align-items-center">
-                        <input type="hidden" name="produit_id" value="<?= $produit['id'] ?>">
-                        <div class="me-3">
-                            <label for="quantite" class="form-label">Quantité :</label>
-                            <input type="number" name="quantite" id="quantite" value="1" min="1" max="<?= $produit['stock'] ?>" class="form-control" style="width: 100px;">
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-shopping-cart me-2"></i>Ajouter au panier
-                        </button>
-                    </form>
-                </div>
+                <button class="btn-add-to-cart" data-product-id="<?= $produit['id'] ?>">
+                    <i class="fas fa-shopping-cart"></i> Ajouter au panier
+                </button>
                 <?php else: ?>
-                <button class="add-to-cart-btn disabled" disabled>
+                <button class="btn-add-to-cart disabled" disabled>
                     Produit indisponible
                 </button>
                 <?php endif; ?>
@@ -100,7 +91,7 @@
     <div class="product-description">
         <h2>Description</h2>
         <?php if (!empty($produit['description'])): ?>
-            <p><?= esc($produit['description']) ?></p>
+            <p><?= nl2br(esc($produit['description'])) ?></p>
         <?php else: ?>
             <p>Aucune description disponible pour ce produit.</p>
         <?php endif; ?>
@@ -110,36 +101,51 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Gestion de la quantité
-    const quantityInput = document.getElementById('quantity');
+    const quantiteInput = document.getElementById('quantite');
     const quantityBtns = document.querySelectorAll('.quantity-btn');
     
     quantityBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const action = btn.getAttribute('data-action');
-            const currentValue = parseInt(quantityInput.value);
+            const currentValue = parseInt(quantiteInput.value);
+            const maxValue = parseInt(quantiteInput.getAttribute('max'));
             
-            if (action === 'increase') {
-                if (currentValue < parseInt(quantityInput.getAttribute('max'))) {
-                    quantityInput.value = currentValue + 1;
-                }
-            } else if (action === 'decrease') {
-                if (currentValue > parseInt(quantityInput.getAttribute('min'))) {
-                    quantityInput.value = currentValue - 1;
-                }
+            if (action === 'increase' && currentValue < maxValue) {
+                quantiteInput.value = currentValue + 1;
+            } else if (action === 'decrease' && currentValue > 1) {
+                quantiteInput.value = currentValue - 1;
             }
         });
     });
     
     // Gestion de l'ajout au panier
-    const addToCartBtn = document.querySelector('.add-to-cart-btn');
-    
-    addToCartBtn.addEventListener('click', function() {
-        const productId = this.getAttribute('data-product-id');
-        const quantity = quantityInput.value;
-        
-        // Ajouter au panier via AJAX (à implémenter)
-        alert(`${quantity} produit(s) ajouté(s) au panier !`);
-    });
+    const addToCartBtn = document.querySelector('.btn-add-to-cart:not(.disabled)');
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            const quantite = document.getElementById('quantite').value;
+            
+            fetch('<?= base_url('index.php/panier/ajouter') ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `produit_id=${productId}&quantite=${quantite}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '<?= base_url('index.php/panier') ?>';
+                } else {
+                    throw new Error(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert(error.message || 'Une erreur est survenue lors de l\'ajout au panier');
+            });
+        });
+    }
 });
 </script>
 
@@ -239,82 +245,86 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .quantity-selector {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .quantity-selector label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 600;
+    color: #333;
 }
 
 .quantity-controls {
     display: flex;
     align-items: center;
-    width: fit-content;
+    gap: 10px;
 }
 
 .quantity-btn {
-    background-color: #f0f0f0;
+    width: 40px;
+    height: 40px;
     border: 1px solid #ddd;
-    width: 30px;
-    height: 30px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
+    transition: all 0.2s;
 }
 
-.quantity-btn:first-child {
-    border-radius: 4px 0 0 4px;
+.quantity-btn:hover {
+    background-color: #e8e8e8;
 }
 
-.quantity-btn:last-child {
-    border-radius: 0 4px 4px 0;
-}
-
-.quantity-controls input {
-    width: 50px;
-    height: 30px;
-    border: 1px solid #ddd;
+input[type="number"] {
+    width: 60px;
+    height: 40px;
     text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 16px;
-    border-left: none;
-    border-right: none;
 }
 
-.add-to-cart-btn {
-    background-color: #4a7a8c;
+.btn-add-to-cart {
+    width: 100%;
+    padding: 15px 25px;
+    background-color: #D97B29;
     color: white;
     border: none;
     border-radius: 4px;
-    padding: 12px 25px;
-    font-size: 16px;
     cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     transition: background-color 0.3s;
-    width: 100%;
-    max-width: 300px;
 }
 
-.add-to-cart-btn:hover {
-    background-color: #3d6a78;
+.btn-add-to-cart:hover {
+    background-color: #B45B19;
 }
 
-.add-to-cart-btn.disabled {
+.btn-add-to-cart.disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
 
+.btn-add-to-cart i {
+    font-size: 18px;
+}
+
 .product-description {
     margin-top: 40px;
-    padding-top: 30px;
-    border-top: 1px solid #e5e5e5;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
 }
 
 .product-description h2 {
-    font-size: 20px;
     margin-bottom: 15px;
     color: #333;
 }

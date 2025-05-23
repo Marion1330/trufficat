@@ -69,9 +69,10 @@ class AuthController extends BaseController
         if ($user && password_verify($password, $user['password'])) {
             session()->set([
                 'user_id' => $user['id'],
-                'email'   => $user['email'],
-                'nom'     => $user['nom'],
-                'role'    => $user['role'],
+                'email' => $user['email'],
+                'nom' => $user['nom'],
+                'role' => $user['role'],
+                'isLoggedIn' => true
             ]);
 
             // Rediriger selon le rôle

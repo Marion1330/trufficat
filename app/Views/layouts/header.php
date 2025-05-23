@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trufficat</title>
 <link rel="stylesheet" href="<?= base_url('css/style.css') ?>" />
+<link rel="stylesheet" href="<?= base_url('css/panier.css') ?>" />
 <link rel="icon" type="image/png" href="<?= base_url('images/logo.png') ?>" sizes="32x32">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>

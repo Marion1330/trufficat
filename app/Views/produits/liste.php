@@ -335,5 +335,9 @@
     </div>
 </div>
 
+<script>
+    // Définir l'URL de base pour les requêtes AJAX
+    const baseUrl = '<?= base_url() ?>';
+</script>
 <script src="<?= base_url('js/produits-liste.js') ?>"></script>
 <?= $this->include('layouts/footer') ?> 

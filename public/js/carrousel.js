@@ -5,6 +5,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnRight = document.querySelector('.carrousel-btn.right');
     const scrollAmount = 270;
 
+    // Gestion des boutons "Ajouter au panier"
+    document.querySelectorAll('.btn-add-to-cart').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productId = this.dataset.productId;
+            
+            fetch(baseUrl + 'index.php/panier/ajouter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `produit_id=${productId}&quantite=1`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = baseUrl + 'index.php/panier';
+                } else {
+                    alert(data.message || 'Une erreur est survenue lors de l\'ajout au panier');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'ajout au panier. Veuillez réessayer.');
+            });
+        });
+    });
+
     if (carrousel && btnLeft && btnRight) {
         btnLeft.addEventListener('click', () => {
             carrousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });

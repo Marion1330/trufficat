@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : ven. 23 mai 2025 à 14:14
+-- Généré le : ven. 23 mai 2025 à 17:29
 -- Version du serveur : 8.0.42-0ubuntu0.22.04.1
 -- Version de PHP : 8.1.2-1ubuntu2.21
 
@@ -41,6 +41,72 @@ CREATE TABLE `adresses` (
   `pays` varchar(100) NOT NULL,
   `telephone` varchar(30) NOT NULL,
   `is_principale` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `commandes`
+--
+
+CREATE TABLE `commandes` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `adresse_livraison_id` int NOT NULL,
+  `montant_total` decimal(10,2) NOT NULL,
+  `status` enum('en_attente','validee','en_preparation','expediee','livree','annulee') DEFAULT 'en_attente',
+  `date_commande` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `commande_details`
+--
+
+CREATE TABLE `commande_details` (
+  `id` int NOT NULL,
+  `commande_id` int NOT NULL,
+  `produit_id` int NOT NULL,
+  `quantite` int NOT NULL,
+  `prix_unitaire` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `paniers`
+--
+
+CREATE TABLE `paniers` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `date_creation` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` enum('actif','commande') DEFAULT 'actif',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `paniers`
+--
+
+INSERT INTO `paniers` (`id`, `user_id`, `date_creation`, `status`, `created_at`, `updated_at`) VALUES
+(1, 12, '2025-05-23 13:23:10', 'actif', '2025-05-23 15:23:10', '2025-05-23 13:23:10');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `panier_produits`
+--
+
+CREATE TABLE `panier_produits` (
+  `id` int NOT NULL,
+  `panier_id` int NOT NULL,
+  `produit_id` int NOT NULL,
+  `quantite` int NOT NULL DEFAULT '1',
+  `prix_unitaire` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -180,7 +246,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `nomcompte`, `prenomcompte`, `email`, `password`, `role`, `nom`, `prenom`, `adresse`, `complement`, `code_postal`, `ville`, `departement`, `pays`, `telephone`, `created_at`, `updated_at`) VALUES
 (12, 'ministrateur', 'Ad', 'admin@outlook.fr', '$2y$10$Lo19Mqcj4tsMcSqlqZC28ervQlX8i0gGqXOk7GedbM7DFevvAqnMC', 'admin', 'ministrateur', 'Ad', '87', '', '13400', 'Aubagne', 'Bouches-du-Rhône', 'France', '098765432', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
-(13, 'admin2', 'maison', 'admin2@outlook.fr', '$2y$10$RZCT4yaSHGZfWH2I7i4aNuRZrKAfwUXODnpgSvVRZZjC2sNtejbSW', 'admin', 'admin2', 'maison', '35', '', '13400', 'aubagne', 'Bouches-du-Rhône', 'France', '055954354', '2025-05-23 00:13:53', '2025-05-23 00:13:53');
+(13, 'admin2', 'maison', 'admin2@outlook.fr', '$2y$10$RZCT4yaSHGZfWH2I7i4aNuRZrKAfwUXODnpgSvVRZZjC2sNtejbSW', 'admin', 'admin2', 'maison', '35', '', '13400', 'aubagne', 'Bouches-du-Rhône', 'France', '055954354', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
+(14, 'cli', 'ent', 'client@outlook.fr', '$2y$10$UPlhM4HOB3MIhps4HbMPj.iU0JpeXHjgd2nRvifz1I.a9TNO67AN2', 'client', 'cli', 'ent', '76', '', '13400', 'Aubagne', 'Vienne', 'France', '0987654', '2025-05-23 14:51:55', '2025-05-23 14:51:55');
 
 --
 -- Index pour les tables déchargées
@@ -192,6 +259,36 @@ INSERT INTO `users` (`id`, `nomcompte`, `prenomcompte`, `email`, `password`, `ro
 ALTER TABLE `adresses`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Index pour la table `commandes`
+--
+ALTER TABLE `commandes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `adresse_livraison_id` (`adresse_livraison_id`);
+
+--
+-- Index pour la table `commande_details`
+--
+ALTER TABLE `commande_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `commande_id` (`commande_id`),
+  ADD KEY `produit_id` (`produit_id`);
+
+--
+-- Index pour la table `paniers`
+--
+ALTER TABLE `paniers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `panier_produits`
+--
+ALTER TABLE `panier_produits`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `panier_id` (`panier_id`),
+  ADD KEY `produit_id` (`produit_id`);
 
 --
 -- Index pour la table `produits`
@@ -223,6 +320,30 @@ ALTER TABLE `adresses`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
+-- AUTO_INCREMENT pour la table `commandes`
+--
+ALTER TABLE `commandes`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `commande_details`
+--
+ALTER TABLE `commande_details`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `paniers`
+--
+ALTER TABLE `paniers`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `panier_produits`
+--
+ALTER TABLE `panier_produits`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
@@ -238,7 +359,7 @@ ALTER TABLE `publicites`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Contraintes pour les tables déchargées
@@ -249,6 +370,27 @@ ALTER TABLE `users`
 --
 ALTER TABLE `adresses`
   ADD CONSTRAINT `adresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `commandes`
+--
+ALTER TABLE `commandes`
+  ADD CONSTRAINT `commandes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `commandes_ibfk_2` FOREIGN KEY (`adresse_livraison_id`) REFERENCES `adresses` (`id`);
+
+--
+-- Contraintes pour la table `commande_details`
+--
+ALTER TABLE `commande_details`
+  ADD CONSTRAINT `commande_details_ibfk_1` FOREIGN KEY (`commande_id`) REFERENCES `commandes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `commande_details_ibfk_2` FOREIGN KEY (`produit_id`) REFERENCES `produits` (`id`);
+
+--
+-- Contraintes pour la table `panier_produits`
+--
+ALTER TABLE `panier_produits`
+  ADD CONSTRAINT `panier_produits_ibfk_1` FOREIGN KEY (`panier_id`) REFERENCES `paniers` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `panier_produits_ibfk_2` FOREIGN KEY (`produit_id`) REFERENCES `produits` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
