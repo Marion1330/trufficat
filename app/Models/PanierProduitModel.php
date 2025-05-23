@@ -20,8 +20,11 @@ class PanierProduitModel extends Model
                     ->findAll();
     }
     
-    public function ajouterProduit($panierId, $produitId, $quantite, $prix)
+    public function ajouterProduit($panierId, $produitId, $quantite = 1, $prix)
     {
+        // S'assurer que la quantité est au moins 1
+        $quantite = max(1, intval($quantite));
+
         $existant = $this->where([
             'panier_id' => $panierId,
             'produit_id' => $produitId
@@ -29,7 +32,7 @@ class PanierProduitModel extends Model
         
         if ($existant) {
             return $this->update($existant['id'], [
-                'quantite' => $existant['quantite'] + $quantite
+                'quantite' => $quantite
             ]);
         }
         

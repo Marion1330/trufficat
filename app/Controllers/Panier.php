@@ -120,36 +120,87 @@ class Panier extends BaseController
     public function modifier($id)
     {
         if (!$this->session->get('isLoggedIn')) {
-            return $this->response->setJSON(['success' => false]);
+            return $this->response->setJSON(['success' => false, 'message' => 'Non connecté']);
         }
 
         $userId = $this->session->get('user_id');
         $quantite = $this->request->getPost('quantite');
         
+        if (!$quantite || $quantite < 1) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Quantité invalide']);
+        }
+        
         $panier = $this->panierModel->getPanierActif($userId);
         if (!$panier) {
-            return $this->response->setJSON(['success' => false]);
+            return $this->response->setJSON(['success' => false, 'message' => 'Panier non trouvé']);
         }
 
-        $this->panierProduitModel->modifierQuantite($panier['id'], $id, $quantite);
-        return $this->response->setJSON(['success' => true]);
+        try {
+            $this->panierProduitModel->modifierQuantite($panier['id'], $id, $quantite);
+            
+            // Récupérer les nouvelles données du panier
+            $produits = $this->panierProduitModel->getProduitsPanier($panier['id']);
+            $total = array_reduce($produits, function($carry, $item) {
+                return $carry + ($item['prix_unitaire'] * $item['quantite']);
+            }, 0);
+
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Quantité mise à jour',
+                'total' => $total,
+                'produits' => $produits
+            ]);
+        } catch (\Exception $e) {
+            log_message('error', 'Erreur lors de la modification de la quantité: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Erreur lors de la mise à jour de la quantité'
+            ]);
+        }
     }
 
     public function supprimer($id)
     {
         if (!$this->session->get('isLoggedIn')) {
-            return $this->response->setJSON(['success' => false]);
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Non connecté'
+            ]);
         }
 
         $userId = $this->session->get('user_id');
         $panier = $this->panierModel->getPanierActif($userId);
         
         if (!$panier) {
-            return $this->response->setJSON(['success' => false]);
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Panier non trouvé'
+            ]);
         }
 
-        $this->panierProduitModel->supprimerProduit($panier['id'], $id);
-        return $this->response->setJSON(['success' => true]);
+        try {
+            // Supprimer le produit
+            $this->panierProduitModel->supprimerProduit($panier['id'], $id);
+            
+            // Récupérer les nouvelles données du panier
+            $produits = $this->panierProduitModel->getProduitsPanier($panier['id']);
+            $total = array_reduce($produits, function($carry, $item) {
+                return $carry + ($item['prix_unitaire'] * $item['quantite']);
+            }, 0);
+
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Produit supprimé du panier',
+                'total' => $total,
+                'produits' => $produits
+            ]);
+        } catch (\Exception $e) {
+            log_message('error', 'Erreur lors de la suppression du produit: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du produit'
+            ]);
+        }
     }
 
     public function vider()
