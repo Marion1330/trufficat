@@ -119,7 +119,7 @@
                                         <option value="antiparasitaires">Produits antiparasitaires</option>
                                         <option value="litieres">Litières</option>
                                         <option value="bacs-litiere">Bacs à litière</option>
-                                        <option value="accessoires-litiere">Accessoires de litières</option>
+                                        <option value="accessoires-litieres">Accessoires de litières</option>
                                         <option value="maison-toilette">Maison de toilette</option>
                                         <option value="entretien-poil">Entretien du poil</option>
                                     </optgroup>
@@ -150,9 +150,24 @@
                                     <option value="">Sélectionner...</option>
                                     <option value="Royal Canin">Royal Canin</option>
                                     <option value="Purina">Purina</option>
-                                    <option value="Pedigree">Pedigree</option>
-                                    <option value="Whiskas">Whiskas</option>
-                                    <option value="Hill's Science Plan">Hill's Science Plan</option>
+                                    <option value="True Origins Wild">True Origins Wild</option>
+                                    <option value="Sheba">Sheba</option>
+                                    <option value="CATXTREME">CATXTREME</option>
+                                    <option value="Nutriva Nature Plus">Nutriva Nature Plus</option>
+                                    <option value="Edgard & Cooper">Edgard & Cooper</option>
+                                    <option value="Animalis">Animalis</option>
+                                    <option value="Leeby">Leeby</option>
+                                    <option value="Ferplast">Ferplast</option>
+                                    <option value="Beaphar">Beaphar</option>
+                                    <option value="Paradisio">Paradisio</option>
+                                    <option value="Bobby">Bobby</option>
+                                    <option value="Trixie">Trixie</option>
+                                    <option value="Turgo">Turgo</option>
+                                    <option value="Flexi">Flexi</option>
+                                    <option value="Gotoo">Gotoo</option>
+                                    <option value="Nath Veterinary Diet">Nath Veterinary Diet</option>
+                                    <option value="Yarrah">Yarrah</option>
+                                    <option value="Weenect">Weenect</option>
                                 </select>
                             </div>
                         </div>

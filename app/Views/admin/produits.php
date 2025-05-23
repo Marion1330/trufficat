@@ -92,6 +92,7 @@
                             <th class="th-age">Âge</th>
                             <th class="th-flavor">Saveur</th>
                             <th class="th-featured">Vedette</th>
+                            <th class="th-dates">Dates</th>
                             <th class="th-actions">Actions</th>
                         </tr>
                     </thead>
@@ -147,6 +148,16 @@
                                     <?php else: ?>
                                         <span class="non-vedette-badge"><i class="far fa-star"></i></span>
                                     <?php endif; ?>
+                                </td>
+                                <td class="td-dates">
+                                    <div class="dates-info">
+                                        <div class="date-created" title="Date de création">
+                                            <i class="fas fa-plus-circle"></i> <?= date('d/m/Y H:i', strtotime($produit['created_at'])) ?>
+                                        </div>
+                                        <div class="date-updated" title="Dernière modification">
+                                            <i class="fas fa-edit"></i> <?= date('d/m/Y H:i', strtotime($produit['updated_at'])) ?>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="td-actions">
                                     <div class="action-buttons">
@@ -602,6 +613,38 @@
     border-radius: 50%;
     background-color: #f5f5f5;
     color: #bdbdbd;
+}
+
+.th-dates, .td-dates {
+    min-width: 200px;
+    text-align: left;
+    padding: 10px;
+}
+
+.dates-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.date-created, .date-updated {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+}
+
+.date-created i {
+    color: #4CAF50;
+}
+
+.date-updated i {
+    color: #2196F3;
+}
+
+.date-created:hover, .date-updated:hover {
+    color: #333;
 }
 
 .th-actions, .td-actions {

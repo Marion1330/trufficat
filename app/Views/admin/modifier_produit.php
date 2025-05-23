@@ -118,7 +118,7 @@
                                         <option value="antiparasitaires" <?= isset($produit['categorie']) && $produit['categorie'] == 'antiparasitaires' ? 'selected' : '' ?>>Produits antiparasitaires</option>
                                         <option value="litieres" <?= isset($produit['categorie']) && $produit['categorie'] == 'litieres' ? 'selected' : '' ?>>Litières</option>
                                         <option value="bacs-litiere" <?= isset($produit['categorie']) && $produit['categorie'] == 'bacs-litiere' ? 'selected' : '' ?>>Bacs à litière</option>
-                                        <option value="accessoires-litiere" <?= isset($produit['categorie']) && $produit['categorie'] == 'accessoires-litiere' ? 'selected' : '' ?>>Accessoires de litières</option>
+                                        <option value="accessoires-litieres" <?= isset($produit['categorie']) && $produit['categorie'] == 'accessoires-litieres' ? 'selected' : '' ?>>Accessoires de litières</option>
                                         <option value="maison-toilette" <?= isset($produit['categorie']) && $produit['categorie'] == 'maison-toilette' ? 'selected' : '' ?>>Maison de toilette</option>
                                         <option value="entretien-poil" <?= isset($produit['categorie']) && $produit['categorie'] == 'entretien-poil' ? 'selected' : '' ?>>Entretien du poil</option>
                                     </optgroup>
@@ -149,9 +149,21 @@
                                     <option value="">Sélectionner...</option>
                                     <option value="Royal Canin" <?= isset($produit['marque']) && $produit['marque'] == 'Royal Canin' ? 'selected' : '' ?>>Royal Canin</option>
                                     <option value="Purina" <?= isset($produit['marque']) && $produit['marque'] == 'Purina' ? 'selected' : '' ?>>Purina</option>
-                                    <option value="Pedigree" <?= isset($produit['marque']) && $produit['marque'] == 'Pedigree' ? 'selected' : '' ?>>Pedigree</option>
-                                    <option value="Whiskas" <?= isset($produit['marque']) && $produit['marque'] == 'Whiskas' ? 'selected' : '' ?>>Whiskas</option>
-                                    <option value="Hill's Science Plan" <?= isset($produit['marque']) && $produit['marque'] == "Hill's Science Plan" ? 'selected' : '' ?>>Hill's Science Plan</option>
+                                    <option value="True Origins Wild" <?= isset($produit['marque']) && $produit['marque'] == 'True Origins Wild' ? 'selected' : '' ?>>True Origins Wild</option>
+                                    <option value="Sheba" <?= isset($produit['marque']) && $produit['marque'] == 'Sheba' ? 'selected' : '' ?>>Sheba</option>
+                                    <option value="CATXTREME" <?= isset($produit['marque']) && $produit['marque'] == "CATXTREME" ? 'selected' : '' ?>>CATXTREME</option>
+                                    <option value="Edgard & Cooper" <?= isset($produit['marque']) && $produit['marque'] == "Edgard & Cooper" ? 'selected' : '' ?>>Edgard & Cooper</option>
+                                    <option value="Ferplast" <?= isset($produit['marque']) && $produit['marque'] == "Ferplast" ? 'selected' : '' ?>>Ferplast</option>
+                                    <option value="Beaphar" <?= isset($produit['marque']) && $produit['marque'] == "Beaphar" ? 'selected' : '' ?>>Beaphar</option>
+                                    <option value="Paradisio" <?= isset($produit['marque']) && $produit['marque'] == "Paradisio" ? 'selected' : '' ?>>Paradisio</option>
+                                    <option value="Bobby" <?= isset($produit['marque']) && $produit['marque'] == "Bobby" ? 'selected' : '' ?>>Bobby</option>   
+                                    <option value="Trixie" <?= isset($produit['marque']) && $produit['marque'] == "Trixie" ? 'selected' : '' ?>>Trixie</option>
+                                    <option value="Turgo" <?= isset($produit['marque']) && $produit['marque'] == "Turgo" ? 'selected' : '' ?>>Turgo</option>
+                                    <option value="Flexi" <?= isset($produit['marque']) && $produit['marque'] == "Flexi" ? 'selected' : '' ?>>Flexi</option>
+                                    <option value="Gotoo" <?= isset($produit['marque']) && $produit['marque'] == "Gotoo" ? 'selected' : '' ?>>Gotoo</option>
+                                    <option value="Nath Veterinary Diet" <?= isset($produit['marque']) && $produit['marque'] == "Nath Veterinary Diet" ? 'selected' : '' ?>>Nath Veterinary Diet</option>
+                                    <option value="Yarrah" <?= isset($produit['marque']) && $produit['marque'] == "Yarrah" ? 'selected' : '' ?>>Yarrah</option>
+                                    <option value="Weenect" <?= isset($produit['marque']) && $produit['marque'] == "Weenect" ? 'selected' : '' ?>>Weenect</option>
                                 </select>
                             </div>
                         </div>

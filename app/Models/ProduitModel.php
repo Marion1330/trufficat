@@ -20,8 +20,15 @@ class ProduitModel extends Model
         'age',
         'saveur',
         'sterilise',
-        'marque'
+        'marque',
+        'created_at',
+        'updated_at'
     ];
+
+    protected $useTimestamps = true;
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
 
     // Récupère les produits vedettes
     public function getProduitsVedettes()

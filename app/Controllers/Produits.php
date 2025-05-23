@@ -41,7 +41,85 @@ class Produits extends BaseController
         $builder->where('animal', $animal);
         
         if ($categorie) {
-            $builder->where('categorie', $categorie);
+            if ($categorie === 'alimentation') {
+                $builder->groupStart()
+                    ->where('categorie', 'alimentation')
+                    ->orWhere('categorie', 'alimentation-sans-cereales')
+                    ->orWhere('categorie', 'alimentation-bio')
+                    ->orWhere('categorie', 'croquettes')
+                    ->orWhere('categorie', 'croquettes-sterilise')
+                    ->orWhere('categorie', 'boites-sachets')
+                    ->orWhere('categorie', 'friandises')
+                    ->groupEnd();
+            } elseif ($categorie === 'hygiene-soins') {
+                if ($animal === 'chien') {
+                    $builder->groupStart()
+                        ->where('categorie', 'hygiene-soins')
+                        ->orWhere('categorie', 'antiparasitaires')
+                        ->orWhere('categorie', 'entretien-poil')
+                        ->orWhere('categorie', 'sacs-proprete')
+                        ->groupEnd();
+                } else { // chat
+                    $builder->groupStart()
+                        ->where('categorie', 'hygiene-soins')
+                        ->orWhere('categorie', 'antiparasitaires')
+                        ->orWhere('categorie', 'litieres')
+                        ->orWhere('categorie', 'bacs-litiere')
+                        ->orWhere('categorie', 'accessoires-litieres')
+                        ->orWhere('categorie', 'maison-toilette')
+                        ->orWhere('categorie', 'entretien-poil')
+                        ->groupEnd();
+                }
+            } elseif ($categorie === 'accessoires') {
+                if ($animal === 'chien') {
+                    $builder->groupStart()
+                        ->where('categorie', 'gamelles')
+                        ->groupEnd();
+                } else { // chat
+                    $builder->groupStart()
+                        ->where('categorie', 'gamelles')
+                        ->orWhere('categorie', 'litieres')
+                        ->orWhere('categorie', 'bacs-litiere')
+                        ->orWhere('categorie', 'accessoires-litieres')
+                        ->orWhere('categorie', 'maison-toilette')
+                        ->orWhere('categorie', 'sellerie')
+                        ->orWhere('categorie', 'chatieres')
+                        ->groupEnd();
+                }
+            } elseif ($categorie === 'couchage') {
+                if ($animal === 'chien') {
+                    $builder->groupStart()
+                        ->where('categorie', 'paniers-coussins')
+                        ->orWhere('categorie', 'niches-chenils')
+                        ->groupEnd();
+                } else { // chat
+                    $builder->groupStart()
+                        ->where('categorie', 'hamac')
+                        ->orWhere('categorie', 'niche-cabane')
+                        ->orWhere('categorie', 'panier-coussin')
+                        ->groupEnd();
+                }
+            } elseif ($categorie === 'transports' && $animal === 'chien') {
+                $builder->groupStart()
+                    ->where('categorie', 'caisses-transport')
+                    ->orWhere('categorie', 'accessoires-voyage')
+                    ->groupEnd();
+            } elseif ($categorie === 'transport' && $animal === 'chat') {
+                $builder->groupStart()
+                    ->where('categorie', 'sac-transport')
+                    ->orWhere('categorie', 'caisse-transport')
+                    ->groupEnd();
+            } elseif ($categorie === 'sellerie' && $animal === 'chien') {
+                $builder->groupStart()
+                    ->where('categorie', 'laisses')
+                    ->orWhere('categorie', 'laisses-enrouleur')
+                    ->orWhere('categorie', 'colliers')
+                    ->orWhere('categorie', 'harnais')
+                    ->orWhere('categorie', 'muselieres')
+                    ->groupEnd();
+            } else {
+                $builder->where('categorie', $categorie);
+            }
         }
         
         if ($marque) {

@@ -27,7 +27,7 @@
                     
                     <?php 
                     // Marques spécifiques pour chaque animal
-                    $marques_chats = ['Purina', 'Sheba', 'Whiskas', 'Royal Canin', 'Hill\'s Science Plan', 'Almo Nature', 'Edgard & Cooper', 'Carnilove', 'Ultima', 'Perfect Fit'];
+                    $marques_chats = ['Purina', 'Sheba', 'Royal Canin', 'Hill\'s Science Plan', 'Almo Nature', 'Edgard & Cooper', 'Carnilove', 'Ultima', 'Perfect Fit'];
                     $marques_chiens = ['Purina', 'Royal Canin', 'Pedigree', 'Hill\'s Science Plan', 'Eukanuba', 'Edgard & Cooper', 'Frolic', 'Carnilove', 'Orijen', 'Acana'];
                     
                     // Sélection des marques selon l'animal
@@ -174,7 +174,7 @@
                         <a href="<?= base_url('produits/detail/' . $produit['id']) ?>" class="product-link">
                             <div class="product-image">
                                 <?php if (!empty($produit['image'])): ?>
-                                    <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>">
+                                    <img src="<?= base_url(esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>">
                                 <?php else: ?>
                                     <img src="<?= base_url('images/placeholder.png') ?>" alt="Image non disponible">
                                 <?php endif; ?>

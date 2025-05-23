@@ -53,8 +53,8 @@
           <div class="dropdown-row">
             <div class="dropdown-column">
               <a href="<?= base_url('produits/categorie/chien/alimentation') ?>"><strong>Alimentation</strong></a>
-              <a href="<?= base_url('produits/categorie/chien/sans-cereales') ?>">Alimentation sans céréales</a>
-              <a href="<?= base_url('produits/categorie/chien/bio') ?>">Alimentation Bio</a>
+              <a href="<?= base_url('produits/categorie/chien/alimentation-sans-cereales') ?>">Alimentation sans céréales</a>
+              <a href="<?= base_url('produits/categorie/chien/alimentation-bio') ?>">Alimentation Bio</a>
               <a href="<?= base_url('produits/categorie/chien/croquettes') ?>">Croquettes</a>
               <a href="<?= base_url('produits/categorie/chien/croquettes-sterilise') ?>">Croquettes pour chiens stérilisé</a>
               <a href="<?= base_url('produits/categorie/chien/boites-sachets') ?>">Boites et sachets</a>
@@ -73,7 +73,7 @@
               <a href="<?= base_url('produits/categorie/chien/paniers-coussins') ?>">Paniers et coussins</a>
               <a href="<?= base_url('produits/categorie/chien/niches-chenils') ?>">Niches et chenils</a>
               <a href="<?= base_url('produits/categorie/chien/transports') ?>"><strong>Transports</strong></a>
-              <a href="<?= base_url('produits/categorie/chien/caisses-sacs-transport') ?>">Caisses et sacs de transport</a>
+              <a href="<?= base_url('produits/categorie/chien/caisses-transport') ?>">Caisses et sacs de transport</a>
               <a href="<?= base_url('produits/categorie/chien/accessoires-voyage') ?>">Accessoires de voyage</a>
             </div>
             <div class="dropdown-column">
@@ -98,8 +98,8 @@
           <div class="dropdown-row">
             <div class="dropdown-column">
               <a href="<?= base_url('produits/categorie/chat/alimentation') ?>"><strong>Alimentation</strong></a>
-              <a href="<?= base_url('produits/categorie/chat/sans-cereales') ?>">Alimentation sans céréales</a>
-              <a href="<?= base_url('produits/categorie/chat/bio') ?>">Alimentation Bio</a>
+              <a href="<?= base_url('produits/categorie/chat/alimentation-sans-cereales') ?>">Alimentation sans céréales</a>
+              <a href="<?= base_url('produits/categorie/chat/alimentation-bio') ?>">Alimentation Bio</a>
               <a href="<?= base_url('produits/categorie/chat/croquettes') ?>">Croquettes</a>
               <a href="<?= base_url('produits/categorie/chat/croquettes-sterilise') ?>">Croquettes pour chat stérilisé</a>
               <a href="<?= base_url('produits/categorie/chat/boites-sachets') ?>">Boites et sachets</a>
@@ -127,8 +127,12 @@
             <div class="dropdown-column">
             <a href="<?= base_url('produits/categorie/chat/accessoires') ?>"><strong>Accessoires</strong></a>
             <a href="<?= base_url('produits/categorie/chat/gamelles') ?>">Gamelles</a>
-              <a href="<?= base_url('produits/categorie/chat/sellerie') ?>"><strong>Sellerie</strong></a>
-              <a href="<?= base_url('produits/categorie/chat/chatieres') ?>"><strong>Chatières</strong></a>
+            <a href="<?= base_url('produits/categorie/chat/litieres') ?>">Litières</a>
+            <a href="<?= base_url('produits/categorie/chat/bacs-litiere') ?>">Bacs à litière</a>
+            <a href="<?= base_url('produits/categorie/chat/accessoires-litieres') ?>">Accessoires de litières</a>
+            <a href="<?= base_url('produits/categorie/chat/maison-toilette') ?>">Maison de toilette</a>
+            <a href="<?= base_url('produits/categorie/chat/sellerie') ?>">Sellerie</a>
+            <a href="<?= base_url('produits/categorie/chat/chatieres') ?>">Chatières</a>
             </div>
             <div class="dropdown-column">
              <a href="<?= base_url('produits/categorie/chat/jouets') ?>"><strong>Jouets</strong></a>

@@ -19,7 +19,10 @@ class Admin extends BaseController
             return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
-        return view('admin/index');
+        $model = new ProduitModel();
+        $data['total_produits'] = $model->countAll();
+
+        return view('admin/index', $data);
     }
 
     public function produits()

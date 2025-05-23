@@ -34,7 +34,7 @@
                 <div class="stat-icon"><i class="fas fa-box-open"></i></div>
                 <div class="stat-info">
                     <h3>Produits</h3>
-                    <p class="stat-number">126</p>
+                    <p class="stat-number"><?= $total_produits ?></p>
                 </div>
             </div>
             
