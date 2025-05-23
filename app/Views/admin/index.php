@@ -1,4 +1,5 @@
 <?= $this->include('layouts/header') ?>
+<link rel="stylesheet" href="<?= base_url('css/admin-dashboard.css') ?>">
 
 <div class="admin-container">
     <div class="admin-sidebar">
@@ -122,21 +123,21 @@
 .admin-container {
     display: flex;
     min-height: calc(100vh - 180px);
-    background-color: #f7f9fc;
+    background-color: #FFF8F0;
 }
 
 .admin-sidebar {
     width: 280px;
     background-color: #F2C078;
     color: #4A3A2D;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    box-shadow: 2px 0 5px rgba(217, 123, 41, 0.1);
     flex-shrink: 0;
 }
 
 .admin-profile {
     padding: 25px 20px;
     text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(217, 123, 41, 0.2);
 }
 
 .admin-avatar {
@@ -206,7 +207,7 @@
     align-items: center;
     margin-bottom: 25px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #F2C078;
 }
 
 .admin-header h1 {
@@ -259,15 +260,17 @@
     background-color: white;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(217, 123, 41, 0.1);
     display: flex;
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #FFE8C6;
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 15px rgba(217, 123, 41, 0.2);
+    border-color: #D97B29;
 }
 
 .stat-icon {
@@ -302,8 +305,9 @@
     background-color: white;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(217, 123, 41, 0.1);
     margin-bottom: 30px;
+    border: 1px solid #FFE8C6;
 }
 
 .admin-quick-links h2,
@@ -313,7 +317,7 @@
     font-size: 18px;
     color: #4A3A2D;
     padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #F2C078;
 }
 
 .quick-links-grid {
@@ -402,7 +406,8 @@
 
 .activity-time {
     font-size: 12px;
-    color: #888;
+    color: #A44D25;
+    opacity: 0.8;
 }
 
 /* Responsive */

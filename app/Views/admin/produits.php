@@ -64,6 +64,10 @@
                 <option value="flavor_desc">Saveur (Z-A)</option>
                 <option value="featured_asc">Vedette (Non → Oui)</option>
                 <option value="featured_desc">Vedette (Oui → Non)</option>
+                <option value="created_desc">Date de création (Plus récent)</option>
+                <option value="created_asc">Date de création (Plus ancien)</option>
+                <option value="updated_desc">Dernière modification (Plus récent)</option>
+                <option value="updated_asc">Dernière modification (Plus ancien)</option>
             </select>
         </div>
 
@@ -179,13 +183,11 @@
             </div>
             
             <div class="admin-pagination">
-                <button class="pagination-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="pagination-btn prev" title="Page précédente"><i class="fas fa-chevron-left"></i></button>
                 <div class="pagination-numbers">
-                    <a href="#" class="pagination-number active">1</a>
-                    <a href="#" class="pagination-number">2</a>
-                    <a href="#" class="pagination-number">3</a>
+                    <!-- Les numéros de pages seront générés dynamiquement par JavaScript -->
                 </div>
-                <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+                <button class="pagination-btn next" title="Page suivante"><i class="fas fa-chevron-right"></i></button>
             </div>
         <?php endif; ?>
     </div>
@@ -196,7 +198,7 @@
 .admin-container {
     display: flex;
     min-height: calc(100vh - 180px);
-    background-color: #f7f9fc;
+    background-color: #FFF8F0;
     max-width: 100%;
     overflow-x: hidden;
 }
@@ -284,7 +286,7 @@
     align-items: center;
     margin-bottom: 25px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #F2C078;
 }
 
 .admin-header h1 {
@@ -308,40 +310,43 @@
 .search-form {
     display: flex;
     align-items: center;
-    position: relative;
+    margin-right: 15px;
 }
 
 .search-form input {
-    padding: 10px 15px;
-    border: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    border: 1px solid #F2C078;
     border-radius: 4px;
     font-size: 14px;
     width: 250px;
+    transition: all 0.3s ease;
+}
+
+.search-form input:focus {
+    outline: none;
+    border-color: #D97B29;
+    box-shadow: 0 0 5px rgba(217, 123, 41, 0.2);
 }
 
 .search-form button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
     background: none;
     border: none;
-    color: #6B3F1D;
+    color: #D97B29;
     cursor: pointer;
+    padding: 8px;
+    margin-left: -35px;
 }
 
 .admin-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 15px;
+    padding: 8px 15px;
     background-color: #D97B29;
     color: white;
-    border: none;
     border-radius: 4px;
     text-decoration: none;
     font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
 .admin-btn i {
@@ -349,56 +354,95 @@
 }
 
 .admin-btn:hover {
-    background-color: #B45B19;
+    background-color: #A44D25;
+    transform: translateY(-2px);
 }
 
 /* Filtres */
 .admin-filters {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 20px;
-    gap: 15px;
+    gap: 20px;
 }
 
 .filter-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .filter-buttons {
     display: flex;
     gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
 }
 
 .filter-btn {
-    padding: 8px 15px;
-    background-color: #f2f2f2;
-    border: none;
-    border-radius: 4px;
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid #D97B29;
+    border-radius: 6px;
+    color: #333;
     cursor: pointer;
+    transition: all 0.3s ease;
     font-size: 14px;
-    transition: all 0.3s;
+    min-width: 100px;
 }
 
-.filter-btn.active,
 .filter-btn:hover {
-    background-color: #D97B29;
-    color: white;
+    border-color: #A44D25;
+    box-shadow: 0 0 8px rgba(217, 123, 41, 0.2);
+}
+
+.filter-btn.active {
+    background-color: #FFE8C6;
+    color: #A44D25;
+    border-color: #D97B29;
 }
 
 .sort-select {
-    padding: 6px 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-size: 13px;
-    background-color: white;
-    max-width: 120px;
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #D97B29;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23D97B29' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 12px) center;
+    padding-right: 35px;
+    width: 200px;
+}
+
+.sort-select:hover {
+    border-color: #A44D25;
+    box-shadow: 0 0 8px rgba(217, 123, 41, 0.2);
+}
+
+.sort-select:focus {
+    outline: none;
+    border-color: #A44D25;
+    box-shadow: 0 0 8px rgba(217, 123, 41, 0.3);
 }
 
 .sort-select option {
-    font-size: 13px;
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+}
+
+.sort-select option:checked {
+    background-color: #FFE8C6;
+    color: #A44D25;
 }
 
 /* Style de la barre de défilement */
@@ -457,7 +501,6 @@
     min-width: 1200px; /* Assure une largeur minimale pour le tableau */
 }
 
-.products-table th,
 .products-table td {
     padding: 15px;
     border-bottom: 1px solid #f0f0f0;
@@ -465,11 +508,13 @@
 }
 
 .products-table th {
-    background-color: #f7f7f7;
+    background-color: #D97B29;
+    color: white;
     font-weight: 600;
-    color: #555;
     text-align: left;
-    white-space: nowrap;
+    padding: 12px 15px;
+    font-size: 13px;
+    border-bottom: 2px solid #B45B19;
 }
 
 .products-table tr:last-child td {
@@ -505,21 +550,28 @@
 }
 
 .td-name {
-    font-weight: 500;
+    color: #4A1F0E;
+    font-weight: 600;
+    background-color: #FFF8F0;
+    border-radius: 4px;
 }
 
 .td-description {
-    color: #666;
-    max-width: 300px;
+    color: #4A1F0E;
+    max-width: 200px;
+    font-size: 13px;
+    background-color: #FFF1E6;
+    border-radius: 4px;
 }
 
-.th-price, .td-price {
-    width: 100px;
-    text-align: right;
-    font-weight: 500;
+.td-price {
+    color: #4A1F0E;
+    font-weight: 600;
+    background-color: #FFF1E6;
+    border-radius: 4px;
 }
 
-.th-stock, .td-stock {
+.td-stock {
     width: 100px;
     text-align: center;
 }
@@ -542,7 +594,7 @@
     color: #c62828;
 }
 
-.th-animal, .td-animal {
+.td-animal {
     width: 100px;
     text-align: center;
 }
@@ -568,27 +620,27 @@
     color: #ff8f00;
 }
 
-.th-category, .td-category {
-    width: 120px;
-    text-align: center;
+.td-category {
+    color: #4A1F0E;
+    font-weight: 600;
+    background-color: #FFE8C6;
+    border-radius: 4px;
 }
 
-.th-brand, .td-brand {
-    width: 120px;
-    text-align: center;
+.td-brand {
+    color: #4A1F0E;
+    font-weight: 600;
+    background-color: #FFE8C6;
+    border-radius: 4px;
 }
 
-.th-age, .td-age {
-    width: 80px;
-    text-align: center;
+.td-age, .td-flavor {
+    color: #4A1F0E;
+    background-color: #FFF8F0;
+    border-radius: 4px;
 }
 
-.th-flavor, .td-flavor {
-    width: 100px;
-    text-align: center;
-}
-
-.th-featured, .td-featured {
+.td-featured {
     width: 80px;
     text-align: center;
 }
@@ -615,7 +667,7 @@
     color: #bdbdbd;
 }
 
-.th-dates, .td-dates {
+.td-dates {
     min-width: 200px;
     text-align: left;
     padding: 10px;
@@ -937,6 +989,88 @@
         margin-right: -10px;
     }
 }
+
+.product-row.chat td {
+    background-color: #FDD4B0;
+    color: #4A3A2D;
+}
+
+.product-row.chat .td-name {
+    color: #A44D25;
+    font-weight: 600;
+    background-color: #FDD4B0;
+}
+
+.product-row.chat .td-description {
+    color: #6B3F1D;
+    background-color: #FDD4B0;
+}
+
+.product-row.chat .td-brand,
+.product-row.chat .td-category {
+    color: #D97B29;
+    font-weight: 600;
+    background-color: #FDD4B0;
+}
+
+.product-row.chat .td-price {
+    color: #A44D25;
+    font-weight: 600;
+    background-color: #FDD4B0;
+}
+
+.product-row.chien td {
+    background-color: #FFE8C6;
+    color: #4A3A2D;
+}
+
+.product-row.chien .td-name {
+    color: #A44D25;
+    font-weight: 600;
+    background-color: #FFE8C6;
+}
+
+.product-row.chien .td-description {
+    color: #6B3F1D;
+    background-color: #FFE8C6;
+}
+
+.product-row.chien .td-brand,
+.product-row.chien .td-category {
+    color: #D97B29;
+    font-weight: 600;
+    background-color: #FFE8C6;
+}
+
+.product-row.chien .td-price {
+    color: #A44D25;
+    font-weight: 600;
+    background-color: #FFE8C6;
+}
+
+.products-table tr:hover td {
+    opacity: 0.9;
+}
+
+.pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #6B3F1D;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+}
+
+.pagination-btn:disabled:hover {
+    background-color: #f5f5f5;
+    transform: none;
+}
 </style>
 
 <script>
@@ -1076,6 +1210,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 const featuredA = a.querySelector('.td-featured .vedette-badge') ? 1 : 0;
                 const featuredB = b.querySelector('.td-featured .vedette-badge') ? 1 : 0;
                 return featuredA - featuredB;
+            },
+            created: (a, b) => {
+                const getCreatedDate = (el) => {
+                    const dateText = el.querySelector('.date-created').textContent;
+                    const [day, month, year, hours, minutes] = dateText.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/).slice(1);
+                    return new Date(year, month - 1, day, hours, minutes);
+                };
+                return getCreatedDate(a) - getCreatedDate(b);
+            },
+            updated: (a, b) => {
+                const getUpdatedDate = (el) => {
+                    const dateText = el.querySelector('.date-updated').textContent;
+                    const [day, month, year, hours, minutes] = dateText.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/).slice(1);
+                    return new Date(year, month - 1, day, hours, minutes);
+                };
+                return getUpdatedDate(a) - getUpdatedDate(b);
             }
         };
 
@@ -1213,6 +1363,163 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+
+    // Pagination
+    const itemsPerPage = 10;
+    let currentPage = 1;
+
+    function updatePagination() {
+        const visibleRows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
+        const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
+        
+        // Mettre à jour les numéros de page
+        const paginationNumbers = document.querySelector('.pagination-numbers');
+        paginationNumbers.innerHTML = '';
+        
+        // Calculer la plage de pages à afficher
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, startPage + 4);
+        
+        // Ajuster si on est près de la fin
+        if (endPage - startPage < 4) {
+            startPage = Math.max(1, endPage - 4);
+        }
+        
+        // Ajouter la première page si nécessaire
+        if (startPage > 1) {
+            const firstPageLink = document.createElement('a');
+            firstPageLink.href = '#';
+            firstPageLink.className = 'pagination-number';
+            firstPageLink.textContent = '1';
+            firstPageLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                goToPage(1);
+            });
+            paginationNumbers.appendChild(firstPageLink);
+            
+            if (startPage > 2) {
+                const ellipsis = document.createElement('span');
+                ellipsis.className = 'pagination-ellipsis';
+                ellipsis.textContent = '...';
+                paginationNumbers.appendChild(ellipsis);
+            }
+        }
+        
+        // Ajouter les pages
+        for (let i = startPage; i <= endPage; i++) {
+            const pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.className = `pagination-number${i === currentPage ? ' active' : ''}`;
+            pageLink.textContent = i;
+            pageLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                goToPage(i);
+            });
+            paginationNumbers.appendChild(pageLink);
+        }
+        
+        // Ajouter la dernière page si nécessaire
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                const ellipsis = document.createElement('span');
+                ellipsis.className = 'pagination-ellipsis';
+                ellipsis.textContent = '...';
+                paginationNumbers.appendChild(ellipsis);
+            }
+            
+            const lastPageLink = document.createElement('a');
+            lastPageLink.href = '#';
+            lastPageLink.className = 'pagination-number';
+            lastPageLink.textContent = totalPages;
+            lastPageLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                goToPage(totalPages);
+            });
+            paginationNumbers.appendChild(lastPageLink);
+        }
+        
+        // Mettre à jour les boutons précédent/suivant
+        const prevButton = document.querySelector('.pagination-btn.prev');
+        const nextButton = document.querySelector('.pagination-btn.next');
+        
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
+        
+        // Afficher les produits de la page courante
+        visibleRows.forEach((row, index) => {
+            const shouldShow = index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage;
+            row.style.display = shouldShow ? '' : 'none';
+        });
+    }
+
+    function goToPage(page) {
+        currentPage = page;
+        updatePagination();
+        // Scroll en haut du tableau
+        tableWrapper.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Ajouter les écouteurs d'événements pour les boutons de pagination
+    document.querySelector('.pagination-btn.prev').addEventListener('click', () => {
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    });
+
+    document.querySelector('.pagination-btn.next').addEventListener('click', () => {
+        const visibleRows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
+        const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            goToPage(currentPage + 1);
+        }
+    });
+
+    // Mettre à jour la pagination après chaque recherche ou tri
+    const updateTableAndPagination = () => {
+        currentPage = 1; // Retour à la première page
+        updatePagination();
+    };
+
+    // Modifier les fonctions existantes pour appeler updateTableAndPagination
+    sortSelect.addEventListener('change', function() {
+        const [sortBy, direction] = this.value.split('_');
+        if (!sortBy) return;
+        
+        sortTable(sortBy, direction);
+        updateTableAndPagination();
+    });
+
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
+        
+        searchTimeout = setTimeout(() => {
+            searchProducts(query);
+            updateTableAndPagination();
+        }, 300);
+    });
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.getAttribute('data-filter');
+            
+            productRows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = row.classList.contains(filter) ? '' : 'none';
+                }
+            });
+            
+            updateTableAndPagination();
+        });
+    });
+
+    // Initialiser la pagination au chargement
+    updateTableAndPagination();
 });
 </script>
 
