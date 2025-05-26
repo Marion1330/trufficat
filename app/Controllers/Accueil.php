@@ -19,9 +19,6 @@ class Accueil extends BaseController
 
     public function index()
     {
-        // Récupère tous les produits
-        $produits = $this->produitModel->getProduits();
-
         // Récupère les produits vedettes
         $produitsVedettes = $this->produitModel->getProduitsVedettes();
 
@@ -38,7 +35,6 @@ class Accueil extends BaseController
 
         // Envoie les données à la vue
         $data = [
-            'produits' => $produits,
             'produitsVedettes' => $produitsVedettes,
             'publicites' => $publicites
         ];

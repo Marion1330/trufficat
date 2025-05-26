@@ -66,6 +66,21 @@
     <button class="carrousel-btn right">&#10095;</button>
 </div>
 
+<div class="presentation-section">
+    <div class="presentation-content">
+        <div class="presentation-text">
+            <h2>Trufficat, l'essentiel pour chiens et chats en un clic</h2>
+            <p>Trufficat vous propose une sélection rigoureuse de produits de qualité pour le bien-être de vos chiens et chats : alimentation, hygiène, accessoires, couchages, jouets, et bien plus encore.</p>
+            <p>Notre objectif : vous offrir, en ligne, tout le nécessaire pour prendre soin de vos compagnons au quotidien, avec des articles fiables, adaptés et livrés rapidement.</p>
+            <p>Portée par une équipe passionnée, Trufficat s'engage également aux côtés d'acteurs responsables pour le bien-être animal.</p>
+            <p>Découvrez notre univers et faites confiance à Trufficat pour combler vos animaux.</p>
+        </div>
+        <div class="presentation-image">
+            <img src="<?= base_url('images/presentation.jpg') ?>" alt="Trufficat - Votre boutique pour chiens et chats">
+        </div>
+    </div>
+</div>
+
 <style>
 /* Styles pour le carrousel de produits vedettes */
 .carrousel-container {
@@ -249,6 +264,65 @@
     background-color: #cccccc;
     cursor: not-allowed;
 }
+
+/* Styles pour la section de présentation */
+.presentation-section {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.presentation-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.presentation-text {
+    flex: 1;
+}
+
+.presentation-text h2 {
+    color: #D97B29;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.presentation-text p {
+    color: #4A3A2D;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.presentation-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.presentation-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .presentation-content {
+        flex-direction: column;
+    }
+    
+    .presentation-text, .presentation-image {
+        width: 100%;
+    }
+    
+    .presentation-text h2 {
+        font-size: 24px;
+    }
+}
 </style>
 
 <script>
@@ -285,18 +359,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
-<div class="produits">
-    <?php foreach ($produits as $produit): ?>
-        <div class="carte <?= esc($produit['animal']) ?>">
-            <?php if (!empty($produit['image'])): ?>
-                <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>" class="produit-img">
-            <?php endif; ?>
-            <h2><?= esc($produit['nom']) ?></h2>
-            <p><?= esc($produit['description']) ?></p>
-        </div>
-    <?php endforeach; ?>
-</div>
 
 <?= $this->include('layouts/footer') ?>
 
