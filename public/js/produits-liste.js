@@ -35,26 +35,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const maxInput = document.getElementById('prix_max');
     
     if (minSlider && maxSlider) {
-        // Initialiser l'affichage du prix
-        minDisplay.textContent = minSlider.value + ' €';
-        maxDisplay.textContent = maxSlider.value + ' €';
-        
-        // Fonction pour mettre à jour les valeurs
-        function updateValues() {
-            // Assurer que min ne dépasse pas max
-            if (parseInt(minSlider.value) > parseInt(maxSlider.value)) {
-                minSlider.value = maxSlider.value;
-            }
-            
-            // Mettre à jour l'affichage et les inputs cachés
-            minDisplay.textContent = minSlider.value + ' €';
-            maxDisplay.textContent = maxSlider.value + ' €';
-            minInput.value = minSlider.value;
-            maxInput.value = maxSlider.value;
+    // Initialiser l'affichage du prix
+    minDisplay.textContent = minSlider.value + ' €';
+    maxDisplay.textContent = maxSlider.value + ' €';
+    
+    // Fonction pour mettre à jour les valeurs
+    function updateValues() {
+        // Assurer que min ne dépasse pas max
+        if (parseInt(minSlider.value) > parseInt(maxSlider.value)) {
+            minSlider.value = maxSlider.value;
         }
         
-        // Événements pour les sliders
-        minSlider.addEventListener('input', updateValues);
-        maxSlider.addEventListener('input', updateValues);
+        // Mettre à jour l'affichage et les inputs cachés
+        minDisplay.textContent = minSlider.value + ' €';
+        maxDisplay.textContent = maxSlider.value + ' €';
+        minInput.value = minSlider.value;
+        maxInput.value = maxSlider.value;
+    }
+    
+    // Événements pour les sliders
+    minSlider.addEventListener('input', updateValues);
+    maxSlider.addEventListener('input', updateValues);
     }
 }); 

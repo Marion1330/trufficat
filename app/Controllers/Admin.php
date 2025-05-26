@@ -167,7 +167,10 @@ class Admin extends BaseController
         }
 
         $model = new \App\Models\UserModel();
-        $data['clients'] = $model->where('role', 'client')->findAll();
+        $data['clients'] = $model->where('role IN ("admin", "client")')
+                                ->orderBy('role', 'ASC')  // ASC mettra 'admin' avant 'client'
+                                ->orderBy('nom', 'ASC')
+                                ->findAll();
         return view('admin/clients', $data);
     }
 
@@ -180,8 +183,8 @@ class Admin extends BaseController
         $model = new \App\Models\UserModel();
         $data['client'] = $model->find($id);
         
-        if (!$data['client'] || $data['client']['role'] !== 'client') {
-            return redirect()->to('/admin/clients')->with('error', 'Client non trouvé');
+        if (!$data['client']) {
+            return redirect()->to('/admin/clients')->with('error', 'Utilisateur non trouvé');
         }
 
         return view('admin/modifier_client', $data);
@@ -196,8 +199,17 @@ class Admin extends BaseController
         $model = new \App\Models\UserModel();
         $client = $model->find($id);
 
-        if (!$client || $client['role'] !== 'client') {
-            return redirect()->to('/admin/clients')->with('error', 'Client non trouvé');
+        if (!$client) {
+            return redirect()->to('/admin/clients')->with('error', 'Utilisateur non trouvé');
+        }
+
+        // Empêcher la modification du rôle du dernier administrateur
+        $newRole = $this->request->getPost('role');
+        if ($client['role'] === 'admin' && $newRole !== 'admin') {
+            $adminCount = $model->where('role', 'admin')->countAllResults();
+            if ($adminCount <= 1) {
+                return redirect()->to('/admin/clients')->with('error', 'Impossible de changer le rôle du dernier administrateur');
+            }
         }
 
         $data = [
@@ -212,22 +224,23 @@ class Admin extends BaseController
             'ville' => $this->request->getPost('ville'),
             'departement' => $this->request->getPost('departement'),
             'pays' => $this->request->getPost('pays'),
-            'telephone' => $this->request->getPost('telephone')
+            'telephone' => $this->request->getPost('telephone'),
+            'role' => $newRole
         ];
 
         // Si un nouveau mot de passe est fourni
         if ($password = $this->request->getPost('password')) {
-            $data['password'] = $password;
+            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
         }
 
         try {
             if ($model->update($id, $data)) {
-                return redirect()->to('/admin/clients')->with('success', 'Client modifié avec succès');
+                return redirect()->to('/admin/clients')->with('success', 'Utilisateur modifié avec succès');
             } else {
-                return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification du client');
+                return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification de l\'utilisateur');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification du client: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification de l\'utilisateur: ' . $e->getMessage());
         }
     }
 
@@ -240,15 +253,23 @@ class Admin extends BaseController
         $model = new \App\Models\UserModel();
         $client = $model->find($id);
 
-        if (!$client || $client['role'] !== 'client') {
-            return redirect()->to('/admin/clients')->with('error', 'Client non trouvé');
+        if (!$client) {
+            return redirect()->to('/admin/clients')->with('error', 'Utilisateur non trouvé');
+        }
+
+        // Empêcher la suppression du dernier administrateur
+        if ($client['role'] === 'admin') {
+            $adminCount = $model->where('role', 'admin')->countAllResults();
+            if ($adminCount <= 1) {
+                return redirect()->to('/admin/clients')->with('error', 'Impossible de supprimer le dernier administrateur');
+            }
         }
 
         try {
             $model->delete($id);
-            return redirect()->to('/admin/clients')->with('success', 'Client supprimé avec succès');
+            return redirect()->to('/admin/clients')->with('success', 'Utilisateur supprimé avec succès');
         } catch (\Exception $e) {
-            return redirect()->to('/admin/clients')->with('error', 'Erreur lors de la suppression du client');
+            return redirect()->to('/admin/clients')->with('error', 'Erreur lors de la suppression de l\'utilisateur');
         }
     }
 }

@@ -3,7 +3,6 @@
 <div class="admin-container">
     <div class="admin-sidebar">
         <div class="admin-profile">
-            <img src="<?= base_url('images/admin_avatar.png') ?>" alt="Admin" class="admin-avatar" onerror="this.src='<?= base_url('images/placeholder.png') ?>'">
             <h3>Administrateur</h3>
             <p><?= session('email') ?? 'admin@trufficat.com' ?></p>
         </div>
@@ -14,8 +13,6 @@
                 <li class="active"><a href="<?= base_url('admin/produits') ?>"><i class="fas fa-box-open"></i> Produits</a></li>
                 <li><a href="<?= base_url('admin/clients') ?>"><i class="fas fa-users"></i> Clients</a></li>
                 <li><a href="<?= base_url('admin/commandes') ?>"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
-                <li><a href="<?= base_url('admin/categories') ?>"><i class="fas fa-tags"></i> Catégories</a></li>
-                <li><a href="<?= base_url('admin/parametres') ?>"><i class="fas fa-cog"></i> Paramètres</a></li>
             </ul>
         </nav>
     </div>
@@ -585,12 +582,13 @@
 }
 
 .stock-badge.disponible {
-    background-color: #e6f7e9;
-    color: #2e7d32;
+    background-color: #FFE8C6;
+    color: #D97B29;
 }
 
 .stock-badge.rupture {
-    background-color: #ffebee;
+    background-color: #fff8e1;
+    color: #ff8f00;;
     color: #c62828;
 }
 
@@ -600,19 +598,22 @@
 }
 
 .animal-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+    display: inline-block;
     padding: 3px 8px;
     border-radius: 3px;
     font-size: 13px;
     font-weight: 500;
+    background-color: #FFE8C6;
+    color: #D97B29;
+}
+
+.animal-badge i {
+    margin-right: 5px;
 }
 
 .animal-badge.chien {
-    background-color: #e3f2fd;
-    color: #1565c0;
+    background-color: #fff8e1;
+    color: #ff8f00;
 }
 
 .animal-badge.chat {
@@ -1017,6 +1018,7 @@
     color: #A44D25;
     font-weight: 600;
     background-color: #FDD4B0;
+    
 }
 
 .product-row.chien td {
@@ -1046,6 +1048,11 @@
     color: #A44D25;
     font-weight: 600;
     background-color: #FFE8C6;
+}
+
+.product-row.chien .stock-badge.disponible {
+    background-color:#FDD4B0;
+    color: #D97B29;
 }
 
 .products-table tr:hover td {

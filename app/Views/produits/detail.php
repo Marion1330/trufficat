@@ -78,7 +78,7 @@
                 
                 <button class="btn-add-to-cart" data-product-id="<?= $produit['id'] ?>">
                     <i class="fas fa-shopping-cart"></i> Ajouter au panier
-                </button>
+                        </button>
                 <?php else: ?>
                 <button class="btn-add-to-cart disabled" disabled>
                     Produit indisponible
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Gestion de l'ajout au panier
     const addToCartBtn = document.querySelector('.btn-add-to-cart:not(.disabled)');
     if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function() {
+    addToCartBtn.addEventListener('click', function() {
             const productId = this.dataset.productId;
             const quantite = document.getElementById('quantite').value;
             
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Erreur:', error);
                 alert(error.message || 'Une erreur est survenue lors de l\'ajout au panier');
-            });
+    });
         });
     }
 });

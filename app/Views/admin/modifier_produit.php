@@ -3,7 +3,6 @@
 <div class="admin-container">
     <div class="admin-sidebar">
         <div class="admin-profile">
-            <img src="<?= base_url('images/admin_avatar.png') ?>" alt="Admin" class="admin-avatar" onerror="this.src='<?= base_url('images/placeholder.png') ?>'">
             <h3>Administrateur</h3>
             <p><?= session('email') ?? 'admin@trufficat.com' ?></p>
         </div>
@@ -14,8 +13,6 @@
                 <li class="active"><a href="<?= base_url('admin/produits') ?>"><i class="fas fa-box-open"></i> Produits</a></li>
                 <li><a href="<?= base_url('admin/clients') ?>"><i class="fas fa-users"></i> Clients</a></li>
                 <li><a href="<?= base_url('admin/commandes') ?>"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
-                <li><a href="<?= base_url('admin/categories') ?>"><i class="fas fa-tags"></i> Catégories</a></li>
-                <li><a href="<?= base_url('admin/parametres') ?>"><i class="fas fa-cog"></i> Paramètres</a></li>
             </ul>
         </nav>
     </div>

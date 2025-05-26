@@ -3,7 +3,6 @@
 <div class="admin-container">
     <div class="admin-sidebar">
         <div class="admin-profile">
-            <img src="<?= base_url('images/admin_avatar.png') ?>" alt="Admin" class="admin-avatar" onerror="this.src='<?= base_url('images/placeholder.png') ?>'">
             <h3>Administrateur</h3>
             <p><?= session('email') ?? 'admin@trufficat.com' ?></p>
         </div>
@@ -14,8 +13,6 @@
                 <li><a href="<?= base_url('admin/produits') ?>"><i class="fas fa-box-open"></i> Produits</a></li>
                 <li class="active"><a href="<?= base_url('admin/clients') ?>"><i class="fas fa-users"></i> Clients</a></li>
                 <li><a href="<?= base_url('admin/commandes') ?>"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
-                <li><a href="<?= base_url('admin/categories') ?>"><i class="fas fa-tags"></i> Catégories</a></li>
-                <li><a href="<?= base_url('admin/parametres') ?>"><i class="fas fa-cog"></i> Paramètres</a></li>
             </ul>
         </nav>
     </div>
@@ -49,9 +46,6 @@
                 <p>Aucun client n'a été trouvé.</p>
             </div>
         <?php else: ?>
-            <div class="table-scroll-hint">
-                <i class="fas fa-arrows-alt-h"></i> Faites défiler horizontalement pour voir toutes les colonnes
-            </div>
             <div class="products-table-wrapper">
                 <table class="products-table">
                     <thead>
@@ -101,24 +95,25 @@
     </div>
 </div>
 
-<!-- Modal de confirmation de suppression -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Êtes-vous sûr de vouloir supprimer ce client ? Cette action est irréversible.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <a href="#" id="confirmDelete" class="btn btn-danger">Supprimer</a>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('.products-table tbody tr');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        tableRows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+});
+
+function confirmerSuppression(id) {
+    window.location.href = '<?= base_url('admin/supprimer-client/') ?>' + id;
+}
+</script>
 
 <style>
 /* Styles pour le tableau de bord administrateur */
@@ -484,27 +479,5 @@
     color: white;
 }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('.products-table tbody tr');
-
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        
-        tableRows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(searchTerm) ? '' : 'none';
-        });
-    });
-});
-
-function confirmerSuppression(id) {
-    document.getElementById('confirmDelete').href = '<?= base_url('admin/supprimer-client/') ?>' + id;
-    var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-    deleteModal.show();
-}
-</script>
 
 <?= $this->include('layouts/footer') ?> 
