@@ -32,12 +32,25 @@ class Produits extends BaseController
         $besoin = $this->request->getGet('besoin');
         $prix_min = $this->request->getGet('prix_min');
         $prix_max = $this->request->getGet('prix_max');
+        $recherche = $this->request->getGet('recherche');
         $page = $this->request->getGet('page') ? (int)$this->request->getGet('page') : 1;
         
         // Construction de la requête avec les filtres
         $db = \Config\Database::connect();
         $builder = $db->table('produits');
         $builder->where('animal', $animal);
+        
+        // Filtre de recherche
+        if ($recherche) {
+            $builder->groupStart()
+                ->like('nom', $recherche)
+                ->orLike('marque', $recherche)
+                ->orLike('description', $recherche)
+                ->orLike('categorie', $recherche)
+                ->orLike('saveur', $recherche)
+                ->orLike('age', $recherche)
+            ->groupEnd();
+        }
         
         if ($categorie) {
             if ($categorie === 'alimentation') {
@@ -238,6 +251,7 @@ class Produits extends BaseController
         if ($besoin) $queryParams['besoin'] = $besoin;
         if ($prix_min) $queryParams['prix_min'] = $prix_min;
         if ($prix_max) $queryParams['prix_max'] = $prix_max;
+        if ($recherche) $queryParams['recherche'] = $recherche;
         if ($tri) $queryParams['tri'] = $tri;
         
         // Préparation des données pour la vue
@@ -268,6 +282,7 @@ class Produits extends BaseController
         $data['filtre_besoin'] = $besoin;
         $data['filtre_prix_min'] = $prix_min;
         $data['filtre_prix_max'] = $prix_max;
+        $data['filtre_recherche'] = $recherche;
         $data['filtre_tri'] = $tri;
         
         return view('produits/liste', $data);
@@ -288,5 +303,55 @@ class Produits extends BaseController
         
         $data['produit'] = $produit;
         return view('produits/detail', $data);
+    }
+    
+    public function recherche()
+    {
+        $terme = $this->request->getGet('q');
+        
+        if (!$terme) {
+            return redirect()->to('/');
+        }
+        
+        // Connexion à la base de données
+        $db = \Config\Database::connect();
+        
+        // Compter les produits pour chiens correspondant au terme de recherche
+        $builderChiens = $db->table('produits');
+        $builderChiens->where('animal', 'chien');
+        $builderChiens->groupStart()
+            ->like('nom', $terme)
+            ->orLike('marque', $terme)
+            ->orLike('description', $terme)
+            ->orLike('categorie', $terme)
+            ->orLike('saveur', $terme)
+            ->orLike('age', $terme)
+        ->groupEnd();
+        $countChiens = $builderChiens->countAllResults();
+        
+        // Compter les produits pour chats correspondant au terme de recherche
+        $builderChats = $db->table('produits');
+        $builderChats->where('animal', 'chat');
+        $builderChats->groupStart()
+            ->like('nom', $terme)
+            ->orLike('marque', $terme)
+            ->orLike('description', $terme)
+            ->orLike('categorie', $terme)
+            ->orLike('saveur', $terme)
+            ->orLike('age', $terme)
+        ->groupEnd();
+        $countChats = $builderChats->countAllResults();
+        
+        // Déterminer vers quelle page rediriger
+        // Si égalité ou plus de chats, on va vers chats
+        // Sinon on va vers chiens
+        if ($countChats >= $countChiens) {
+            $animal = 'chats';
+        } else {
+            $animal = 'chiens';
+        }
+        
+        // Rediriger vers la page appropriée avec le terme de recherche comme filtre
+        return redirect()->to("/produits/$animal?recherche=" . urlencode($terme));
     }
 }

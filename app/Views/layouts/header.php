@@ -17,7 +17,7 @@
     <div class="logo">
       <a href="<?= base_url() ?>"><img src="<?= base_url('images/logo.png') ?>" alt="Trufficat" class="logo-img" /></a>
     </div>
-    <form action="/recherche" method="get" class="search-bar">
+    <form action="<?= base_url('recherche') ?>" method="get" class="search-bar">
       <input type="text" name="q" placeholder="Rechercher un produit..." />
     </form>
 

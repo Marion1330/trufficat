@@ -11,6 +11,7 @@ $routes->get('produits/chiens', 'Produits::chiens');
 $routes->get('produits/chats', 'Produits::chats');
 $routes->get('produits/detail/(:num)', 'Produits::detail/$1');
 $routes->get('produits/categorie/(:any)/(:any)', 'Produits::categorie/$1/$2');
+$routes->get('recherche', 'Produits::recherche');
 $routes->get('panier', 'Panier::index');
 $routes->post('panier/ajouter', 'Panier::ajouter');
 $routes->post('panier/supprimer/(:num)', 'Panier::supprimer/$1');

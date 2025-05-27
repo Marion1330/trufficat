@@ -4,7 +4,22 @@
     <div class="filters-container">
         <h3>Filtrer les produits</h3>
         
+        <?php if (!empty($filtre_recherche)): ?>
+            <div class="search-info">
+                <i class="fas fa-search"></i> Résultats pour : "<strong><?= esc($filtre_recherche) ?></strong>" 
+                (<?= $pagination['total_produits'] ?> produit<?= $pagination['total_produits'] > 1 ? 's' : '' ?> trouvé<?= $pagination['total_produits'] > 1 ? 's' : '' ?>)
+                <a href="<?= current_url() ?>" class="clear-search" title="Effacer la recherche">
+                    <i class="fas fa-times"></i>
+                </a>
+            </div>
+        <?php endif; ?>
+        
         <form action="" method="get" id="filter-form">
+            <!-- Champ caché pour conserver le terme de recherche -->
+            <?php if (!empty($filtre_recherche)): ?>
+                <input type="hidden" name="recherche" value="<?= esc($filtre_recherche) ?>">
+            <?php endif; ?>
+            
             <!-- Tri des produits -->
             <div class="filter-group">
                 <select name="tri" id="tri" class="form-control" onchange="this.form.submit()">
