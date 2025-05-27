@@ -19,8 +19,12 @@ class Admin extends BaseController
             return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
-        $model = new ProduitModel();
-        $data['total_produits'] = $model->countAll();
+        $produitModel = new ProduitModel();
+        $data['total_produits'] = $produitModel->countAll();
+        
+        // Récupérer le nombre total d'utilisateurs (admin + clients)
+        $db = \Config\Database::connect();
+        $data['total_utilisateurs'] = $db->table('users')->countAllResults();
 
         return view('admin/index', $data);
     }

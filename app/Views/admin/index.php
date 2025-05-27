@@ -39,8 +39,8 @@
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-users"></i></div>
                 <div class="stat-info">
-                    <h3>Clients</h3>
-                    <p class="stat-number">48</p>
+                    <h3>Utilisateurs</h3>
+                    <p class="stat-number"><?= $total_utilisateurs ?></p>
                 </div>
             </div>
             
@@ -49,66 +49,6 @@
                 <div class="stat-info">
                     <h3>Commandes</h3>
                     <p class="stat-number">32</p>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-euro-sign"></i></div>
-                <div class="stat-info">
-                    <h3>Revenus</h3>
-                    <p class="stat-number">4 520 €</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="admin-quick-links">
-            <h2>Accès rapides</h2>
-            <div class="quick-links-grid">
-                <a href="<?= base_url('admin/produit/ajouter') ?>" class="quick-link">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Ajouter un produit</span>
-                </a>
-                <a href="<?= base_url('admin/commandes/recentes') ?>" class="quick-link">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Commandes récentes</span>
-                </a>
-                <a href="<?= base_url('admin/messages') ?>" class="quick-link">
-                    <i class="fas fa-envelope"></i>
-                    <span>Messages</span>
-                </a>
-                <a href="<?= base_url('admin/statistiques') ?>" class="quick-link">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Statistiques</span>
-                </a>
-            </div>
-        </div>
-        
-        <div class="admin-recent-activities">
-            <h2>Activités récentes</h2>
-            <div class="activity-list">
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-shopping-cart"></i></div>
-                    <div class="activity-details">
-                        <h4>Nouvelle commande #1234</h4>
-                        <p>Client: Jean Dupont</p>
-                        <span class="activity-time">Il y a 2 heures</span>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-user-plus"></i></div>
-                    <div class="activity-details">
-                        <h4>Nouveau client inscrit</h4>
-                        <p>Marie Martin a créé un compte</p>
-                        <span class="activity-time">Il y a 4 heures</span>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-box"></i></div>
-                    <div class="activity-details">
-                        <h4>Produit mis à jour</h4>
-                        <p>Croquettes Premium pour Chat a été modifié</p>
-                        <span class="activity-time">Il y a 1 jour</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -120,7 +60,7 @@
 .admin-container {
     display: flex;
     min-height: calc(100vh - 180px);
-    background-color: #f7f9fc;
+   
 }
 
 .admin-sidebar {
@@ -294,115 +234,6 @@
     margin: 0;
 }
 
-/* Quick Links */
-.admin-quick-links,
-.admin-recent-activities {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    margin-bottom: 30px;
-}
-
-.admin-quick-links h2,
-.admin-recent-activities h2 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #4A3A2D;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.quick-links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 15px;
-}
-
-.quick-link {
-    background-color: #FFF8F0;
-    border-radius: 8px;
-    padding: 15px;
-    text-decoration: none;
-    text-align: center;
-    color: #6B3F1D;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.quick-link i {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #D97B29;
-}
-
-.quick-link span {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.quick-link:hover {
-    background-color: #D97B29;
-    color: white;
-}
-
-.quick-link:hover i {
-    color: white;
-}
-
-/* Activity List */
-.activity-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.activity-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #FFF8F0;
-    transition: background-color 0.3s ease;
-}
-
-.activity-item:hover {
-    background-color: #FFE8C6;
-}
-
-.activity-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background-color: #D97B29;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-}
-
-.activity-details h4 {
-    margin: 0 0 5px;
-    font-size: 16px;
-    color: #4A3A2D;
-}
-
-.activity-details p {
-    margin: 0 0 5px;
-    font-size: 14px;
-    color: #6B3F1D;
-}
-
-.activity-time {
-    font-size: 12px;
-    color: #888;
-}
-
 /* Responsive */
 @media (max-width: 992px) {
     .admin-container {
@@ -425,18 +256,10 @@
     .admin-stats {
         grid-template-columns: repeat(2, 1fr);
     }
-    
-    .quick-links-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 @media (max-width: 576px) {
     .admin-stats {
-        grid-template-columns: 1fr;
-    }
-    
-    .quick-links-grid {
         grid-template-columns: 1fr;
     }
     
