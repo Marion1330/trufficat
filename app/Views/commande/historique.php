@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?= base_url('css/panier.css') ?>">
 
 <div class="container">
-    <h1>Historique de mes commandes</h1>
+    <h1 style="text-align: center;">Historique de mes commandes</h1>
     
     <?php if(session()->getFlashdata('success')): ?>
         <div class="alert alert-success">
@@ -70,12 +70,17 @@
                         <div class="commande-total">
                             <strong>Total: <?= number_format($commande['total'], 2, ',', ' ') ?> €</strong>
                         </div>
-                        <?php if ($commande['statut'] === 'validee' && !empty($commande['date_paiement'])): ?>
-                            <p class="paiement-info">
-                                <i class="fas fa-check-circle"></i>
-                                Payée le <?= date('d/m/Y à H:i', strtotime($commande['date_paiement'])) ?>
-                            </p>
-                        <?php endif; ?>
+                        <div class="commande-actions">
+                            <?php if ($commande['statut'] === 'validee' && !empty($commande['date_paiement'])): ?>
+                                <p class="paiement-info">
+                                    <i class="fas fa-check-circle"></i>
+                                    Payée le <?= date('d/m/Y à H:i', strtotime($commande['date_paiement'])) ?>
+                                </p>
+                            <?php endif; ?>
+                            <a href="<?= base_url('commande/confirmation/' . $commande['id']) ?>" class="btn btn-confirmation">
+                                <i class="fas fa-receipt"></i> Voir la confirmation
+                            </a>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -250,6 +255,31 @@
     align-items: center;
 }
 
+.commande-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.btn-confirmation {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-confirmation:hover {
+    background-color: #218838;
+    color: white;
+}
+
 .commande-total {
     font-size: 18px;
     color: #D97B29;
@@ -294,7 +324,12 @@
     .commande-footer {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 15px;
+    }
+    
+    .commande-actions {
+        align-items: flex-start;
+        width: 100%;
     }
     
     .produit-commande {

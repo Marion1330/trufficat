@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Produit ajouté silencieusement au panier
-                    console.log('Produit ajouté au panier');
+                    // Rediriger vers le panier après ajout
+                    window.location.href = baseUrl + 'index.php/panier';
                 } else {
                     console.error('Erreur lors de l\'ajout au panier:', data.message);
                 }
