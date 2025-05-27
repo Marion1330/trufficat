@@ -10,16 +10,16 @@
             
             <div class="products-list">
                 <?php foreach ($produits as $produit): ?>
-                    <div class="product-item">
-                        <div class="product-info">
+                    <div class="checkout-product-item">
+                        <div class="checkout-product-info">
                             <img src="<?= base_url($produit['image'] ?: 'images/placeholder.png') ?>" alt="<?= esc($produit['nom']) ?>">
-                            <div class="product-details">
+                            <div class="checkout-product-details">
                                 <h3><?= esc($produit['nom']) ?></h3>
                                 <p class="brand"><?= esc($produit['marque']) ?></p>
                                 <p class="quantity">Quantité: <?= $produit['quantite'] ?></p>
                             </div>
                         </div>
-                        <div class="product-price">
+                        <div class="checkout-product-price">
                             <?= number_format($produit['prix'] * $produit['quantite'], 2, ',', ' ') ?> €
                         </div>
                     </div>

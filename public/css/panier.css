@@ -211,35 +211,6 @@
     margin-top: 1.5rem;
 }
 
-.btn {
-    width: 100%;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    transition: background-color 0.3s;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #bd2130;
-}
-
-.btn-primary {
-    background-color: #D97B29;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #B45B19;
-}
-
 /* Responsive design */
 @media (max-width: 992px) {
     .panier-content {
@@ -294,7 +265,7 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.product-item {
+.checkout-product-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -302,12 +273,12 @@
     border-bottom: 1px solid #eee;
 }
 
-.product-info {
+.checkout-product-info {
     display: flex;
     align-items: center;
 }
 
-.product-info img {
+.checkout-product-info img {
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -315,25 +286,25 @@
     margin-right: 15px;
 }
 
-.product-details h3 {
+.checkout-product-details h3 {
     margin: 0 0 5px;
     font-size: 16px;
     color: #333;
 }
 
-.product-details .brand {
+.checkout-product-details .brand {
     color: #D97B29;
     font-size: 14px;
     margin: 0 0 5px;
 }
 
-.product-details .quantity {
+.checkout-product-details .quantity {
     color: #666;
     font-size: 14px;
     margin: 0;
 }
 
-.product-price {
+.checkout-product-price {
     font-weight: bold;
     color: #D97B29;
 }
@@ -358,6 +329,35 @@
     text-align: center;
     padding: 20px;
     color: #D97B29;
+}
+
+.panier-btn-checkout {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.panier-btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.panier-btn-danger:hover {
+    background-color: #bd2130;
+}
+
+.panier-btn-primary {
+    background-color: #D97B29;
+    color: white;
+}
+
+.panier-btn-primary:hover {
+    background-color: #B45B19;
 }
 
 @media (max-width: 768px) {
