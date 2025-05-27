@@ -36,11 +36,23 @@ class Admin extends BaseController
         // Récupérer les paramètres de filtrage et pagination
         $animal = $this->request->getGet('animal') ?? 'all';
         $page = $this->request->getGet('page') ?? 1;
+        $search = $this->request->getGet('search') ?? '';
         $perPage = 10;
 
         // Appliquer le filtre par type d'animal
         if ($animal !== 'all') {
             $model->where('animal', $animal);
+        }
+
+        // Appliquer la recherche si un terme est fourni
+        if (!empty($search)) {
+            $model->groupStart()
+                  ->like('nom', $search)
+                  ->orLike('description', $search)
+                  ->orLike('marque', $search)
+                  ->orLike('categorie', $search)
+                  ->orLike('saveur', $search)
+                  ->groupEnd();
         }
 
         // Récupérer le total des produits pour la pagination
@@ -50,6 +62,7 @@ class Admin extends BaseController
         $data['produits'] = $model->paginate($perPage);
         $data['pager'] = $model->pager;
         $data['currentAnimal'] = $animal;
+        $data['currentSearch'] = $search;
         $data['total'] = $total;
         $data['perPage'] = $perPage;
         $data['currentPage'] = $page;

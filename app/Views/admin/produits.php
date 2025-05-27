@@ -21,20 +21,34 @@
         <div class="admin-header">
             <h1><i class="fas fa-box-open"></i> Gestion des produits</h1>
             <div class="admin-actions">
-                <form action="" method="get" class="search-form" onsubmit="return false;">
-                    <input type="text" placeholder="Rechercher un produit..." name="search" id="searchInput">
-                    <button type="button"><i class="fas fa-search"></i></button>
+                <form action="<?= base_url('admin/produits') ?>" method="get" class="search-form">
+                    <input type="hidden" name="animal" value="<?= esc($currentAnimal) ?>">
+                    <input type="text" placeholder="Rechercher un produit..." name="search" id="searchInput" value="<?= esc($currentSearch ?? '') ?>">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                    <?php if (!empty($currentSearch)): ?>
+                        <a href="<?= base_url('admin/produits?animal=' . $currentAnimal) ?>" class="clear-search" title="Effacer la recherche">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    <?php endif; ?>
                 </form>
                 <a href="<?= base_url('admin/produit/ajouter') ?>" class="admin-btn"><i class="fas fa-plus-circle"></i> Ajouter un produit</a>
             </div>
         </div>
         
+        <?php if (!empty($currentSearch)): ?>
+            <div class="search-info">
+                <i class="fas fa-search"></i> Résultats pour : "<strong><?= esc($currentSearch) ?></strong>" 
+                (<?= $total ?> produit<?= $total > 1 ? 's' : '' ?> trouvé<?= $total > 1 ? 's' : '' ?>)
+            </div>
+        <?php endif; ?>
+        
         <div class="admin-filters">
             <div class="filter-group">
                 <div class="filter-buttons">
-                    <a href="<?= base_url('admin/produits?animal=all') ?>" class="filter-btn <?= $currentAnimal === 'all' ? 'active' : '' ?>">Tous</a>
-                    <a href="<?= base_url('admin/produits?animal=chien') ?>" class="filter-btn <?= $currentAnimal === 'chien' ? 'active' : '' ?>">Chiens</a>
-                    <a href="<?= base_url('admin/produits?animal=chat') ?>" class="filter-btn <?= $currentAnimal === 'chat' ? 'active' : '' ?>">Chats</a>
+                    <?php $searchParam = !empty($currentSearch) ? '&search=' . urlencode($currentSearch) : ''; ?>
+                    <a href="<?= base_url('admin/produits?animal=all' . $searchParam) ?>" class="filter-btn <?= $currentAnimal === 'all' ? 'active' : '' ?>">Tous</a>
+                    <a href="<?= base_url('admin/produits?animal=chien' . $searchParam) ?>" class="filter-btn <?= $currentAnimal === 'chien' ? 'active' : '' ?>">Chiens</a>
+                    <a href="<?= base_url('admin/produits?animal=chat' . $searchParam) ?>" class="filter-btn <?= $currentAnimal === 'chat' ? 'active' : '' ?>">Chats</a>
                 </div>
             </div>
             
@@ -175,8 +189,11 @@
             </div>
             
             <div class="admin-pagination">
+                <?php 
+                $searchParam = !empty($currentSearch) ? '&search=' . urlencode($currentSearch) : '';
+                ?>
                 <?php if ($currentPage > 1): ?>
-                    <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . ($currentPage - 1)) ?>" class="pagination-btn prev" title="Page précédente">
+                    <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . ($currentPage - 1) . $searchParam) ?>" class="pagination-btn prev" title="Page précédente">
                         <i class="fas fa-chevron-left"></i>
                     </a>
                 <?php else: ?>
@@ -188,7 +205,7 @@
                     $totalPages = ceil($total / $perPage);
                     for ($i = 1; $i <= $totalPages; $i++):
                     ?>
-                        <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . $i) ?>" 
+                        <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . $i . $searchParam) ?>" 
                            class="pagination-number <?= $i == $currentPage ? 'active' : '' ?>">
                             <?= $i ?>
                         </a>
@@ -196,7 +213,7 @@
                 </div>
 
                 <?php if ($currentPage < ceil($total / $perPage)): ?>
-                    <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . ($currentPage + 1)) ?>" class="pagination-btn next" title="Page suivante">
+                    <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . ($currentPage + 1) . $searchParam) ?>" class="pagination-btn next" title="Page suivante">
                         <i class="fas fa-chevron-right"></i>
                     </a>
                 <?php else: ?>
@@ -349,6 +366,23 @@
     cursor: pointer;
     padding: 8px;
     margin-left: -35px;
+}
+
+.clear-search {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: 5px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.clear-search:hover {
+    background-color: #dc3545;
+    color: white;
 }
 
 .admin-btn {
@@ -1122,6 +1156,21 @@
 .pagination-btn:disabled:hover {
     background-color: #f5f5f5;
     transform: none;
+}
+
+.search-info {
+    background-color: #FFF8E1;
+    border: 1px solid #FFE8C6;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    color: #D97B29;
+    font-size: 14px;
+}
+
+.search-info i {
+    margin-right: 8px;
+    color: #D97B29;
 }
 </style>
 
