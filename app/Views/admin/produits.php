@@ -32,14 +32,9 @@
         <div class="admin-filters">
             <div class="filter-group">
                 <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">Tous</button>
-                    <button class="filter-btn" data-filter="chien">Chiens</button>
-                    <button class="filter-btn" data-filter="chat">Chats</button>
-                </div>
-                <div class="scroll-indicator">
-                    <div class="scroll-track">
-                        <div class="scroll-thumb"></div>
-                    </div>
+                    <a href="<?= base_url('admin/produits?animal=all') ?>" class="filter-btn <?= $currentAnimal === 'all' ? 'active' : '' ?>">Tous</a>
+                    <a href="<?= base_url('admin/produits?animal=chien') ?>" class="filter-btn <?= $currentAnimal === 'chien' ? 'active' : '' ?>">Chiens</a>
+                    <a href="<?= base_url('admin/produits?animal=chat') ?>" class="filter-btn <?= $currentAnimal === 'chat' ? 'active' : '' ?>">Chats</a>
                 </div>
             </div>
             
@@ -180,11 +175,33 @@
             </div>
             
             <div class="admin-pagination">
-                <button class="pagination-btn prev" title="Page précédente"><i class="fas fa-chevron-left"></i></button>
+                <?php if ($currentPage > 1): ?>
+                    <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . ($currentPage - 1)) ?>" class="pagination-btn prev" title="Page précédente">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                <?php else: ?>
+                    <button class="pagination-btn prev" disabled title="Page précédente"><i class="fas fa-chevron-left"></i></button>
+                <?php endif; ?>
+
                 <div class="pagination-numbers">
-                    <!-- Les numéros de pages seront générés dynamiquement par JavaScript -->
+                    <?php
+                    $totalPages = ceil($total / $perPage);
+                    for ($i = 1; $i <= $totalPages; $i++):
+                    ?>
+                        <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . $i) ?>" 
+                           class="pagination-number <?= $i == $currentPage ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
                 </div>
-                <button class="pagination-btn next" title="Page suivante"><i class="fas fa-chevron-right"></i></button>
+
+                <?php if ($currentPage < ceil($total / $perPage)): ?>
+                    <a href="<?= base_url('admin/produits?animal=' . $currentAnimal . '&page=' . ($currentPage + 1)) ?>" class="pagination-btn next" title="Page suivante">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                <?php else: ?>
+                    <button class="pagination-btn next" disabled title="Page suivante"><i class="fas fa-chevron-right"></i></button>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>
@@ -766,54 +783,82 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    margin-top: 25px;
-}
-
-.pagination-btn {
-    width: 36px;
-    height: 36px;
-    border: 1px solid #e0e0e0;
-    background-color: white;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.pagination-btn:hover {
-    background-color: #f9f9f9;
+    margin-top: 2rem;
+    gap: 1rem;
 }
 
 .pagination-numbers {
     display: flex;
-    gap: 5px;
+    gap: 0.5rem;
 }
 
 .pagination-number {
-    width: 36px;
-    height: 36px;
-    border: 1px solid #e0e0e0;
-    background-color: white;
-    border-radius: 4px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #D97B29;
     text-decoration: none;
-    color: #6B3F1D;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 .pagination-number:hover {
-    background-color: #f9f9f9;
+    background-color: #FFE8C6;
 }
 
 .pagination-number.active {
     background-color: #D97B29;
-    color: white;
-    border-color: #D97B29;
+    color: #fff;
+}
+
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #D97B29;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: #FFE8C6;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.filter-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid #D97B29;
+    background-color: #fff;
+    color: #D97B29;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #FFE8C6;
+}
+
+.filter-btn.active {
+    background-color: #D97B29;
+    color: #fff;
 }
 
 /* Indication de défilement */

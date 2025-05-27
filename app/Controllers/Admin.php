@@ -27,8 +27,33 @@ class Admin extends BaseController
 
     public function produits()
     {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
         $model = new ProduitModel();
-        $data['produits'] = $model->findAll();
+        
+        // Récupérer les paramètres de filtrage et pagination
+        $animal = $this->request->getGet('animal') ?? 'all';
+        $page = $this->request->getGet('page') ?? 1;
+        $perPage = 10;
+
+        // Appliquer le filtre par type d'animal
+        if ($animal !== 'all') {
+            $model->where('animal', $animal);
+        }
+
+        // Récupérer le total des produits pour la pagination
+        $total = $model->countAllResults(false);
+
+        // Récupérer les produits avec pagination
+        $data['produits'] = $model->paginate($perPage);
+        $data['pager'] = $model->pager;
+        $data['currentAnimal'] = $animal;
+        $data['total'] = $total;
+        $data['perPage'] = $perPage;
+        $data['currentPage'] = $page;
+
         return view('admin/produits', $data);
     }
 
