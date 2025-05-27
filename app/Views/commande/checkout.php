@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?= base_url('css/panier.css') ?>">
 
 <div class="container">
-    <h1>Finaliser votre commande</h1>
+    <h1 class="page-title">Finaliser votre commande</h1>
     
     <div class="checkout-container">
         <div class="order-summary">
@@ -102,93 +102,5 @@ paypal.Buttons({
     }
 }).render('#paypal-button-container');
 </script>
-
-<style>
-.checkout-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-.order-summary, .payment-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.product-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.product-info {
-    display: flex;
-    align-items: center;
-}
-
-.product-info img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 15px;
-}
-
-.product-details h3 {
-    margin: 0 0 5px;
-    font-size: 16px;
-    color: #333;
-}
-
-.product-details .brand {
-    color: #D97B29;
-    font-size: 14px;
-    margin: 0 0 5px;
-}
-
-.product-details .quantity {
-    color: #666;
-    font-size: 14px;
-    margin: 0;
-}
-
-.product-price {
-    font-weight: bold;
-    color: #D97B29;
-}
-
-.total-section {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 2px solid #D97B29;
-}
-
-.total-line {
-    font-size: 18px;
-    text-align: right;
-    color: #D97B29;
-}
-
-#paypal-button-container {
-    margin-top: 20px;
-}
-
-#loading {
-    text-align: center;
-    padding: 20px;
-    color: #D97B29;
-}
-
-@media (max-width: 768px) {
-    .checkout-container {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 
 <?= $this->include('layouts/footer') ?> 

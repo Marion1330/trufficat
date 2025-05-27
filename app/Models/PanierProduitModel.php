@@ -30,8 +30,11 @@ class PanierProduitModel extends Model
     
     public function ajouterProduit($panierId, $produitId, $quantite = 1, $prix)
     {
-        // S'assurer que la quantité est au moins 1
-        $quantite = max(1, intval($quantite));
+        // Conversion simple en entier
+        $quantite = intval($quantite);
+        if ($quantite < 1) {
+            $quantite = 1;
+        }
 
         $existant = $this->where([
             'panier_id' => $panierId,
@@ -39,8 +42,10 @@ class PanierProduitModel extends Model
         ])->first();
         
         if ($existant) {
+            // Additionner la nouvelle quantité à l'existante
+            $nouvelleQuantite = $existant['quantite'] + $quantite;
             return $this->update($existant['id'], [
-                'quantite' => $quantite
+                'quantite' => $nouvelleQuantite
             ]);
         }
         

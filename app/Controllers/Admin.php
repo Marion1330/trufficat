@@ -353,12 +353,54 @@ class Admin extends BaseController
         }
 
         $statut = $this->request->getPost('statut');
-        $commandeModel = new \App\Models\CommandeModel();
         
-        if ($commandeModel->update($id, ['statut' => $statut])) {
-            return redirect()->to('/admin/commandes')->with('success', 'Statut mis à jour avec succès');
+        // Debug: afficher le statut reçu
+        log_message('debug', "Statut reçu: " . $statut . " pour commande ID: " . $id);
+        
+        // Validation du statut
+        $statutsValides = ['en_attente', 'validee', 'en_preparation', 'expediee', 'livree', 'annulee'];
+        if (!in_array($statut, $statutsValides)) {
+            log_message('error', "Statut invalide reçu: " . $statut);
+            return redirect()->to('/admin/commandes')->with('error', 'Statut invalide');
         }
         
-        return redirect()->to('/admin/commandes')->with('error', 'Erreur lors de la mise à jour');
+        $commandeModel = new \App\Models\CommandeModel();
+        
+        // Vérifier que la commande existe
+        $commande = $commandeModel->find($id);
+        if (!$commande) {
+            return redirect()->to('/admin/commandes')->with('error', 'Commande non trouvée');
+        }
+        
+        log_message('debug', "Commande trouvée, statut actuel: " . $commande['statut']);
+        
+        try {
+            $datePaiement = null;
+            
+            // Si on passe à "validee" et qu'il n'y a pas encore de date de paiement
+            if ($statut === 'validee' && empty($commande['date_paiement'])) {
+                $datePaiement = date('Y-m-d H:i:s');
+            }
+            
+            log_message('debug', "Mise à jour vers statut: " . $statut . ($datePaiement ? " avec date de paiement: " . $datePaiement : ""));
+            
+            $result = $commandeModel->updateStatut($id, $statut, $datePaiement);
+            log_message('debug', "Résultat de la mise à jour: " . ($result ? 'true' : 'false'));
+            
+            if ($result) {
+                // Vérifier que la mise à jour a bien eu lieu
+                $commandeUpdated = $commandeModel->find($id);
+                log_message('debug', "Statut après mise à jour: " . $commandeUpdated['statut']);
+                
+                return redirect()->to('/admin/commandes')->with('success', 'Statut mis à jour avec succès');
+            } else {
+                $errors = $commandeModel->errors();
+                log_message('error', "Erreurs du modèle: " . json_encode($errors));
+                return redirect()->to('/admin/commandes')->with('error', 'Erreur lors de la mise à jour du statut');
+            }
+        } catch (\Exception $e) {
+            log_message('error', "Exception lors de la mise à jour du statut de la commande {$id}: " . $e->getMessage());
+            return redirect()->to('/admin/commandes')->with('error', 'Erreur lors de la mise à jour: ' . $e->getMessage());
+        }
     }
 }

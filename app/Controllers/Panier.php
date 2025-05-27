@@ -50,7 +50,6 @@ class Panier extends BaseController
     public function ajouter()
     {
         if (!$this->session->get('isLoggedIn')) {
-            log_message('error', 'Tentative d\'ajout au panier sans connexion');
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Veuillez vous connecter pour ajouter des produits au panier'
@@ -61,10 +60,23 @@ class Panier extends BaseController
         $produitId = $this->request->getPost('produit_id');
         $quantite = $this->request->getPost('quantite') ?? 1;
         
-        log_message('debug', "Tentative d'ajout au panier - User ID: {$userId}, Produit ID: {$produitId}, Quantité: {$quantite}");
+        // Protection contre les requêtes multiples
+        $requestKey = "panier_add_{$userId}_{$produitId}_{$quantite}";
+        $lastRequest = $this->session->get($requestKey);
+        $currentTime = time();
+        
+        // Si la même requête a été faite il y a moins de 2 secondes, l'ignorer
+        if ($lastRequest && ($currentTime - $lastRequest) < 2) {
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Produit déjà ajouté au panier'
+            ]);
+        }
+        
+        // Enregistrer le timestamp de cette requête
+        $this->session->set($requestKey, $currentTime);
         
         if (!$produitId) {
-            log_message('error', 'Tentative d\'ajout au panier sans ID produit');
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'ID du produit manquant'
@@ -73,23 +85,17 @@ class Panier extends BaseController
         
         $produit = $this->produitModel->find($produitId);
         if (!$produit) {
-            log_message('error', "Produit non trouvé - ID: {$produitId}");
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Produit non trouvé'
             ]);
         }
 
-        log_message('debug', "Produit trouvé - Prix: {$produit['prix']}");
-
         $panier = $this->panierModel->getPanierActif($userId);
         if (!$panier) {
-            log_message('debug', "Création d'un nouveau panier pour l'utilisateur {$userId}");
             $panierId = $this->panierModel->creerPanier($userId);
             $panier = ['id' => $panierId];
         }
-
-        log_message('debug', "Panier ID: {$panier['id']}");
 
         try {
             $result = $this->panierProduitModel->ajouterProduit(
@@ -99,16 +105,12 @@ class Panier extends BaseController
                 $produit['prix']
             );
             
-            log_message('debug', "Résultat de l'ajout: " . json_encode($result));
-            
             return $this->response->setJSON([
                 'success' => true,
                 'message' => 'Produit ajouté au panier'
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Erreur lors de l\'ajout au panier: ' . $e->getMessage());
-            log_message('error', 'Stack trace: ' . $e->getTraceAsString());
-            log_message('error', 'User ID: ' . $userId . ', Produit ID: ' . $produitId . ', Panier ID: ' . $panier['id']);
             
             return $this->response->setJSON([
                 'success' => false,

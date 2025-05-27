@@ -24,7 +24,7 @@ class CommandeModel extends Model
         'date_paiement'
     ];
 
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat = 'datetime';
     protected $createdField = 'date_commande';
     protected $updatedField = 'date_modification';
@@ -54,5 +54,19 @@ class CommandeModel extends Model
     public function genererNumeroCommande()
     {
         return 'CMD-' . date('Y') . '-' . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+    }
+
+    public function updateStatut($id, $statut, $datePaiement = null)
+    {
+        $data = ['statut' => $statut];
+        
+        if ($datePaiement) {
+            $data['date_paiement'] = $datePaiement;
+        }
+        
+        // Mettre à jour manuellement la date de modification
+        $data['date_modification'] = date('Y-m-d H:i:s');
+        
+        return $this->update($id, $data);
     }
 } 

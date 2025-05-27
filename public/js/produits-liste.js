@@ -1,30 +1,33 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Gestion des boutons "Ajouter au panier"
-    document.querySelectorAll('.btn-add-to-cart').forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.dataset.productId;
-            
-            fetch(baseUrl + 'index.php/panier/ajouter', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `produit_id=${productId}&quantite=1`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Rediriger vers le panier après ajout
-                    window.location.href = baseUrl + 'index.php/panier';
-                } else {
-                    console.error('Erreur lors de l\'ajout au panier:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
+    // Gestion des boutons "Ajouter au panier" UNIQUEMENT sur la page liste
+    // On vérifie qu'on n'est pas sur une page détail
+    if (!document.querySelector('.product-detail-container')) {
+        document.querySelectorAll('.btn-add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.dataset.productId;
+                
+                fetch(baseUrl + 'index.php/panier/ajouter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `produit_id=${productId}&quantite=1`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Rediriger vers le panier après ajout
+                        window.location.href = baseUrl + 'index.php/panier';
+                    } else {
+                        console.error('Erreur lors de l\'ajout au panier:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
             });
         });
-    });
+    }
     
     // Gestion du slider de prix
     const minSlider = document.getElementById('price-min-slider');

@@ -60,7 +60,7 @@
                     <span><?= number_format($totalFinal, 2) ?> €</span>
                 </div>
                 <div class="panier-actions">
-                    <a href="<?= base_url('commande') ?>" class="btn-commander">Commander</a>
+                    <a href="<?= base_url('commande/checkout') ?>" class="btn-commander">Commander</a>
                 </div>
             </div>
         </div>

@@ -263,7 +263,7 @@
 }
 
 .btn-confirmation {
-    background-color: #28a745;
+    background-color: #D97B29;
     color: white;
     padding: 8px 16px;
     text-decoration: none;
@@ -276,7 +276,7 @@
 }
 
 .btn-confirmation:hover {
-    background-color: #218838;
+    background-color: #A44D25;
     color: white;
 }
 

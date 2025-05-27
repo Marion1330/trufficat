@@ -71,14 +71,14 @@
                     <label for="quantite">Quantité :</label>
                     <div class="quantity-controls">
                         <button type="button" class="quantity-btn" data-action="decrease">-</button>
-                        <input type="number" id="quantite" name="quantite" value="1" min="1" max="<?= $produit['stock'] ?>">
+                        <input type="number" id="quantite" name="quantite" value="1" min="1" max="<?= $produit['stock'] ?>" class="quantity-input">
                         <button type="button" class="quantity-btn" data-action="increase">+</button>
                     </div>
                 </div>
                 
                 <button class="btn-add-to-cart" data-product-id="<?= $produit['id'] ?>">
                     <i class="fas fa-shopping-cart"></i> Ajouter au panier
-                        </button>
+                </button>
                 <?php else: ?>
                 <button class="btn-add-to-cart disabled" disabled>
                     Produit indisponible
@@ -118,12 +118,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Validation de la saisie manuelle
+    quantiteInput.addEventListener('input', function() {
+        const value = parseInt(this.value);
+        const max = parseInt(this.getAttribute('max'));
+        const min = parseInt(this.getAttribute('min'));
+        
+        if (value > max) {
+            this.value = max;
+        } else if (value < min || isNaN(value)) {
+            this.value = min;
+        }
+    });
+    
     // Gestion de l'ajout au panier
     const addToCartBtn = document.querySelector('.btn-add-to-cart:not(.disabled)');
     if (addToCartBtn) {
-    addToCartBtn.addEventListener('click', function() {
+        let isAdding = false; // Variable pour empêcher les clics multiples
+        
+        addToCartBtn.addEventListener('click', function(e) {
+            e.preventDefault(); // Empêcher le comportement par défaut
+            
+            // Si déjà en cours d'ajout, ignorer le clic
+            if (isAdding) {
+                return;
+            }
+            
+            isAdding = true;
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ajout en cours...';
+            
             const productId = this.dataset.productId;
-            const quantite = document.getElementById('quantite').value;
+            const quantite = parseInt(document.getElementById('quantite').value);
+            
+            // Vérification de la quantité
+            if (!quantite || quantite < 1) {
+                // Redirection vers le panier même si quantité invalide
+                window.location.href = '<?= base_url('index.php/panier') ?>';
+                return;
+            }
             
             fetch('<?= base_url('index.php/panier/ajouter') ?>', {
                 method: 'POST',
@@ -134,16 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    window.location.href = '<?= base_url('index.php/panier') ?>';
-                } else {
-                    throw new Error(data.message);
-                }
+                // Redirection vers le panier dans tous les cas
+                window.location.href = '<?= base_url('index.php/panier') ?>';
             })
             .catch(error => {
                 console.error('Erreur:', error);
+                // Redirection vers le panier même en cas d'erreur
+                window.location.href = '<?= base_url('index.php/panier') ?>';
             });
-    });
         });
     }
 });
@@ -279,13 +310,22 @@ document.addEventListener('DOMContentLoaded', function() {
     background-color: #e8e8e8;
 }
 
-input[type="number"] {
+.quantity-input {
     width: 60px;
     height: 40px;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
+    /* Supprime les flèches natives du navigateur */
+    -moz-appearance: textfield;
+}
+
+/* Supprime les flèches pour Chrome, Safari, Edge */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .btn-add-to-cart {

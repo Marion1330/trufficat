@@ -5,7 +5,6 @@
     <div class="admin-sidebar">
         <div class="admin-profile">
             <h3>Administrateur</h3>
-            <p><?= session('email') ?? 'admin@trufficat.com' ?></p>
         </div>
         
         <nav class="admin-nav">

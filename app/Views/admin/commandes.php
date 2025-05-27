@@ -4,7 +4,6 @@
     <div class="admin-sidebar">
         <div class="admin-profile">
             <h3>Administrateur</h3>
-            <p><?= session('email') ?? 'admin@trufficat.com' ?></p>
         </div>
         
         <nav class="admin-nav">
@@ -95,6 +94,7 @@
                                         
                                         <form method="post" action="<?= base_url('admin/commande/statut/' . $commande['id']) ?>" 
                                               style="display: inline-block;">
+                                            <?= csrf_field() ?>
                                             <select name="statut" onchange="this.form.submit()" class="statut-select">
                                                 <option value="en_attente" <?= $commande['statut'] == 'en_attente' ? 'selected' : '' ?>>En attente</option>
                                                 <option value="validee" <?= $commande['statut'] == 'validee' ? 'selected' : '' ?>>Validée</option>
