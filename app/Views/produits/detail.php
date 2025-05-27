@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Erreur:', error);
-                alert(error.message || 'Une erreur est survenue lors de l\'ajout au panier');
+            });
     });
         });
     }

@@ -48,7 +48,7 @@
                 <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
                 <div class="stat-info">
                     <h3>Commandes</h3>
-                    <p class="stat-number">32</p>
+                    <p class="stat-number"><?= $total_commandes ?></p>
                 </div>
             </div>
         </div>

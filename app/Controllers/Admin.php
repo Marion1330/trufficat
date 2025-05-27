@@ -25,6 +25,9 @@ class Admin extends BaseController
         // Récupérer le nombre total d'utilisateurs (admin + clients)
         $db = \Config\Database::connect();
         $data['total_utilisateurs'] = $db->table('users')->countAllResults();
+        
+        // Récupérer le nombre total de commandes
+        $data['total_commandes'] = $db->table('commandes')->countAllResults();
 
         return view('admin/index', $data);
     }
@@ -313,5 +316,49 @@ class Admin extends BaseController
         } catch (\Exception $e) {
             return redirect()->to('/admin/clients')->with('error', 'Erreur lors de la suppression de l\'utilisateur');
         }
+    }
+
+    public function commandes()
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        $commandeModel = new \App\Models\CommandeModel();
+        $data['commandes'] = $commandeModel->getCommandesWithUser();
+        
+        return view('admin/commandes', $data);
+    }
+
+    public function voirCommande($id)
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        $commandeModel = new \App\Models\CommandeModel();
+        $data['commande'] = $commandeModel->getCommandeWithDetails($id);
+        
+        if (!$data['commande']) {
+            return redirect()->to('/admin/commandes')->with('error', 'Commande non trouvée');
+        }
+        
+        return view('admin/voir_commande', $data);
+    }
+
+    public function updateStatutCommande($id)
+    {
+        if (session()->get('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
+        }
+
+        $statut = $this->request->getPost('statut');
+        $commandeModel = new \App\Models\CommandeModel();
+        
+        if ($commandeModel->update($id, ['statut' => $statut])) {
+            return redirect()->to('/admin/commandes')->with('success', 'Statut mis à jour avec succès');
+        }
+        
+        return redirect()->to('/admin/commandes')->with('error', 'Erreur lors de la mise à jour');
     }
 }

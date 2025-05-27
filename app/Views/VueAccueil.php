@@ -334,8 +334,26 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const productId = this.getAttribute('data-product-id');
             
-            // Ajouter au panier via AJAX (à implémenter)
-            alert('Produit ajouté au panier !');
+            // Ajouter au panier via AJAX
+            fetch('<?= base_url('panier/ajouter') ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `produit_id=${productId}&quantite=1`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Produit ajouté silencieusement au panier
+                    console.log('Produit ajouté au panier');
+                } else {
+                    console.error('Erreur lors de l\'ajout au panier:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
         });
     });
     

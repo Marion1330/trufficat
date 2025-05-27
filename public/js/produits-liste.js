@@ -14,14 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = baseUrl + 'index.php/panier';
+                    // Produit ajouté silencieusement au panier
+                    console.log('Produit ajouté au panier');
                 } else {
-                    alert(data.message || 'Une erreur est survenue lors de l\'ajout au panier');
+                    console.error('Erreur lors de l\'ajout au panier:', data.message);
                 }
             })
             .catch(error => {
                 console.error('Erreur:', error);
-                alert('Une erreur est survenue lors de l\'ajout au panier. Veuillez réessayer.');
             });
         });
     });

@@ -18,6 +18,15 @@ $routes->post('panier/supprimer/(:num)', 'Panier::supprimer/$1');
 $routes->post('panier/modifier/(:num)', 'Panier::modifier/$1');
 $routes->get('panier/vider', 'Panier::vider');
 
+// Routes pour les commandes
+$routes->get('commande', 'Commande::index');
+$routes->get('commande/historique', 'Commande::historique');
+$routes->get('commande/checkout', 'Commande::checkout');
+$routes->post('commande/creer', 'Commande::creerCommande');
+$routes->get('commande/paypal/success', 'Commande::paypalSuccess');
+$routes->get('commande/paypal/cancel', 'Commande::paypalCancel');
+$routes->get('commande/confirmation/(:num)', 'Commande::confirmation/$1');
+
 // Routes d'administration
 $routes->get('admin', 'Admin::index');
 $routes->get('admin/produits', 'Admin::produits');
@@ -32,6 +41,11 @@ $routes->get('admin/clients', 'Admin::clients');
 $routes->get('admin/modifier-client/(:num)', 'Admin::modifierClient/$1');
 $routes->post('admin/update-client/(:num)', 'Admin::updateClient/$1');
 $routes->get('admin/supprimer-client/(:num)', 'Admin::supprimerClient/$1');
+
+// Routes pour la gestion des commandes dans l'admin
+$routes->get('admin/commandes', 'Admin::commandes');
+$routes->get('admin/commande/(:num)', 'Admin::voirCommande/$1');
+$routes->post('admin/commande/statut/(:num)', 'Admin::updateStatutCommande/$1');
 
 //Route de connexion et inscription et traitement de formulaire 
 $routes->get('/connexion', 'AuthController::connexion');

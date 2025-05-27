@@ -20,6 +20,14 @@ class PanierProduitModel extends Model
                     ->findAll();
     }
     
+    public function getProduitsAvecDetails($panierId)
+    {
+        return $this->select('panier_produits.*, produits.nom, produits.image, produits.marque, panier_produits.prix_unitaire as prix')
+                    ->join('produits', 'produits.id = panier_produits.produit_id')
+                    ->where('panier_id', $panierId)
+                    ->findAll();
+    }
+    
     public function ajouterProduit($panierId, $produitId, $quantite = 1, $prix)
     {
         // S'assurer que la quantité est au moins 1
