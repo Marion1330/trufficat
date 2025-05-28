@@ -1,5 +1,6 @@
 </main>
 <footer class="footer">
+<p>Service client: <a href="mailto:contact@Trufficat.com">contact@Trufficat.com</a></p>
 <p>&copy; <?= date('Y') ?> Trufficat. Tous droits réservés.</p>
 </footer>
 

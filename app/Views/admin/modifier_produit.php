@@ -213,7 +213,7 @@
                             <div class="image-upload-container">
                                 <?php if (!empty($produit['image'])): ?>
                                     <div class="current-image">
-                                        <img src="<?= base_url('images/' . esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>" class="product-image-preview">
+                                        <img src="<?= base_url(esc($produit['image'])) ?>" alt="<?= esc($produit['nom']) ?>" class="product-image-preview">
                                         <p>Image actuelle: <?= esc($produit['image']) ?></p>
                                     </div>
                                 <?php endif; ?>
@@ -473,18 +473,31 @@ textarea.form-control {
 }
 
 .current-image {
-    margin-bottom: 15px;
-    padding: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
     background-color: #FFF8F0;
-    border-radius: 8px;
+    border: 2px solid #F2C078;
+    border-radius: 12px;
     text-align: center;
+}
+
+.current-image p {
+    margin: 10px 0 0 0;
+    font-size: 14px;
+    color: #6B3F1D;
+    font-weight: 500;
 }
 
 .product-image-preview {
     max-width: 100%;
-    max-height: 200px;
+    max-height: 250px;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 3px solid #D97B29;
 }
 
 .custom-file-upload {

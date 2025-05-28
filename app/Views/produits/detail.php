@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .main-image {
-    background-color: #f8f8f8;
+    
     border-radius: 8px;
     padding: 20px;
     display: flex;
@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .product-description {
     margin-top: 40px;
     padding: 20px;
-    background-color: #f8f8f8;
+    
     border-radius: 8px;
 }
 

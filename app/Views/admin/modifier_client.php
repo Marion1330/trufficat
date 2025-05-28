@@ -1,153 +1,254 @@
-<?= $this->extend('layouts/admin_layout') ?>
+<?= $this->include('layouts/header') ?>
+<link rel="stylesheet" href="<?= base_url('css/admin-dashboard.css') ?>">
 
-<?= $this->section('content') ?>
-<div class="form-container">
-    <div class="form-header">
-        <h1>Modifier un utilisateur</h1>
-        <a href="<?= base_url('admin/clients') ?>" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Retour
-        </a>
+<div class="admin-container">
+    <div class="admin-sidebar">
+        <div class="admin-profile">
+            <h3>Administrateur</h3>
+        </div>
+        
+        <nav class="admin-nav">
+            <ul>
+                <li><a href="<?= base_url('admin') ?>"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
+                <li><a href="<?= base_url('admin/produits') ?>"><i class="fas fa-box-open"></i> Produits</a></li>
+                <li class="active"><a href="<?= base_url('admin/clients') ?>"><i class="fas fa-users"></i> Clients</a></li>
+                <li><a href="<?= base_url('admin/commandes') ?>"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
+            </ul>
+        </nav>
     </div>
-
-    <?php if(session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger">
-            <?= session()->getFlashdata('error') ?>
-        </div>
-    <?php endif; ?>
-
-    <form action="<?= base_url('admin/update-client/' . $client['id']) ?>" method="post" class="edit-form">
-        <div class="form-grid">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?= esc($client['email']) ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="role">Rôle</label>
-                <select id="role" name="role" required>
-                    <option value="admin" <?= $client['role'] === 'admin' ? 'selected' : '' ?>>Administrateur</option>
-                    <option value="client" <?= $client['role'] === 'client' ? 'selected' : '' ?>>Client</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="nomcompte">Nom du compte</label>
-                <input type="text" id="nomcompte" name="nomcompte" value="<?= esc($client['nomcompte']) ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="prenomcompte">Prénom du compte</label>
-                <input type="text" id="prenomcompte" name="prenomcompte" value="<?= esc($client['prenomcompte']) ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="telephone">Téléphone</label>
-                <input type="tel" id="telephone" name="telephone" value="<?= esc($client['telephone']) ?>" required>
-            </div>
-
-            <div class="form-group full-width">
-                <label for="adresse">Adresse</label>
-                <input type="text" id="adresse" name="adresse" value="<?= esc($client['adresse']) ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="code_postal">Code Postal</label>
-                <input type="text" id="code_postal" name="code_postal" value="<?= esc($client['code_postal']) ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="ville">Ville</label>
-                <input type="text" id="ville" name="ville" value="<?= esc($client['ville']) ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="departement">Département</label>
-                <input type="text" id="departement" name="departement" value="<?= esc($client['departement']) ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="pays">Pays</label>
-                <input type="text" id="pays" name="pays" value="<?= esc($client['pays']) ?>" required>
+    
+    <div class="admin-content">
+        <div class="admin-header">
+            <h1><i class="fas fa-user-edit"></i> Modifier un utilisateur</h1>
+            <div class="admin-actions">
+                <a href="<?= base_url('admin/clients') ?>" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
             </div>
         </div>
 
-        <div class="form-actions">
-            <button type="submit" class="save-btn">
-                <i class="fas fa-save"></i> Enregistrer
-            </button>
+        <?php if(session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="form-container">
+            <form action="<?= base_url('admin/update-client/' . $client['id']) ?>" method="post" class="edit-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="<?= esc($client['email']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">Rôle</label>
+                        <select id="role" name="role" required>
+                            <option value="admin" <?= $client['role'] === 'admin' ? 'selected' : '' ?>>Administrateur</option>
+                            <option value="client" <?= $client['role'] === 'client' ? 'selected' : '' ?>>Client</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nomcompte">Nom du compte</label>
+                        <input type="text" id="nomcompte" name="nomcompte" value="<?= esc($client['nomcompte']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenomcompte">Prénom du compte</label>
+                        <input type="text" id="prenomcompte" name="prenomcompte" value="<?= esc($client['prenomcompte']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" id="telephone" name="telephone" value="<?= esc($client['telephone']) ?>" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse" value="<?= esc($client['adresse']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="code_postal">Code Postal</label>
+                        <input type="text" id="code_postal" name="code_postal" value="<?= esc($client['code_postal']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ville">Ville</label>
+                        <input type="text" id="ville" name="ville" value="<?= esc($client['ville']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="departement">Département</label>
+                        <input type="text" id="departement" name="departement" value="<?= esc($client['departement']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pays">Pays</label>
+                        <input type="text" id="pays" name="pays" value="<?= esc($client['pays']) ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 <style>
-.form-container {
-    background: white;
-    padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
-    margin: 0 auto;
+/* Styles pour le tableau de bord administrateur */
+.admin-container {
+    display: flex;
+    min-height: calc(100vh - 180px);
 }
 
-.form-header {
+.admin-sidebar {
+    width: 280px;
+    background-color: #F2C078;
+    color: #4A3A2D;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+}
+
+.admin-profile {
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.admin-profile h3 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: #4A3A2D;
+}
+
+.admin-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-nav li {
+    margin-bottom: 2px;
+}
+
+.admin-nav a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #4A3A2D;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.admin-nav a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.admin-nav li.active a,
+.admin-nav a:hover {
+    background-color: #D97B29;
+    color: white;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 25px;
+}
+
+.admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 2px solid #F2C078;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.form-header h1 {
-    color: #D97B29;
-    font-size: 2rem;
+.admin-header h1 {
     margin: 0;
+    font-size: 24px;
+    color: #D97B29;
+    display: flex;
+    align-items: center;
+}
+
+.admin-header h1 i {
+    margin-right: 10px;
+}
+
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .back-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.6rem 1.2rem;
+    padding: 8px 15px;
     background-color: #F2C078;
     color: #4A3A2D;
-    border-radius: 6px;
+    border-radius: 4px;
     text-decoration: none;
+    font-size: 14px;
     transition: all 0.3s ease;
 }
 
 .back-btn:hover {
     background-color: #D97B29;
-    color: #fff;
-    transform: translateY(-2px);
+    color: white;
+}
+
+/* Form Styles */
+.form-container {
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 4rem;
+    gap: 2rem 3rem;
     margin-bottom: 2rem;
-    padding: 0 2rem;
 }
 
 .form-group {
-    margin-bottom: 1.8rem;
-    position: relative;
+    margin-bottom: 1.5rem;
 }
 
 .form-group.full-width {
     grid-column: 1 / -1;
-    max-width: 100%;
-    padding: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #4A3A2D;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 0.9rem 1rem;
+    padding: 15px 18px;
     border: 2px solid #ddd;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 16px;
     transition: all 0.3s ease;
     background-color: #fff;
 }
@@ -159,35 +260,26 @@
     box-shadow: 0 0 0 3px rgba(242, 192, 120, 0.2);
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.8rem;
-    color: #4A3A2D;
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 0.3px;
-}
-
 .form-actions {
-    margin-top: 2rem;
-    text-align: right;
-    padding: 0 2rem;
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
 }
 
 .save-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.9rem 2rem;
+    gap: 0.8rem;
+    padding: 15px 40px;
     background-color: #D97B29;
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 180px;
+    min-width: 200px;
 }
 
 .save-btn:hover {
@@ -196,10 +288,10 @@
 }
 
 .alert {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    padding: 15px 20px;
+    margin-bottom: 25px;
     border-radius: 8px;
-    font-size: 0.95rem;
+    font-size: 16px;
 }
 
 .alert-danger {
@@ -208,32 +300,52 @@
     border: 1px solid #FCA5A5;
 }
 
-@media (max-width: 1024px) {
+/* Responsive */
+@media (max-width: 992px) {
+    .admin-container {
+        flex-direction: column;
+    }
+    
+    .admin-sidebar {
+        width: 100%;
+    }
+    
     .form-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .form-container {
+        padding: 2rem;
     }
 }
 
 @media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .admin-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
     .form-container {
         padding: 1.5rem;
     }
-
-    .form-header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
+    
+    .form-group input,
+    .form-group select {
+        padding: 12px 15px;
+        font-size: 14px;
     }
-
-    .back-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
+    
     .save-btn {
         width: 100%;
         justify-content: center;
     }
 }
 </style>
-<?= $this->endSection() ?> 
+
+<?= $this->include('layouts/footer') ?> 

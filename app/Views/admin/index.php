@@ -20,10 +20,6 @@
     <div class="admin-content">
         <div class="admin-header">
             <h1><i class="fas fa-tachometer-alt"></i> Tableau de bord</h1>
-            <div class="admin-actions">
-                <span class="date-display"><?= date('d/m/Y') ?></span>
-                <a href="<?= base_url('deconnexion') ?>" class="admin-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-            </div>
         </div>
         
         <div class="admin-stats">
