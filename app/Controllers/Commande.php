@@ -211,7 +211,13 @@ class Commande extends BaseController
             return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
-        return view('commande/confirmation', ['commande' => $commande]);
+        // Extraire les produits pour les passer séparément à la vue
+        $produits = $commande['produits'] ?? [];
+
+        return view('commande/confirmation', [
+            'commande' => $commande,
+            'produits' => $produits
+        ]);
     }
 
     private function getAdresseLivraison()

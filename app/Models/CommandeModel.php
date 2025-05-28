@@ -39,7 +39,7 @@ class CommandeModel extends Model
 
     public function getCommandeWithDetails($id)
     {
-        $commande = $this->select('commandes.*, users.email, users.nom, users.prenom')
+        $commande = $this->select('commandes.*, users.email, users.nom, users.prenom, users.adresse, users.code_postal, users.ville, users.departement, users.pays')
                          ->join('users', 'users.id = commandes.user_id')
                          ->find($id);
 

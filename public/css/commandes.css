@@ -1,0 +1,275 @@
+/* Styles pour la gestion des commandes */
+.admin-container {
+    display: flex;
+    min-height: calc(100vh - 180px);
+    background-color: #FFF8F0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.admin-sidebar {
+    width: 280px;
+    background-color: #F2C078;
+    color: #4A3A2D;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+    min-height: calc(100vh - 180px);
+}
+
+.admin-profile {
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.admin-profile h3 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: #4A3A2D;
+}
+
+.admin-profile p {
+    margin: 0;
+    font-size: 14px;
+    color: #6B3F1D;
+    opacity: 0.8;
+}
+
+.admin-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-nav li {
+    margin-bottom: 2px;
+}
+
+.admin-nav a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #4A3A2D;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.admin-nav a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.admin-nav li.active a,
+.admin-nav a:hover {
+    background-color: #D97B29;
+    color: white;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 25px;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #F2C078;
+}
+
+.admin-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #D97B29;
+    display: flex;
+    align-items: center;
+}
+
+.admin-header h1 i {
+    margin-right: 10px;
+}
+
+.alert {
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.no-commandes {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.no-commandes i {
+    font-size: 48px;
+    color: #D97B29;
+    margin-bottom: 20px;
+}
+
+.no-commandes p {
+    font-size: 18px;
+    color: #6B3F1D;
+    margin: 0;
+}
+
+.commandes-table-wrapper {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow-x: auto;
+}
+
+.commandes-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.commandes-table th {
+    background-color: #F2C078;
+    color: #4A3A2D;
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #D97B29;
+}
+
+.commandes-table td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+}
+
+.commandes-table tr:hover {
+    background-color: #FFF8F0;
+}
+
+.td-numero strong {
+    color: #D97B29;
+}
+
+.client-info strong {
+    color: #4A3A2D;
+}
+
+.client-info small {
+    color: #6B3F1D;
+}
+
+.td-total strong {
+    color: #D97B29;
+}
+
+.statut-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.statut-en_attente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.statut-payee {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.statut-expediee {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.statut-livree {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.statut-annulee {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-action {
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-view {
+    background-color: #D97B29;
+    color: white;
+}
+
+.btn-view:hover {
+    background-color: #A44D25;
+    color: white;
+}
+
+.statut-select {
+    padding: 4px 8px;
+    border: 1px solid #D97B29;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: white;
+    color: #4A3A2D;
+}
+
+.statut-select:focus {
+    outline: none;
+    border-color: #A44D25;
+}
+
+@media (max-width: 992px) {
+    .admin-container {
+        flex-direction: column;
+    }
+    
+    .admin-sidebar {
+        width: 100%;
+    }
+    
+    .commandes-table-wrapper {
+        overflow-x: scroll;
+    }
+    
+    .commandes-table {
+        min-width: 800px;
+    }
+}
