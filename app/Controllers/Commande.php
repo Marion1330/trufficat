@@ -202,8 +202,13 @@ class Commande extends BaseController
 
         $commande = $this->commandeModel->getCommandeWithDetails($commandeId);
         
-        if (!$commande || $commande['user_id'] != session('user_id')) {
+        if (!$commande) {
             return redirect()->to('/')->with('error', 'Commande non trouvée');
+        }
+        
+        // Vérifier que l'utilisateur est propriétaire de la commande OU est administrateur
+        if ($commande['user_id'] != session('user_id') && session('role') !== 'admin') {
+            return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
         return view('commande/confirmation', ['commande' => $commande]);

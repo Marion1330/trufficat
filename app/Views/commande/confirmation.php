@@ -33,6 +33,19 @@
                 <?php endif; ?>
             </div>
             
+            <?php if (!empty($commande['adresse_livraison'])): ?>
+            <div class="delivery-address">
+                <h3>Adresse de livraison</h3>
+                <div class="address-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="address-details">
+                        <p class="recipient-name"><strong><?= esc($commande['prenom']) ?> <?= esc($commande['nom']) ?></strong></p>
+                        <p class="address-text"><?= nl2br(esc($commande['adresse_livraison'])) ?></p>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+            
             <div class="products-ordered">
                 <h3>Produits commandés</h3>
                 <?php if (!empty($commande['produits'])): ?>
@@ -67,14 +80,19 @@
                 <li>📧 Vous recevrez un email de confirmation</li>
                 <li>📦 Votre commande sera préparée sous 24-48h</li>
                 <li>🚚 Vous recevrez un email avec le numéro de suivi</li>
-                <li>📱 Vous pouvez suivre votre commande dans votre espace client</li>
             </ul>
         </div>
         
         <div class="action-buttons">
-            <a href="<?= base_url('commande/historique') ?>" class="btn btn-secondary">
-                <i class="fas fa-history"></i> Voir mes commandes
-            </a>
+            <?php if (session('role') === 'admin'): ?>
+                <a href="<?= base_url('admin/commandes') ?>" class="btn btn-admin">
+                    <i class="fas fa-arrow-left"></i> Retour au dashboard admin
+                </a>
+            <?php else: ?>
+                <a href="<?= base_url('commande/historique') ?>" class="btn btn-secondary">
+                    <i class="fas fa-history"></i> Voir mes commandes
+                </a>
+            <?php endif; ?>
             <a href="<?= base_url('/') ?>" class="btn btn-primary">
                 <i class="fas fa-home"></i> Retour à l'accueil
             </a>
@@ -161,6 +179,46 @@
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
+}
+
+.delivery-address {
+    background: #FFF8F0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.delivery-address h3 {
+    color: #D97B29;
+    margin-bottom: 20px;
+}
+
+.address-info {
+    display: flex;
+    align-items: flex-start;
+}
+
+.address-info i {
+    font-size: 24px;
+    color: #D97B29;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+.address-details {
+    flex: 1;
+}
+
+.recipient-name {
+    margin: 0 0 10px 0;
+    color: #D97B29;
+    font-size: 16px;
+}
+
+.address-text {
+    margin: 0;
+    color: #6B3F1D;
+    line-height: 1.5;
 }
 
 .products-ordered h3 {
@@ -286,6 +344,16 @@
 }
 
 .btn-secondary:hover {
+    background: #4A3A2D;
+    color: white;
+}
+
+.btn-admin {
+    background: #6B3F1D;
+    color: white;
+}
+
+.btn-admin:hover {
     background: #4A3A2D;
     color: white;
 }

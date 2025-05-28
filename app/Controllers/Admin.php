@@ -337,13 +337,14 @@ class Admin extends BaseController
         }
 
         $commandeModel = new \App\Models\CommandeModel();
-        $data['commande'] = $commandeModel->getCommandeWithDetails($id);
+        $commande = $commandeModel->find($id);
         
-        if (!$data['commande']) {
+        if (!$commande) {
             return redirect()->to('/admin/commandes')->with('error', 'Commande non trouvée');
         }
         
-        return view('admin/voir_commande', $data);
+        // Rediriger vers la page de confirmation de commande existante
+        return redirect()->to('/commande/confirmation/' . $id);
     }
 
     public function updateStatutCommande($id)
