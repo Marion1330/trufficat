@@ -1175,112 +1175,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const tableWrapper = document.querySelector('.products-table-wrapper');
-    const scrollTrack = document.querySelector('.scroll-track');
-    const scrollThumb = document.querySelector('.scroll-thumb');
-    
-    if (!tableWrapper || !scrollTrack || !scrollThumb) return;
-
-    let isDragging = false;
-    let startX, startScrollLeft, startThumbPosition;
-
-    function updateThumbPosition(forcePosition = null) {
-        const scrollableWidth = tableWrapper.scrollWidth - tableWrapper.clientWidth;
-        if (scrollableWidth <= 0) return;
-
-        const trackWidth = scrollTrack.clientWidth;
-        const thumbWidth = scrollThumb.clientWidth;
-        const maxTransform = trackWidth - thumbWidth;
-
-        if (forcePosition !== null) {
-            const transform = Math.max(0, Math.min(forcePosition, maxTransform));
-            const percentage = transform / maxTransform;
-            tableWrapper.scrollLeft = percentage * scrollableWidth;
-        } else {
-            const scrollPercentage = tableWrapper.scrollLeft / scrollableWidth;
-            const transform = scrollPercentage * maxTransform;
-            scrollThumb.style.transform = `translateX(${transform}px)`;
-        }
-    }
-
-    // Mise à jour initiale
-    updateThumbPosition();
-
-    // Gestion du défilement du tableau
-    tableWrapper.addEventListener('scroll', () => updateThumbPosition());
-
-    // Gestion du drag & drop
-    function onMouseDown(e) {
-        isDragging = true;
-        scrollThumb.classList.add('dragging');
-        
-        startX = e.clientX;
-        startThumbPosition = scrollThumb.getBoundingClientRect().left - scrollTrack.getBoundingClientRect().left;
-        
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-        e.preventDefault(); // Empêche la sélection de texte
-    }
-
-    function onMouseMove(e) {
-        if (!isDragging) return;
-
-        const deltaX = e.clientX - startX;
-        const newPosition = startThumbPosition + deltaX;
-        updateThumbPosition(newPosition);
-    }
-
-    function onMouseUp() {
-        isDragging = false;
-        scrollThumb.classList.remove('dragging');
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-    }
-
-    // Gestion du clic sur la track
-    scrollTrack.addEventListener('click', function(e) {
-        if (e.target === scrollThumb) return;
-        
-        const trackRect = scrollTrack.getBoundingClientRect();
-        const clickPosition = e.clientX - trackRect.left;
-        const thumbWidth = scrollThumb.clientWidth;
-        const trackWidth = scrollTrack.clientWidth;
-        
-        // Centre le curseur sur le clic
-        const newPosition = clickPosition - (thumbWidth / 2);
-        updateThumbPosition(newPosition);
-    });
-
-    // Ajout des écouteurs d'événements pour le drag & drop
-    scrollThumb.addEventListener('mousedown', onMouseDown);
-
-    // Gestion du resize de la fenêtre
-    window.addEventListener('resize', () => updateThumbPosition());
-
-    // Filtrage par type d'animal
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const productRows = document.querySelectorAll('.product-row');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            const filter = this.getAttribute('data-filter');
-            
-            productRows.forEach(row => {
-                if (filter === 'all') {
-                    row.style.display = '';
-                } else {
-                    row.style.display = row.classList.contains(filter) ? '' : 'none';
-                }
-            });
-        });
-    });
-
     // Fonction de tri
     const sortSelect = document.querySelector('.sort-select');
     const tbody = document.querySelector('.products-table tbody');
+
+    if (!sortSelect || !tbody) return;
 
     function sortTable(sortBy, direction) {
         const rows = Array.from(tbody.querySelectorAll('tr'));
@@ -1288,13 +1187,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const sortFunctions = {
             name: (a, b) => a.querySelector('.td-name').textContent.localeCompare(b.querySelector('.td-name').textContent),
             price: (a, b) => {
-                const priceA = parseFloat(a.querySelector('.td-price').textContent.replace('€', '').replace(',', '.').trim());
-                const priceB = parseFloat(b.querySelector('.td-price').textContent.replace('€', '').replace(',', '.').trim());
+                const priceTextA = a.querySelector('.td-price').textContent.replace(/[€\s]/g, '').replace(',', '.');
+                const priceTextB = b.querySelector('.td-price').textContent.replace(/[€\s]/g, '').replace(',', '.');
+                const priceA = parseFloat(priceTextA) || 0;
+                const priceB = parseFloat(priceTextB) || 0;
                 return priceA - priceB;
             },
             stock: (a, b) => {
-                const stockA = parseInt(a.querySelector('.td-stock .stock-badge').textContent) || 0;
-                const stockB = parseInt(b.querySelector('.td-stock .stock-badge').textContent) || 0;
+                const stockTextA = a.querySelector('.td-stock .stock-badge').textContent.trim();
+                const stockTextB = b.querySelector('.td-stock .stock-badge').textContent.trim();
+                const stockA = stockTextA === 'Rupture' ? 0 : parseInt(stockTextA) || 0;
+                const stockB = stockTextB === 'Rupture' ? 0 : parseInt(stockTextB) || 0;
                 return stockA - stockB;
             },
             category: (a, b) => a.querySelector('.td-category').textContent.localeCompare(b.querySelector('.td-category').textContent),
@@ -1314,7 +1217,9 @@ document.addEventListener('DOMContentLoaded', function() {
             created: (a, b) => {
                 const getCreatedDate = (el) => {
                     const dateText = el.querySelector('.date-created').textContent;
-                    const [day, month, year, hours, minutes] = dateText.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/).slice(1);
+                    const match = dateText.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/);
+                    if (!match) return new Date(0);
+                    const [, day, month, year, hours, minutes] = match;
                     return new Date(year, month - 1, day, hours, minutes);
                 };
                 return getCreatedDate(a) - getCreatedDate(b);
@@ -1322,304 +1227,70 @@ document.addEventListener('DOMContentLoaded', function() {
             updated: (a, b) => {
                 const getUpdatedDate = (el) => {
                     const dateText = el.querySelector('.date-updated').textContent;
-                    const [day, month, year, hours, minutes] = dateText.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/).slice(1);
+                    const match = dateText.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/);
+                    if (!match) return new Date(0);
+                    const [, day, month, year, hours, minutes] = match;
                     return new Date(year, month - 1, day, hours, minutes);
                 };
                 return getUpdatedDate(a) - getUpdatedDate(b);
             }
         };
 
-        rows.sort((a, b) => {
-            const [field] = sortBy.split('_');
-            let result = sortFunctions[field](a, b);
-            return direction === 'desc' ? -result : result;
-        });
+        if (sortFunctions[sortBy]) {
+            rows.sort((a, b) => {
+                let result = sortFunctions[sortBy](a, b);
+                return direction === 'desc' ? -result : result;
+            });
 
-        // Réinsérer les lignes triées
-        rows.forEach(row => tbody.appendChild(row));
+            // Réinsérer les lignes triées
+            rows.forEach(row => tbody.appendChild(row));
+        }
     }
 
+    // Event listener pour le tri
     sortSelect.addEventListener('change', function() {
-        const [sortBy, direction] = this.value.split('_');
-        if (!sortBy) return; // Si "Trier par" est sélectionné
+        const value = this.value;
+        if (!value) return;
         
+        const parts = value.split('_');
+        const sortBy = parts[0];
+        const direction = parts[1] || 'asc';
+        
+        console.log('Tri par:', sortBy, 'Direction:', direction); // Debug
         sortTable(sortBy, direction);
     });
 
-    // Fonction de recherche
+    // Fonction de recherche simple
     const searchInput = document.getElementById('searchInput');
-    let searchTimeout;
-
-    function normalizeText(text) {
-        return text.toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9\s]/g, '');
-    }
-
-    function searchProducts(query) {
-        const normalizedQuery = normalizeText(query);
+    if (searchInput) {
+        let searchTimeout;
         
-        productRows.forEach(row => {
-            const searchableFields = [
-                row.querySelector('.td-name').textContent,
-                row.querySelector('.td-description').textContent,
-                row.querySelector('.td-category').textContent,
-                row.querySelector('.td-brand').textContent,
-                row.querySelector('.td-age').textContent,
-                row.querySelector('.td-flavor').textContent,
-                row.querySelector('.td-price').textContent,
-                row.querySelector('.td-stock .stock-badge').textContent,
-                row.querySelector('.td-animal').textContent
-            ];
-
-            const searchableText = normalizeText(searchableFields.join(' '));
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim().toLowerCase();
             
-            if (normalizedQuery === '' || searchableText.includes(normalizedQuery)) {
-                row.style.display = '';
-                // Mettre en surbrillance les correspondances
-                highlightMatches(row, query);
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        // Mettre à jour la position du curseur de défilement
-        if (typeof updateThumbPosition === 'function') {
-            updateThumbPosition();
-        }
-    }
-
-    function highlightMatches(row, query) {
-        if (!query) {
-            // Restaurer le texte original s'il n'y a pas de recherche
-            row.querySelectorAll('.highlight').forEach(el => {
-                el.outerHTML = el.textContent;
-            });
-            return;
-        }
-
-        const fields = row.querySelectorAll('.td-name, .td-description, .td-category, .td-brand, .td-age, .td-flavor');
-        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-
-        fields.forEach(field => {
-            const originalText = field.textContent;
-            if (!field.querySelector('.highlight')) {
-                field.innerHTML = originalText.replace(regex, '<span class="highlight">$1</span>');
-            }
+            searchTimeout = setTimeout(() => {
+                const rows = tbody.querySelectorAll('tr');
+                
+                rows.forEach(row => {
+                    const searchableText = [
+                        row.querySelector('.td-name').textContent,
+                        row.querySelector('.td-description').textContent,
+                        row.querySelector('.td-category').textContent,
+                        row.querySelector('.td-brand').textContent,
+                        row.querySelector('.td-age').textContent,
+                        row.querySelector('.td-flavor').textContent
+                    ].join(' ').toLowerCase();
+                    
+                    if (query === '' || searchableText.includes(query)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }, 300);
         });
     }
-
-    searchInput.addEventListener('input', function() {
-        clearTimeout(searchTimeout);
-        const query = this.value.trim();
-        
-        // Délai de 300ms pour éviter trop de recherches pendant la frappe
-        searchTimeout = setTimeout(() => {
-            searchProducts(query);
-        }, 300);
-    });
-
-    // Ajouter les styles pour la surbrillance
-    const style = document.createElement('style');
-    style.textContent = `
-        .highlight {
-            background-color: #fff3cd;
-            padding: 0 2px;
-            border-radius: 2px;
-            font-weight: bold;
-            color: #D97B29;
-        }
-        
-        .search-form {
-            position: relative;
-        }
-        
-        .search-form input {
-            padding-right: 35px;
-            transition: all 0.3s ease;
-        }
-        
-        .search-form input:focus {
-            border-color: #D97B29;
-            box-shadow: 0 0 0 2px rgba(217, 123, 41, 0.1);
-        }
-        
-        .search-form button {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #D97B29;
-            cursor: pointer;
-            padding: 5px;
-            transition: color 0.3s ease;
-        }
-        
-        .search-form button:hover {
-            color: #B45B19;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Pagination
-    const itemsPerPage = 10;
-    let currentPage = 1;
-
-    function updatePagination() {
-        const visibleRows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
-        const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
-        
-        // Mettre à jour les numéros de page
-        const paginationNumbers = document.querySelector('.pagination-numbers');
-        paginationNumbers.innerHTML = '';
-        
-        // Calculer la plage de pages à afficher
-        let startPage = Math.max(1, currentPage - 2);
-        let endPage = Math.min(totalPages, startPage + 4);
-        
-        // Ajuster si on est près de la fin
-        if (endPage - startPage < 4) {
-            startPage = Math.max(1, endPage - 4);
-        }
-        
-        // Ajouter la première page si nécessaire
-        if (startPage > 1) {
-            const firstPageLink = document.createElement('a');
-            firstPageLink.href = '#';
-            firstPageLink.className = 'pagination-number';
-            firstPageLink.textContent = '1';
-            firstPageLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                goToPage(1);
-            });
-            paginationNumbers.appendChild(firstPageLink);
-            
-            if (startPage > 2) {
-                const ellipsis = document.createElement('span');
-                ellipsis.className = 'pagination-ellipsis';
-                ellipsis.textContent = '...';
-                paginationNumbers.appendChild(ellipsis);
-            }
-        }
-        
-        // Ajouter les pages
-        for (let i = startPage; i <= endPage; i++) {
-            const pageLink = document.createElement('a');
-            pageLink.href = '#';
-            pageLink.className = `pagination-number${i === currentPage ? ' active' : ''}`;
-            pageLink.textContent = i;
-            pageLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                goToPage(i);
-            });
-            paginationNumbers.appendChild(pageLink);
-        }
-        
-        // Ajouter la dernière page si nécessaire
-        if (endPage < totalPages) {
-            if (endPage < totalPages - 1) {
-                const ellipsis = document.createElement('span');
-                ellipsis.className = 'pagination-ellipsis';
-                ellipsis.textContent = '...';
-                paginationNumbers.appendChild(ellipsis);
-            }
-            
-            const lastPageLink = document.createElement('a');
-            lastPageLink.href = '#';
-            lastPageLink.className = 'pagination-number';
-            lastPageLink.textContent = totalPages;
-            lastPageLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                goToPage(totalPages);
-            });
-            paginationNumbers.appendChild(lastPageLink);
-        }
-        
-        // Mettre à jour les boutons précédent/suivant
-        const prevButton = document.querySelector('.pagination-btn.prev');
-        const nextButton = document.querySelector('.pagination-btn.next');
-        
-        prevButton.disabled = currentPage === 1;
-        nextButton.disabled = currentPage === totalPages;
-        
-        // Afficher les produits de la page courante
-        visibleRows.forEach((row, index) => {
-            const shouldShow = index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage;
-            row.style.display = shouldShow ? '' : 'none';
-        });
-    }
-
-    function goToPage(page) {
-        currentPage = page;
-        updatePagination();
-        // Scroll en haut du tableau
-        tableWrapper.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Ajouter les écouteurs d'événements pour les boutons de pagination
-    document.querySelector('.pagination-btn.prev').addEventListener('click', () => {
-        if (currentPage > 1) {
-            goToPage(currentPage - 1);
-        }
-    });
-
-    document.querySelector('.pagination-btn.next').addEventListener('click', () => {
-        const visibleRows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
-        const totalPages = Math.ceil(visibleRows.length / itemsPerPage);
-        if (currentPage < totalPages) {
-            goToPage(currentPage + 1);
-        }
-    });
-
-    // Mettre à jour la pagination après chaque recherche ou tri
-    const updateTableAndPagination = () => {
-        currentPage = 1; // Retour à la première page
-        updatePagination();
-    };
-
-    // Modifier les fonctions existantes pour appeler updateTableAndPagination
-    sortSelect.addEventListener('change', function() {
-        const [sortBy, direction] = this.value.split('_');
-        if (!sortBy) return;
-        
-        sortTable(sortBy, direction);
-        updateTableAndPagination();
-    });
-
-    searchInput.addEventListener('input', function() {
-        clearTimeout(searchTimeout);
-        const query = this.value.trim();
-        
-        searchTimeout = setTimeout(() => {
-            searchProducts(query);
-            updateTableAndPagination();
-        }, 300);
-    });
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            const filter = this.getAttribute('data-filter');
-            
-            productRows.forEach(row => {
-                if (filter === 'all') {
-                    row.style.display = '';
-                } else {
-                    row.style.display = row.classList.contains(filter) ? '' : 'none';
-                }
-            });
-            
-            updateTableAndPagination();
-        });
-    });
-
-    // Initialiser la pagination au chargement
-    updateTableAndPagination();
 });
 </script>
 
