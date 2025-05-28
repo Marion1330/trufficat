@@ -8,7 +8,7 @@
     <div class="pub-carousel">
         <?php foreach ($publicites as $pub): ?>
             <div class="pub-slide">
-                <a href="<?= esc($pub['url'] ?? '#') ?>" target="_blank">
+                <a href="<?= esc($pub['url'] ?? '#') ?>">
                     <img src="<?= base_url('images/pubs/' . esc($pub['image'])) ?>" alt="<?= esc($pub['alt_text'] ?? 'Publicité') ?>">
                 </a>
             </div>

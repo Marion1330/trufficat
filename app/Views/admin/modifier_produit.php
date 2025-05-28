@@ -246,7 +246,7 @@
 .admin-container {
     display: flex;
     min-height: calc(100vh - 180px);
-    background-color: #f7f9fc;
+    
 }
 
 .admin-sidebar {

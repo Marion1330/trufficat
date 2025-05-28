@@ -22,8 +22,8 @@ class Accueil extends BaseController
         // Récupère les produits vedettes
         $produitsVedettes = $this->produitModel->getProduitsVedettes();
 
-        // Récupérer les publicités
-        $publicites = $this->pubModel->findAll();
+        // Récupérer les publicités avec leurs URLs générées
+        $publicites = $this->pubModel->getPublicites();
 
         // Calcul du prix formaté
         foreach ($produitsVedettes as &$produit) {
