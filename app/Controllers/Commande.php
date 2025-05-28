@@ -211,12 +211,19 @@ class Commande extends BaseController
             return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
+        // Récupérer l'adresse par défaut actuelle de l'utilisateur
+        $adresseModel = new \App\Models\AdresseModel();
+        $adresseDefaut = $adresseModel->where('user_id', $commande['user_id'])
+                                     ->where('is_defaut', 1)
+                                     ->first();
+
         // Extraire les produits pour les passer séparément à la vue
         $produits = $commande['produits'] ?? [];
 
         return view('commande/confirmation', [
             'commande' => $commande,
-            'produits' => $produits
+            'produits' => $produits,
+            'adresseDefaut' => $adresseDefaut
         ]);
     }
 

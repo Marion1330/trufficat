@@ -36,12 +36,23 @@
             <div class="address-info">
                 <i class="fas fa-home"></i>
                 <div class="address-details">
-                    <p class="recipient-name"><?= esc($commande['prenom']) ?> <?= esc($commande['nom']) ?></p>
-                    <p class="address-text">
-                        <?= esc($commande['adresse'] ?? '') ?><br>
-                        <?= esc($commande['code_postal'] ?? '') ?> <?= esc($commande['ville'] ?? '') ?><br>
-                        <?= esc($commande['departement'] ?? '') ?><?= !empty($commande['pays']) ? ', ' . esc($commande['pays']) : '' ?>
-                    </p>
+                    <?php if ($adresseDefaut): ?>
+                        <p class="recipient-name"><?= esc($adresseDefaut['prenom']) ?> <?= esc($adresseDefaut['nom']) ?></p>
+                        <p class="address-text">
+                            <?= esc($adresseDefaut['adresse']) ?><br>
+                            <?php if (!empty($adresseDefaut['complement'])): ?>
+                                <?= esc($adresseDefaut['complement']) ?><br>
+                            <?php endif; ?>
+                            <?= esc($adresseDefaut['code_postal']) ?> <?= esc($adresseDefaut['ville']) ?><br>
+                            <?= esc($adresseDefaut['departement']) ?><?= !empty($adresseDefaut['pays']) ? ', ' . esc($adresseDefaut['pays']) : '' ?>
+                        </p>
+                        <?php if (!empty($adresseDefaut['telephone'])): ?>
+                            <p class="phone">📞 <?= esc($adresseDefaut['telephone']) ?></p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p class="recipient-name">Adresse non disponible</p>
+                        <p class="address-text">Veuillez définir une adresse par défaut dans votre profil.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
