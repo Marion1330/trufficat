@@ -100,17 +100,26 @@ class AuthController extends BaseController
         $userId = session()->get('user_id');
         $user = $userModel->find($userId);
 
-        // On considère que l'adresse principale est toujours par défaut sauf si une adresse secondaire a is_principale=1
-        $adressePrincipaleDefaut = !$adresseModel->where('user_id', $userId)->where('is_principale', 1)->first();
+        // Récupérer toutes les adresses de l'utilisateur
+        $adresses = $adresseModel->where('user_id', $userId)->findAll();
 
-        $adresses = $adresseModel
-            ->where('user_id', $userId)
-            ->findAll();
+        // Séparer l'adresse par défaut des autres
+        $adresseDefaut = null;
+        $adressesSupplementaires = [];
+
+        foreach ($adresses as $adresse) {
+            if ($adresse['is_defaut'] == 1) {
+                $adresseDefaut = $adresse;
+            } else {
+                // Plus de comptage des commandes liées - les adresses supplémentaires sont librement supprimables
+                $adressesSupplementaires[] = $adresse;
+            }
+        }
 
         return view('VueProfil', [
             'user' => $user,
-            'adresses' => $adresses,
-            'adressePrincipaleDefaut' => $adressePrincipaleDefaut
+            'adresseDefaut' => $adresseDefaut,
+            'adressesSupplementaires' => $adressesSupplementaires
         ]);
     }
 
@@ -136,11 +145,11 @@ class AuthController extends BaseController
             'departement' => $this->request->getPost('departement'),
             'pays' => $this->request->getPost('pays'),
             'telephone' => $this->request->getPost('telephone'),
-            'is_principale' => $this->request->getPost('is_principale') ? 1 : 0,
+            'is_defaut' => 0, // Les nouvelles adresses ne sont jamais par défaut
         ];
 
         $adresseModel->save($data);
-        return redirect()->to('/profil')->with('success', 'Adresse secondaire ajoutée.');
+        return redirect()->to('/profil')->with('success', 'Adresse supplémentaire ajoutée.');
     }
 
     public function modifierAdresse($id)
@@ -160,14 +169,9 @@ class AuthController extends BaseController
         $adresseModel = new \App\Models\AdresseModel();
         $userId = session()->get('user_id');
 
-        // Si définie principale, désactiver les autres
-        if ($this->request->getPost('is_principale')) {
-            $adresseModel->where('user_id', $userId)
-                ->set(['is_principale' => 0])
-                ->update();
-        }
-
         $data = [
+            'nom' => $this->request->getPost('nom'),
+            'prenom' => $this->request->getPost('prenom'),
             'adresse' => $this->request->getPost('adresse'),
             'complement' => $this->request->getPost('complement'),
             'code_postal' => $this->request->getPost('code_postal'),
@@ -175,7 +179,6 @@ class AuthController extends BaseController
             'departement' => $this->request->getPost('departement'),
             'pays' => $this->request->getPost('pays'),
             'telephone' => $this->request->getPost('telephone'),
-            'is_principale' => $this->request->getPost('is_principale') ? 1 : 0,
         ];
 
         $adresseModel->update($id, $data);
@@ -189,9 +192,10 @@ class AuthController extends BaseController
 
         if ($adresse && $adresse['user_id'] == session()->get('user_id')) {
             $adresseModel->delete($id);
+            return redirect()->to('/profil')->with('success', 'Adresse supprimée.');
         }
 
-        return redirect()->to('/profil')->with('success', 'Adresse supprimée.');
+        return redirect()->to('/profil')->with('error', 'Adresse non trouvée.');
     }
 
     public function changerMotDePasse()
@@ -240,50 +244,25 @@ class AuthController extends BaseController
     public function definirAdresseDefaut($id)
     {
         $adresseModel = new \App\Models\AdresseModel();
-        $userModel = new \App\Models\UserModel();
         $userId = session()->get('user_id');
 
-        $adresse = $adresseModel->where('user_id', $userId)->find($id);
-        if (!$adresse) {
-            return redirect()->to('/profil')->withInput()->with('error', 'Adresse non trouvée.');
+        $nouvelleAdresseDefaut = $adresseModel->where('user_id', $userId)->find($id);
+        if (!$nouvelleAdresseDefaut) {
+            return redirect()->to('/profil')->with('error', 'Adresse non trouvée.');
         }
 
-        // Sauvegarde l'ancienne adresse principale dans adresses
-        $user = $userModel->find($userId);
-        $adresseModel->insert([
-            'user_id' => $userId,
-            'nom' => $user['nom'],
-            'prenom' => $user['prenom'],
-            'adresse' => $user['adresse'],
-            'complement' => $user['complement'],
-            'code_postal' => $user['code_postal'],
-            'ville' => $user['ville'],
-            'departement' => $user['departement'],
-            'pays' => $user['pays'],
-            'telephone' => $user['telephone'],
-            'is_principale' => 0
-        ]);
+        // Récupérer l'ancienne adresse par défaut
+        $ancienneAdresseDefaut = $adresseModel->where('user_id', $userId)->where('is_defaut', 1)->first();
 
-        // Met à jour l'utilisateur avec la nouvelle adresse principale
-        $userModel->update($userId, [
-            'nom' => $adresse['nom'],
-            'prenom' => $adresse['prenom'],
-            'adresse' => $adresse['adresse'],
-            'complement' => $adresse['complement'],
-            'code_postal' => $adresse['code_postal'],
-            'ville' => $adresse['ville'],
-            'departement' => $adresse['departement'],
-            'pays' => $adresse['pays'],
-            'telephone' => $adresse['telephone'],
-        ]);
+        // Mettre l'ancienne adresse par défaut comme supplémentaire (is_defaut = 0)
+        if ($ancienneAdresseDefaut) {
+            $adresseModel->update($ancienneAdresseDefaut['id'], ['is_defaut' => 0]);
+        }
 
-        // Met toutes les adresses secondaires à is_principale=0
-        $adresseModel->where('user_id', $userId)->set(['is_principale' => 0])->update();
+        // Définir la nouvelle adresse comme défaut
+        $adresseModel->update($id, ['is_defaut' => 1]);
 
-        // Supprime l'adresse devenue principale des adresses secondaires
-        $adresseModel->delete($id);
-
-        return redirect()->to('/profil')->with('success', 'Adresse principale modifiée.');
+        return redirect()->to('/profil')->with('success', 'Adresse par défaut modifiée.');
     }
 
     // Quand une adresse devient principale
@@ -395,5 +374,89 @@ class AuthController extends BaseController
         ];
         $userModel->update($userId, $data);
         return redirect()->to('/profil')->with('success', 'Adresse principale modifiée.');
+    }
+
+    public function modifierAdresseDefaut()
+    {
+        $adresseModel = new \App\Models\AdresseModel();
+        $userId = session()->get('user_id');
+
+        // Récupérer l'adresse par défaut actuelle
+        $adresseDefaut = $adresseModel->where('user_id', $userId)->where('is_defaut', 1)->first();
+
+        if (!$adresseDefaut) {
+            return redirect()->to('/profil')->with('error', 'Aucune adresse par défaut trouvée.');
+        }
+
+        return view('AdresseModifier', [
+            'adresse' => $adresseDefaut,
+            'isDefaut' => true
+        ]);
+    }
+
+    public function updateAdresseDefaut()
+    {
+        $adresseModel = new \App\Models\AdresseModel();
+        $userId = session()->get('user_id');
+
+        // Récupérer l'adresse par défaut actuelle
+        $adresseDefaut = $adresseModel->where('user_id', $userId)->where('is_defaut', 1)->first();
+
+        if (!$adresseDefaut) {
+            return redirect()->to('/profil')->with('error', 'Aucune adresse par défaut trouvée.');
+        }
+
+        $data = [
+            'nom' => $this->request->getPost('nom'),
+            'prenom' => $this->request->getPost('prenom'),
+            'adresse' => $this->request->getPost('adresse'),
+            'complement' => $this->request->getPost('complement'),
+            'code_postal' => $this->request->getPost('code_postal'),
+            'ville' => $this->request->getPost('ville'),
+            'departement' => $this->request->getPost('departement'),
+            'pays' => $this->request->getPost('pays'),
+            'telephone' => $this->request->getPost('telephone'),
+        ];
+
+        $adresseModel->update($adresseDefaut['id'], $data);
+        return redirect()->to('/profil')->with('success', 'Adresse par défaut modifiée.');
+    }
+
+    public function creerAdresseDefaut()
+    {
+        $userModel = new \App\Models\UserModel();
+        $adresseModel = new \App\Models\AdresseModel();
+        $userId = session()->get('user_id');
+        $user = $userModel->find($userId);
+
+        // Vérifier qu'il n'y a pas déjà d'adresse par défaut
+        $adresseDefautExistante = $adresseModel->where('user_id', $userId)->where('is_defaut', 1)->first();
+        if ($adresseDefautExistante) {
+            return redirect()->to('/profil')->with('error', 'Vous avez déjà une adresse par défaut.');
+        }
+
+        // Vérifier que l'utilisateur a des infos d'adresse
+        if (empty($user['adresse']) || empty($user['code_postal']) || empty($user['ville'])) {
+            return redirect()->to('/profil')->with('error', 'Veuillez d\'abord compléter vos informations d\'adresse dans votre profil.');
+        }
+
+        // Créer l'adresse par défaut
+        $nouvelleAdresse = [
+            'user_id' => $userId,
+            'nom' => $user['nom'] ?: $user['nomcompte'],
+            'prenom' => $user['prenom'] ?: $user['prenomcompte'],
+            'titre' => 'Adresse par défaut',
+            'adresse' => $user['adresse'],
+            'complement' => $user['complement'],
+            'code_postal' => $user['code_postal'],
+            'ville' => $user['ville'],
+            'departement' => $user['departement'],
+            'pays' => $user['pays'] ?: 'France',
+            'telephone' => $user['telephone'],
+            'is_defaut' => 1
+        ];
+
+        $adresseModel->save($nouvelleAdresse);
+        return redirect()->to('/profil')->with('success', 'Adresse par défaut créée à partir de vos informations.');
     }
 }

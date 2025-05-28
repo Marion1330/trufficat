@@ -1,5 +1,5 @@
 <?= $this->include('layouts/header') ?>
-<link rel="stylesheet" href="<?= base_url('css/panier_index.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css/panier.css') ?>">
 
 <div class="panier-container">
     <h1 class="panier-title">Mon Panier</h1>

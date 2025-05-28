@@ -10,6 +10,6 @@ class AdresseModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'user_id', 'nom', 'prenom', 'titre', 'adresse', 'complement', 'code_postal',
-        'ville', 'departement', 'pays', 'telephone', 'is_principale'
+        'ville', 'departement', 'pays', 'telephone', 'is_defaut'
     ];
 }

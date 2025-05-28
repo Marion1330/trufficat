@@ -1,5 +1,5 @@
 <?= $this->include('layouts/header') ?>
-<link rel="stylesheet" href="<?= base_url('css/panier.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css/checkout.css') ?>">
 
 <div class="container">
     <h1 class="page-title">Finaliser votre commande</h1>

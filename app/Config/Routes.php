@@ -58,8 +58,8 @@ $routes->get('/deconnexion', 'AuthController::deconnexion');
 $routes->get('/profil', 'AuthController::profil');
 $routes->post('/profil', 'AuthController::updateProfil');
 $routes->get('profil/supprimer', 'AuthController::supprimerCompte');
-$routes->post('/profil/modifier-adresse-principale', 'AuthController::modifierAdressePrincipale');
-$routes->get('/profil/modifier-adresse-principale', 'AuthController::afficherFormulaireAdressePrincipale');
+$routes->get('/profil/modifier-adresse-defaut', 'AuthController::modifierAdresseDefaut');
+$routes->post('/profil/modifier-adresse-defaut', 'AuthController::updateAdresseDefaut');
 $routes->get('/profil/modifier-infos', 'AuthController::afficherFormulaireInfos');
 $routes->post('/profil/modifier-infos', 'AuthController::modifierInfos');
 
@@ -70,7 +70,7 @@ $routes->get('/adresse/modifier/(:num)', 'AuthController::modifierAdresse/$1');
 $routes->post('/adresse/modifier/(:num)', 'AuthController::updateAdresse/$1');
 $routes->get('/adresse/supprimer/(:num)', 'AuthController::supprimerAdresse/$1');
 $routes->get('adresse/defaut/(:num)', 'AuthController::definirAdresseDefaut/$1');
-$routes->get('adresse/defaut/principale', 'AuthController::definirPrincipaleDefaut');
+$routes->get('/adresse/creer-defaut', 'AuthController::creerAdresseDefaut');
 
 $routes->get('/changer-mot-de-passe', 'AuthController::changerMotDePasse');
 $routes->post('/changer-mot-de-passe', 'AuthController::traiterChangementMotDePasse');

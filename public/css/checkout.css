@@ -1,0 +1,123 @@
+/* ===== STYLES CHECKOUT ===== */
+.page-title {
+    text-align: center;
+    color: #D97B29;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.checkout-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.order-summary, .payment-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.checkout-product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.checkout-product-info {
+    display: flex;
+    align-items: center;
+}
+
+.checkout-product-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+
+.checkout-product-details h3 {
+    margin: 0 0 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.checkout-product-details .brand {
+    color: #D97B29;
+    font-size: 14px;
+    margin: 0 0 5px;
+}
+
+.checkout-product-details .quantity {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.checkout-product-price {
+    font-weight: bold;
+    color: #D97B29;
+}
+
+.total-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #D97B29;
+}
+
+.total-line {
+    font-size: 18px;
+    text-align: right;
+    color: #D97B29;
+}
+
+#paypal-button-container {
+    margin-top: 20px;
+}
+
+#loading {
+    text-align: center;
+    padding: 20px;
+    color: #D97B29;
+}
+
+.panier-btn-checkout {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.panier-btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.panier-btn-danger:hover {
+    background-color: #bd2130;
+}
+
+.panier-btn-primary {
+    background-color: #D97B29;
+    color: white;
+}
+
+.panier-btn-primary:hover {
+    background-color: #B45B19;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+} 

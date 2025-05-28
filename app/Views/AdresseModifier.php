@@ -1,9 +1,9 @@
 <?= $this->include('layouts/header') ?>
 
 <main class="form-container">
-    <h2>Modifier l'adresse</h2>
+    <h2><?= isset($isDefaut) && $isDefaut ? 'Modifier l\'adresse par défaut' : 'Modifier l\'adresse' ?></h2>
 
-    <form action="<?= isset($isPrincipale) && $isPrincipale ? base_url('profil/modifier-adresse-principale') : base_url('adresse/modifier/'.$adresse['id']) ?>" method="post">
+    <form action="<?= isset($isDefaut) && $isDefaut ? base_url('profil/modifier-adresse-defaut') : base_url('adresse/modifier/'.$adresse['id']) ?>" method="post">
         <?= csrf_field() ?>
         
         <label for="nom">Nom :</label>
@@ -37,11 +37,9 @@
         <label for="telephone">Téléphone :</label>
         <input type="text" name="telephone" value="<?= esc(set_value('telephone', $adresse['telephone'] ?? '')) ?>"><br>
 
-        <label>
-            <input type="checkbox" name="is_principale" value="1"
-                <?= set_value('is_principale', $adresse['is_principale'] ?? false) ? 'checked' : '' ?>>
-            Définir comme adresse principale
-        </label><br>
+        <?php if (isset($isDefaut) && $isDefaut): ?>
+            <p><small><i class="fas fa-info-circle"></i> Cette adresse est utilisée par défaut pour vos commandes.</small></p>
+        <?php endif; ?>
 
         <div class="form-btns">
             <button type="button" class="btn btn-secondary btn-sm btn-annuler" onclick="window.location.href='<?= base_url('profil') ?>'">Annuler</button>

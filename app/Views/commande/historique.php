@@ -1,6 +1,5 @@
 <?= $this->include('layouts/header') ?>
 <link rel="stylesheet" href="<?= base_url('css/historique.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css/panier.css') ?>">
 
 <div class="container">
     <h1 style="text-align: center;">Historique de mes commandes</h1>

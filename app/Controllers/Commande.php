@@ -233,19 +233,21 @@ class Commande extends BaseController
         $adresseModel = new \App\Models\AdresseModel();
         $userModel = new \App\Models\UserModel();
         
-        // Chercher l'adresse principale de l'utilisateur
-        $adressePrincipale = $adresseModel->where('user_id', session('user_id'))
-                                         ->where('is_principale', 1)
-                                         ->first();
+        // Chercher l'adresse par défaut de l'utilisateur
+        $adresseDefaut = $adresseModel->where('user_id', session('user_id'))
+                                     ->where('is_defaut', 1)
+                                     ->first();
         
-        if ($adressePrincipale) {
-            return $adressePrincipale['id'];
+        if ($adresseDefaut) {
+            return $adresseDefaut['id'];
         }
         
-        // Si pas d'adresse principale, chercher la première adresse de l'utilisateur
+        // Si pas d'adresse par défaut, chercher la première adresse de l'utilisateur
         $premiereAdresse = $adresseModel->where('user_id', session('user_id'))->first();
         
         if ($premiereAdresse) {
+            // Définir cette adresse comme par défaut
+            $adresseModel->update($premiereAdresse['id'], ['is_defaut' => 1]);
             return $premiereAdresse['id'];
         }
         
@@ -257,7 +259,7 @@ class Commande extends BaseController
                 'user_id' => session('user_id'),
                 'nom' => $user['nom'] ?: $user['nomcompte'],
                 'prenom' => $user['prenom'] ?: $user['prenomcompte'],
-                'titre' => 'Adresse principale',
+                'titre' => 'Adresse par défaut',
                 'adresse' => $user['adresse'],
                 'complement' => $user['complement'],
                 'code_postal' => $user['code_postal'],
@@ -265,7 +267,7 @@ class Commande extends BaseController
                 'departement' => $user['departement'],
                 'pays' => $user['pays'] ?: 'France',
                 'telephone' => $user['telephone'],
-                'is_principale' => 1
+                'is_defaut' => 1
             ];
             
             $adresseId = $adresseModel->insert($nouvelleAdresse);
