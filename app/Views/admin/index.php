@@ -1,5 +1,5 @@
 <?= $this->include('layouts/header') ?>
-<link rel="stylesheet" href="<?= base_url('css/admin-dashboard.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
 
 <div class="admin-container">
     <div class="admin-sidebar">
