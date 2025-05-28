@@ -23,7 +23,7 @@
 
 .carrousel .product-card {
     flex: 0 0 auto;
-    width: 250px;
+    width: 281px;
     border: 1px solid #e5e5e5;
     border-radius: 8px;
     overflow: hidden;
@@ -159,6 +159,10 @@
     font-weight: bold;
     margin: 5px 0;
     font-size: 0.9em;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
 }
 
 .stock {
@@ -166,6 +170,10 @@
     font-weight: bold;
     margin: 5px 0;
     font-size: 0.9em;
+    background-color: rgba(40, 167, 69, 0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
 }
 
 /* Styles pour la section de présentation */
@@ -213,21 +221,64 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
+/* Responsive Design */
+
+/* Tablettes (768px - 1024px) */
+@media (max-width: 1024px) {
+    .carrousel .product-card {
+        width: 260px;
+    }
+    
+    .carrousel-btn {
+        padding: 8px 12px;
+        font-size: 20px;
+    }
+}
+
+/* Tablettes petites (576px - 768px) */
 @media (max-width: 768px) {
     .carrousel {
         gap: 10px;
+        padding: 0 10px;
     }
     
     .carrousel .product-card {
-        width: 220px;
+        width: 240px;
     }
     
     .carrousel .product-image {
         height: 180px;
     }
     
+    .carrousel .product-info {
+        padding: 12px;
+    }
+    
+    .carrousel .product-title {
+        font-size: 15px;
+        height: 36px;
+    }
+    
+    .carrousel .product-price {
+        font-size: 16px;
+    }
+    
+    .carrousel-btn {
+        padding: 6px 10px;
+        font-size: 18px;
+    }
+    
+    .carrousel-btn.left {
+        left: 5px;
+    }
+    
+    .carrousel-btn.right {
+        right: 5px;
+    }
+    
     .presentation-content {
         flex-direction: column;
+        gap: 30px;
     }
     
     .presentation-text, .presentation-image {
@@ -236,5 +287,80 @@
     
     .presentation-text h2 {
         font-size: 24px;
+    }
+}
+
+/* Mobiles (320px - 576px) */
+@media (max-width: 576px) {
+    .carrousel {
+        gap: 8px;
+        padding: 0 5px;
+    }
+    
+    .carrousel .product-card {
+        width: 200px;
+    }
+    
+    .carrousel .product-image {
+        height: 160px;
+    }
+    
+    .carrousel .product-info {
+        padding: 10px;
+    }
+    
+    .carrousel .product-title {
+        font-size: 14px;
+        height: 32px;
+    }
+    
+    .carrousel .product-brand {
+        font-size: 12px;
+    }
+    
+    .carrousel .product-price {
+        font-size: 15px;
+    }
+    
+    .carrousel .btn-add-to-cart {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .carrousel-btn {
+        padding: 5px 8px;
+        font-size: 16px;
+    }
+    
+    .presentation-section {
+        padding: 40px 15px;
+    }
+    
+    .presentation-text h2 {
+        font-size: 20px;
+    }
+    
+    .presentation-text p {
+        font-size: 14px;
+    }
+}
+
+/* Très petits mobiles (max 320px) */
+@media (max-width: 320px) {
+    .carrousel .product-card {
+        width: 180px;
+    }
+    
+    .carrousel .product-image {
+        height: 140px;
+    }
+    
+    .carrousel .product-title {
+        font-size: 13px;
+        height: 28px;
+    }
+    
+    .carrousel .product-price {
+        font-size: 14px;
     }
 } 

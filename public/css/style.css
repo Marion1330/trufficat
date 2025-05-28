@@ -224,11 +224,6 @@ main {
         align-items: center;
     }
 
-    .carrousel {
-        gap: 10px;
-        padding: 10px;
-    }
-
     .carte {
         min-width: 200px;
         width: 80%;
@@ -239,10 +234,6 @@ main {
         width: 100%;
         height: auto;
         max-height: 160px;
-    }
-
-    .carrousel-btn {
-        display: none;
     }
 
     .search-bar {
@@ -296,28 +287,6 @@ main {
     background-color: #fff;
 }
 
-.rupture-stock {
-    color: #ff0000;
-    font-weight: bold;
-    margin: 5px 0;
-    font-size: 0.9em;
-    background-color: rgba(255, 0, 0, 0.1);
-    padding: 5px 10px;
-    border-radius: 4px;
-    display: inline-block;
-}
-
-.stock {
-    color: #28a745;
-    font-weight: bold;
-    margin: 5px 0;
-    font-size: 0.9em;
-    background-color: rgba(40, 167, 69, 0.1);
-    padding: 5px 10px;
-    border-radius: 4px;
-    display: inline-block;
-}
-
 /* 🌿 Footer */
 .footer {
     text-align: center;
@@ -327,74 +296,11 @@ main {
     margin-top: 40px;
 }
 
-/* 🌿 Carrousels */
-.carrousel-wrapper, .pub-carousel-container {
-    position: relative;
-    overflow: hidden;
-    margin: 30px auto;
-    border-radius: 12px;
-    max-width: 100%;
-}
-
-.carrousel {
-    display: flex;
-    padding: 20px 40px;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-}
-
-.carrousel::-webkit-scrollbar {
-    display: none;
-}
-
-.carrousel-btn, .pub-prev, .pub-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    cursor: pointer;
-    z-index: 10;
-    font-size: 22px;
-    border-radius: 50%;
-    transition: background 0.3s;
-}
-
-.carrousel-btn:hover, .pub-prev:hover, .pub-next:hover {
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.carrousel-btn.left, .pub-prev { left: 10px; }
-.carrousel-btn.right, .pub-next { right: 10px; }
-
-.pub-slide {
-    min-width: 100%;
-    box-sizing: border-box;
-}
-
-.pub-slide img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    display: block;
-    border-radius: 12px;
-}
-
 /* 🌿 Responsive */
 @media (max-width: 768px) {
     .nav-links {
         flex-direction: column;
         align-items: center;
-    }
-
-    .carrousel {
-        gap: 10px;
-        padding: 10px;
     }
 
     .carte {
@@ -409,20 +315,11 @@ main {
         max-height: 160px;
     }
 
-    .carrousel-btn, .pub-prev, .pub-next {
-        display: none;
-    }
-
     .search-bar {
         margin: 10px auto;
         max-width: 90%;
     }
-
-    .pub-slide img {
-        height: 220px;
-    }
 }
-
 
 /* 🐾 NAVBAR SECONDAIRE (Chiens / Chats par ex.) */
 .navbar-secondary {
@@ -964,143 +861,5 @@ select option {
     
     .panier-btn {
         padding: 0.8rem 1.5rem;
-    }
-}
-
-/* Styles pour le carrousel de produits vedettes */
-.carrousel-container {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    margin: 30px 0;
-    padding: 0;
-}
-
-.carrousel {
-    display: flex;
-    padding: 20px 40px;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-}
-
-.carrousel::-webkit-scrollbar {
-    display: none;
-}
-
-.carrousel .product-card {
-    flex: 0 0 auto;
-    width: calc(25% - 13px);
-    min-width: 282px;
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: white;
-}
-
-.carrousel .product-image {
-    height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.carrousel .product-image img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
-
-.carrousel .product-info {
-    padding: 15px;
-}
-
-.carrousel .product-title {
-    font-size: 16px;
-    margin: 0 0 5px;
-    color: #333;
-    height: 40px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-.carrousel .product-brand {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 10px;
-}
-
-.carrousel .product-price {
-    color: #A44D25;
-    font-size: 18px;
-    margin: 0;
-}
-
-.carrousel .product-actions {
-    padding: 0 15px 15px;
-}
-
-.carrousel .btn-add-to-cart {
-    width: 100%;
-    padding: 8px 15px;
-    background-color: #D97B29;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-}
-
-.carrousel .btn-add-to-cart:hover {
-    background-color: #B45B19;
-}
-
-/* Styles pour les boutons du carrousel */
-.carrousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(242, 192, 120, 0.9);
-    color: #4A3A2D;
-    border: none;
-    padding: 15px 20px;
-    cursor: pointer;
-    z-index: 10;
-    font-size: 24px;
-    border-radius: 50%;
-    transition: background 0.3s;
-}
-
-.carrousel-btn:hover {
-    background: rgba(167, 123, 41, 0.9);
-}
-
-.carrousel-btn.left {
-    left: 20px;
-}
-
-.carrousel-btn.right {
-    right: 20px;
-}
-
-@media (max-width: 768px) {
-    .carrousel {
-        padding: 20px;
-    }
-    
-    .carrousel .product-card {
-        width: 85%;
-        min-width: 250px;
-    }
-    
-    .carrousel .product-image {
-        height: 200px;
     }
 }
