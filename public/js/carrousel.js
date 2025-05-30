@@ -3,15 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const carrousel = document.querySelector('.carrousel');
     const btnLeft = document.querySelector('.carrousel-btn.left');
     const btnRight = document.querySelector('.carrousel-btn.right');
-    const scrollAmount = 270;
+    
+    // Fonction pour calculer le scroll amount responsive
+    function getScrollAmount() {
+        const width = window.innerWidth;
+        if (width <= 320) return 200;
+        if (width <= 576) return 220;
+        if (width <= 768) return 250;
+        if (width <= 992) return 270;
+        return 300;
+    }
 
     if (carrousel && btnLeft && btnRight) {
         btnLeft.addEventListener('click', () => {
-            carrousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            carrousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
         });
 
         btnRight.addEventListener('click', () => {
-            carrousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            carrousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
         });
 
         let isMouseDown = false;
@@ -50,6 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.touches[0].pageX - carrousel.offsetLeft;
             const walk = (x - startX) * 3;
             carrousel.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Ajuster le scroll amount lors du redimensionnement
+        window.addEventListener('resize', () => {
+            // Ajustement automatique si nécessaire
         });
     }
 

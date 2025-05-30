@@ -4,6 +4,7 @@
 <p class="intro">Votre boutique dédiée aux chiens et chats, tout en douceur.</p>
 
 <!-- 🟧 Nouveau carrousel PUB plein écran -->
+<?php if (!empty($publicites)): ?>
 <div class="pub-carousel-container">
     <div class="pub-carousel">
         <?php foreach ($publicites as $pub): ?>
@@ -14,9 +15,12 @@
             </div>
         <?php endforeach; ?>
     </div>
+    <?php if (count($publicites) > 1): ?>
     <button class="pub-prev">&#10094;</button>
     <button class="pub-next">&#10095;</button>
+    <?php endif; ?>
 </div>
+<?php endif; ?>
 
 <h2 class="titre-accueil">Produits Vedettes</h2>
 <div class="carrousel-container">

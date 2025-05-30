@@ -19,6 +19,7 @@
     </div>
     <form action="<?= base_url('recherche') ?>" method="get" class="search-bar">
       <input type="text" name="q" placeholder="Rechercher un produit..." />
+      <button type="submit"><i class="fas fa-search"></i></button>
     </form>
 
     <ul class="nav-links">

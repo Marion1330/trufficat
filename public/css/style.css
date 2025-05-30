@@ -211,23 +211,183 @@ main {
 }
 
 /* 🌿 Barre de recherche */
-.search-bar input {
-    width: 700px;
-    max-width: 100%;
-    padding: 8px 15px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    box-sizing: border-box;
+.search-bar {
+    position: relative;
+    max-width: 400px;
+    flex: 1;
 }
 
-/* 🌿 Responsive */
-@media (max-width: 768px) {
-    .nav-links {
-        flex-direction: column;
-        align-items: center;
-    }
+.search-bar input {
+    width: 100%;
+    padding: 8px 40px 8px 15px;
+    border: 2px solid #D97B29;
+    border-radius: 25px;
+    font-size: 14px;
+    background-color: white;
+    color: #4A3A2D;
+    transition: border-color 0.3s ease;
+}
 
+.search-bar input:focus {
+    outline: none;
+    border-color: #A44D25;
+    box-shadow: 0 0 0 3px rgba(169, 77, 37, 0.1);
+}
+
+.search-bar input::placeholder {
+    color: #9C6F44;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #D97B29;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: rgba(217, 123, 41, 0.1);
+}
+
+/* 🌿 Responsive - Header et Navigation */
+@media (max-width: 1200px) {
+    .dropdown-menu-chiens,
+    .dropdown-menu-chats {
+        width: 100vw;
+        left: 0;
+        transform: none;
+        max-width: 100%;
+    }
+    
+    .dropdown-menu-chiens .dropdown-row,
+    .dropdown-menu-chats .dropdown-row {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .dropdown-menu-chiens .dropdown-column,
+    .dropdown-menu-chats .dropdown-column {
+        min-width: 200px;
+        flex: 1;
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .logo {
+        order: 1;
+        font-size: 1.5em;
+    }
+    
+    .logo-img {
+        height: 60px;
+    }
+    
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        background-color: #F2C078;
+        padding: 10px 0;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+    
+    .search-bar {
+        order: 2;
+        flex: 1;
+        max-width: 300px;
+    }
+    
+    .navbar-secondary {
+        padding: 5px 10px;
+    }
+    
+    .nav-links-secondary {
+        gap: 15px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 10px 15px;
+    }
+    
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .logo {
+        text-align: center;
+        order: 1;
+    }
+    
+    .search-bar {
+        order: 2;
+        width: 100%;
+        max-width: none;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #D97B29;
+        border-radius: 5px;
+    }
+    
+    .nav-links {
+        order: 3;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 0;
+        padding: 10px;
+    }
+    
+    .nav-links li {
+        flex: 0 0 auto;
+    }
+    
+    .nav-links li a {
+        padding: 8px 12px;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,0.1);
+        font-size: 14px;
+    }
+    
+    .navbar-secondary {
+        overflow-x: auto;
+        padding: 8px 15px;
+    }
+    
+    .nav-links-secondary {
+        white-space: nowrap;
+        gap: 20px;
+        min-width: max-content;
+    }
+    
+    /* Masquer les menus déroulants sur mobile */
+    .dropdown-menu-chiens,
+    .dropdown-menu-chats {
+        display: none;
+    }
+    
     .carte {
         min-width: 200px;
         width: 80%;
@@ -239,10 +399,124 @@ main {
         height: auto;
         max-height: 160px;
     }
+}
 
-    .search-bar {
-        margin: 10px auto;
-        max-width: 90%;
+@media (max-width: 576px) {
+    .logo {
+        font-size: 1.3em;
+    }
+    
+    .logo-img {
+        height: 50px;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .nav-links li a {
+        padding: 10px 15px;
+        width: 200px;
+        text-align: center;
+    }
+    
+    .nav-links-secondary {
+        gap: 15px;
+        padding: 0 10px;
+    }
+    
+    .nav-links-secondary li a {
+        font-size: 13px;
+    }
+    
+    /* Menu compte responsive */
+    .dropdown-menu-compte {
+        position: fixed;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        z-index: 10000;
+    }
+}
+
+/* 🌿 Corrections pour très petits écrans */
+@media (max-width: 480px) {
+    body {
+        overflow-x: hidden;
+    }
+    
+    header {
+        padding: 8px 10px;
+        overflow-x: hidden;
+    }
+    
+    .navbar {
+        gap: 8px;
+    }
+    
+    .logo {
+        font-size: 1.1em;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+    
+    .nav-links li a {
+        padding: 8px 10px;
+        width: 180px;
+        font-size: 13px;
+    }
+    
+    .navbar-secondary {
+        padding: 5px 8px;
+    }
+    
+    .nav-links-secondary {
+        gap: 8px;
+        padding: 0 5px;
+    }
+    
+    .nav-links-secondary li a {
+        font-size: 12px;
+        padding: 5px 8px;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 360px) {
+    header {
+        padding: 5px 8px;
+    }
+    
+    .logo {
+        font-size: 1em;
+    }
+    
+    .logo-img {
+        height: 35px;
+    }
+    
+    .nav-links li a {
+        width: 160px;
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+    
+    .nav-links-secondary li a {
+        font-size: 11px;
+        padding: 4px 6px;
+    }
+    
+    .navbar-secondary {
+        padding: 3px 5px;
+    }
+    
+    .nav-links-secondary {
+        gap: 6px;
     }
 }
 
@@ -297,28 +571,26 @@ main {
     padding: 10px 20px;
     position: relative;
     text-align: flex-start;
-    
-    
-    }
-    
-    .nav-links-secondary {
+}
+
+.nav-links-secondary {
     list-style: none;
     display: inline-flex;
     justify-content: center;
     gap: 30px;
     margin: 0 auto;
     padding: 0;
-    }
-    
-    .nav-links-secondary li {
-    position: relative;
-    }
-    
-    .nav-links-secondary li a {
-    font-weight: 600;
-    }
+}
 
-  /* 🌿 Menu déroulant - Produits pour chiens */
+.nav-links-secondary li {
+    position: relative;
+}
+
+.nav-links-secondary li a {
+    font-weight: 600;
+}
+
+/* 🌿 Menu déroulant - Produits pour chiens */
 .dropdown-chiens {
     position: relative;
     padding-bottom: 5px;
@@ -448,7 +720,7 @@ main {
     text-decoration: none;
     color: #4A3A2D;
     padding: 4px 0;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 12px;
     transition: color 0.3s;
     white-space: nowrap;

@@ -60,3 +60,96 @@ a:link,
 a:visited {
     color: #dd4814;
 }
+
+/* 🌿 RESPONSIVE DESIGN */
+
+/* Tablettes - 768px */
+@media (max-width: 768px) {
+    .wrap {
+        margin: 2rem auto;
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    div.logo {
+        height: 150px;
+        width: 116px;
+        margin-left: -58px;
+        top: 1rem;
+    }
+    
+    .footer {
+        padding: 1rem 1rem 0 1rem;
+        font-size: 80%;
+    }
+}
+
+/* Mobile - 576px */
+@media (max-width: 576px) {
+    .wrap {
+        margin: 1rem auto;
+        padding: 1rem;
+        max-width: 95%;
+    }
+    
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    div.logo {
+        height: 120px;
+        width: 93px;
+        margin-left: -47px;
+        top: 0.5rem;
+    }
+    
+    p {
+        margin-top: 1rem;
+        font-size: 14px;
+    }
+    
+    code {
+        padding: 0.5rem;
+        font-size: 13px;
+        word-break: break-all;
+    }
+    
+    pre {
+        margin-top: 1rem;
+        font-size: 13px;
+    }
+    
+    .footer {
+        margin-top: 1.5rem;
+        padding: 0.8rem 0.5rem 0 0.5rem;
+        font-size: 75%;
+    }
+}
+
+/* Très petit mobile - 320px */
+@media (max-width: 320px) {
+    .wrap {
+        margin: 0.5rem auto;
+        padding: 0.8rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    div.logo {
+        height: 100px;
+        width: 78px;
+        margin-left: -39px;
+    }
+    
+    code {
+        padding: 0.3rem;
+        font-size: 12px;
+    }
+}

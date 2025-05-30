@@ -256,5 +256,135 @@
     
     .produit-commande img {
         margin-bottom: 10px;
+        margin-right: 0;
     }
+    
+    .page-title {
+        font-size: 24px;
+        text-align: center;
     }
+    
+    .commande-item {
+        margin-bottom: 15px;
+    }
+    
+    .commande-produits {
+        padding: 15px;
+    }
+}
+
+/* Mobile - 576px */
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .page-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .commande-item {
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+    
+    .commande-header {
+        padding: 15px;
+    }
+    
+    .commande-info h3 {
+        font-size: 16px;
+    }
+    
+    .commande-date {
+        font-size: 12px;
+    }
+    
+    .statut-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+    
+    .commande-produits {
+        padding: 10px;
+    }
+    
+    .produit-commande {
+        padding: 10px 0;
+    }
+    
+    .produit-commande img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .produit-details h4 {
+        font-size: 14px;
+    }
+    
+    .produit-details .marque,
+    .produit-details .quantite {
+        font-size: 12px;
+    }
+    
+    .produit-prix {
+        font-size: 14px;
+    }
+    
+    .commande-footer {
+        padding: 15px;
+    }
+    
+    .commande-total {
+        font-size: 16px;
+    }
+    
+    .btn-confirmation {
+        font-size: 12px;
+        padding: 6px 12px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .paiement-info {
+        font-size: 12px;
+    }
+    
+    .alert {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+}
+
+/* Très petit mobile - 320px */
+@media (max-width: 320px) {
+    .container {
+        padding: 5px;
+    }
+    
+    .page-title {
+        font-size: 18px;
+    }
+    
+    .commande-header {
+        padding: 10px;
+    }
+    
+    .commande-produits {
+        padding: 8px;
+    }
+    
+    .commande-footer {
+        padding: 10px;
+    }
+    
+    .produit-commande img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .produit-details h4 {
+        font-size: 13px;
+    }
+}
