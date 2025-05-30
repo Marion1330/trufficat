@@ -44,63 +44,15 @@
 </div>
 
 <script src="https://www.paypal.com/sdk/js?client-id=<?= $paypal_client_id ?>&currency=EUR"></script>
+<script src="<?= base_url('js/checkout.js') ?>"></script>
 <script>
-let commandeId = null;
-
-paypal.Buttons({
-    createOrder: function(data, actions) {
-        // Créer la commande côté serveur d'abord
-        return fetch('<?= base_url('commande/creer') ?>', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                commandeId = data.commande_id;
-                // Créer le paiement PayPal
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '<?= number_format($total, 2, '.', '') ?>',
-                            currency_code: 'EUR'
-                        },
-                        description: 'Commande Trufficat #' + data.commande_id
-                    }]
-                });
-            } else {
-                throw new Error(data.message || 'Erreur lors de la création de la commande');
-            }
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-            alert('Erreur lors de la création de la commande: ' + error.message);
-        });
-    },
-    
-    onApprove: function(data, actions) {
-        document.getElementById('loading').style.display = 'block';
-        
-        return actions.order.capture().then(function(details) {
-            // Rediriger vers la page de succès avec les bonnes informations
-            window.location.href = '<?= base_url('commande/paypal/success') ?>?paymentId=' + 
-                                   data.orderID + '&PayerID=' + data.payerID + '&commande_id=' + commandeId;
-        });
-    },
-    
-    onCancel: function(data) {
-        window.location.href = '<?= base_url('commande/paypal/cancel') ?>';
-    },
-    
-    onError: function(err) {
-        console.error('Erreur PayPal:', err);
-        alert('Une erreur est survenue lors du paiement. Veuillez réessayer.');
-        document.getElementById('loading').style.display = 'none';
-    }
-}).render('#paypal-button-container');
+// Initialiser le checkout avec la configuration
+window.TrufficatCheckout.init({
+    total: '<?= number_format($total, 2, '.', '') ?>',
+    createOrderUrl: '<?= base_url('commande/creer') ?>',
+    successUrl: '<?= base_url('commande/paypal/success') ?>',
+    cancelUrl: '<?= base_url('commande/paypal/cancel') ?>'
+});
 </script>
 
 <?= $this->include('layouts/footer') ?> 

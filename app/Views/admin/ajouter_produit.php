@@ -237,91 +237,10 @@
 </div>
 </style>
 
+<script src="<?= base_url('js/admin-form-produit.js') ?>"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const animalSelect = document.getElementById('animal');
-    const categorieSelect = document.getElementById('categorie');
-    const saveurSelect = document.getElementById('saveur');
-
-    // Fonction pour mettre à jour l'affichage des catégories selon l'animal
-    function updateCategories() {
-        const animal = animalSelect.value;
-        const chienCategories = document.querySelectorAll('.chien-categories');
-        const chatCategories = document.querySelectorAll('.chat-categories');
-
-        if (animal === 'chien') {
-            chienCategories.forEach(cat => cat.style.display = '');
-            chatCategories.forEach(cat => cat.style.display = 'none');
-        } else {
-            chienCategories.forEach(cat => cat.style.display = 'none');
-            chatCategories.forEach(cat => cat.style.display = '');
-        }
-    }
-
-    // Fonction pour gérer l'activation du sélecteur de saveur
-    function updateSaveurSelect() {
-        const categorie = categorieSelect.value;
-        const alimentationCategories = [
-            'alimentation',
-            'alimentation-sans-cereales',
-            'alimentation-bio',
-            'croquettes',
-            'croquettes-sterilise',
-            'boites-sachets',
-            'friandises'
-        ];
-
-        saveurSelect.disabled = !alimentationCategories.includes(categorie);
-        if (saveurSelect.disabled) {
-            saveurSelect.value = '';
-        }
-    }
-
-    // Écouter les changements
-    animalSelect.addEventListener('change', updateCategories);
-    categorieSelect.addEventListener('change', updateSaveurSelect);
-
-    // Initialiser l'état au chargement
-    updateCategories();
-    updateSaveurSelect();
-
-    // Gestion de l'upload d'image
-    const fileInput = document.getElementById('image');
-    const fileInfo = document.querySelector('.file-info');
-    
-    fileInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-            const fileName = this.files[0].name;
-            fileInfo.textContent = fileName;
-            
-            // Prévisualisation optionnelle
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.createElement('img');
-                preview.src = e.target.result;
-                preview.className = 'product-image-preview';
-                
-                const container = document.querySelector('.current-image');
-                if (container) {
-                    container.innerHTML = '';
-                    container.appendChild(preview);
-                    container.appendChild(document.createElement('p')).textContent = 'Nouvelle image: ' + fileName;
-                } else {
-                    const newContainer = document.createElement('div');
-                    newContainer.className = 'current-image';
-                    newContainer.appendChild(preview);
-                    newContainer.appendChild(document.createElement('p')).textContent = 'Nouvelle image: ' + fileName;
-                    
-                    const uploadContainer = document.querySelector('.image-upload-container');
-                    uploadContainer.insertBefore(newContainer, uploadContainer.firstChild);
-                }
-            };
-            reader.readAsDataURL(this.files[0]);
-        } else {
-            fileInfo.textContent = 'Aucun fichier sélectionné';
-        }
-    });
-});
+// Initialiser le formulaire de produit
+window.TrufficatAdminFormProduit.init();
 </script>
 
 <?= $this->include('layouts/footer') ?> 

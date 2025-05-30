@@ -205,7 +205,7 @@ class Commande extends BaseController
         if (!$commande) {
             return redirect()->to('/')->with('error', 'Commande non trouvée');
         }
-        
+
         // Vérifier que l'utilisateur est propriétaire de la commande OU est administrateur
         if ($commande['user_id'] != session('user_id') && session('role') !== 'admin') {
             return redirect()->to('/')->with('error', 'Accès refusé');
@@ -243,7 +243,7 @@ class Commande extends BaseController
         // Chercher l'adresse par défaut de l'utilisateur
         $adresseDefaut = $adresseModel->where('user_id', session('user_id'))
                                      ->where('is_defaut', 1)
-                                     ->first();
+                                         ->first();
         
         if ($adresseDefaut) {
             return $adresseDefaut['id'];

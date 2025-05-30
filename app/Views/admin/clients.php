@@ -95,24 +95,12 @@
     </div>
 </div>
 
+<script src="<?= base_url('js/admin-clients.js') ?>"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('.products-table tbody tr');
-
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        
-        tableRows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(searchTerm) ? '' : 'none';
-        });
-    });
+// Initialiser la gestion des clients admin
+window.TrufficatAdminClients.init({
+    deleteUrl: '<?= base_url('admin/supprimer-client/') ?>'
 });
-
-function confirmerSuppression(id) {
-    window.location.href = '<?= base_url('admin/supprimer-client/') ?>' + id;
-}
 </script>
 
 <?= $this->include('layouts/footer') ?> 

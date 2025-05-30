@@ -99,85 +99,12 @@
     </div>
 </div>
 
+<script src="<?= base_url('js/produit-detail.js') ?>"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Gestion de la quantité
-    const quantiteInput = document.getElementById('quantite');
-    const quantityBtns = document.querySelectorAll('.quantity-btn');
-    
-    quantityBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const action = btn.getAttribute('data-action');
-            const currentValue = parseInt(quantiteInput.value);
-            const maxValue = parseInt(quantiteInput.getAttribute('max'));
-            
-            if (action === 'increase' && currentValue < maxValue) {
-                quantiteInput.value = currentValue + 1;
-            } else if (action === 'decrease' && currentValue > 1) {
-                quantiteInput.value = currentValue - 1;
-            }
-        });
-    });
-    
-    // Validation de la saisie manuelle
-    quantiteInput.addEventListener('input', function() {
-        const value = parseInt(this.value);
-        const max = parseInt(this.getAttribute('max'));
-        const min = parseInt(this.getAttribute('min'));
-        
-        if (value > max) {
-            this.value = max;
-        } else if (value < min || isNaN(value)) {
-            this.value = min;
-        }
-    });
-    
-    // Gestion de l'ajout au panier
-    const addToCartBtn = document.querySelector('.btn-add-to-cart:not(.disabled)');
-    if (addToCartBtn) {
-        let isAdding = false; // Variable pour empêcher les clics multiples
-        
-        addToCartBtn.addEventListener('click', function(e) {
-            e.preventDefault(); // Empêcher le comportement par défaut
-            
-            // Si déjà en cours d'ajout, ignorer le clic
-            if (isAdding) {
-                return;
-            }
-            
-            isAdding = true;
-            this.disabled = true;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ajout en cours...';
-            
-            const productId = this.dataset.productId;
-            const quantite = parseInt(document.getElementById('quantite').value);
-            
-            // Vérification de la quantité
-            if (!quantite || quantite < 1) {
-                // Redirection vers le panier même si quantité invalide
-                window.location.href = '<?= base_url('index.php/panier') ?>';
-                return;
-            }
-            
-            fetch('<?= base_url('index.php/panier/ajouter') ?>', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `produit_id=${productId}&quantite=${quantite}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Redirection vers le panier dans tous les cas
-                window.location.href = '<?= base_url('index.php/panier') ?>';
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                // Redirection vers le panier même en cas d'erreur
-                window.location.href = '<?= base_url('index.php/panier') ?>';
-            });
-        });
-    }
+// Initialiser le produit detail avec la configuration
+window.TrufficatProduitDetail.init({
+    addToCartUrl: '<?= base_url('index.php/panier/ajouter') ?>',
+    panierUrl: '<?= base_url('index.php/panier') ?>'
 });
 </script>
 

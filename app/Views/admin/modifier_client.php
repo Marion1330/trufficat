@@ -21,81 +21,81 @@
         <div class="admin-header">
             <h1><i class="fas fa-user-edit"></i> Modifier un utilisateur</h1>
             <div class="admin-actions">
-                <a href="<?= base_url('admin/clients') ?>" class="back-btn">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </a>
+        <a href="<?= base_url('admin/clients') ?>" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Retour
+        </a>
+            </div>
+    </div>
+
+    <?php if(session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger">
+            <?= session()->getFlashdata('error') ?>
+        </div>
+    <?php endif; ?>
+
+        <div class="form-container">
+    <form action="<?= base_url('admin/update-client/' . $client['id']) ?>" method="post" class="edit-form">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="<?= esc($client['email']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Rôle</label>
+                <select id="role" name="role" required>
+                    <option value="admin" <?= $client['role'] === 'admin' ? 'selected' : '' ?>>Administrateur</option>
+                    <option value="client" <?= $client['role'] === 'client' ? 'selected' : '' ?>>Client</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nomcompte">Nom du compte</label>
+                <input type="text" id="nomcompte" name="nomcompte" value="<?= esc($client['nomcompte']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="prenomcompte">Prénom du compte</label>
+                <input type="text" id="prenomcompte" name="prenomcompte" value="<?= esc($client['prenomcompte']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telephone">Téléphone</label>
+                <input type="tel" id="telephone" name="telephone" value="<?= esc($client['telephone']) ?>" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="adresse">Adresse</label>
+                <input type="text" id="adresse" name="adresse" value="<?= esc($client['adresse']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="code_postal">Code Postal</label>
+                <input type="text" id="code_postal" name="code_postal" value="<?= esc($client['code_postal']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ville">Ville</label>
+                <input type="text" id="ville" name="ville" value="<?= esc($client['ville']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="departement">Département</label>
+                <input type="text" id="departement" name="departement" value="<?= esc($client['departement']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pays">Pays</label>
+                <input type="text" id="pays" name="pays" value="<?= esc($client['pays']) ?>" required>
             </div>
         </div>
 
-        <?php if(session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger">
-                <?= session()->getFlashdata('error') ?>
-            </div>
-        <?php endif; ?>
-
-        <div class="form-container">
-            <form action="<?= base_url('admin/update-client/' . $client['id']) ?>" method="post" class="edit-form">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="<?= esc($client['email']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="role">Rôle</label>
-                        <select id="role" name="role" required>
-                            <option value="admin" <?= $client['role'] === 'admin' ? 'selected' : '' ?>>Administrateur</option>
-                            <option value="client" <?= $client['role'] === 'client' ? 'selected' : '' ?>>Client</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nomcompte">Nom du compte</label>
-                        <input type="text" id="nomcompte" name="nomcompte" value="<?= esc($client['nomcompte']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="prenomcompte">Prénom du compte</label>
-                        <input type="text" id="prenomcompte" name="prenomcompte" value="<?= esc($client['prenomcompte']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="telephone">Téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" value="<?= esc($client['telephone']) ?>" required>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="adresse">Adresse</label>
-                        <input type="text" id="adresse" name="adresse" value="<?= esc($client['adresse']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="code_postal">Code Postal</label>
-                        <input type="text" id="code_postal" name="code_postal" value="<?= esc($client['code_postal']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ville">Ville</label>
-                        <input type="text" id="ville" name="ville" value="<?= esc($client['ville']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="departement">Département</label>
-                        <input type="text" id="departement" name="departement" value="<?= esc($client['departement']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pays">Pays</label>
-                        <input type="text" id="pays" name="pays" value="<?= esc($client['pays']) ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="save-btn">
-                        <i class="fas fa-save"></i> Enregistrer
-                    </button>
-                </div>
-            </form>
+        <div class="form-actions">
+            <button type="submit" class="save-btn">
+                <i class="fas fa-save"></i> Enregistrer
+            </button>
+        </div>
+    </form>
         </div>
     </div>
 </div>

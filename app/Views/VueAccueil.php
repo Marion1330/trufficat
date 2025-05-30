@@ -82,85 +82,17 @@
     </div>
 </div>
 
+<!-- JavaScript centralisé -->
+<script src="<?= base_url('js/accueil.js') ?>"></script>
+<script src="<?= base_url('js/carrousel.js') ?>"></script>
 <script>
-// Gestion de l'ajout au panier
-document.addEventListener('DOMContentLoaded', function() {
-    const addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const productId = this.getAttribute('data-product-id');
-            
-            // Ajouter au panier via AJAX
-            fetch('<?= base_url('panier/ajouter') ?>', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `produit_id=${productId}&quantite=1`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Rediriger vers le panier après ajout
-                    window.location.href = '<?= base_url('panier') ?>';
-                } else {
-                    console.error('Erreur lors de l\'ajout au panier:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
-        });
-    });
+// Initialiser l'accueil avec la configuration
+window.TrufficatAccueil.init({
+    addToCartUrl: '<?= base_url('panier/ajouter') ?>',
+    panierUrl: '<?= base_url('panier') ?>'
 });
-
-// Carrousel de publicités
-let currentSlide = 0;
-const slides = document.querySelectorAll('.pub-slide');
-const totalSlides = slides.length;
-
-function showSlide(index) {
-    const carousel = document.querySelector('.pub-carousel');
-    carousel.style.transform = `translateX(-${index * 100}%)`;
-}
-
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    showSlide(currentSlide);
-}
-
-function prevSlide() {
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    showSlide(currentSlide);
-}
-
-// Auto-play
-setInterval(nextSlide, 5000);
-
-// Boutons de navigation
-document.querySelector('.pub-next').addEventListener('click', nextSlide);
-document.querySelector('.pub-prev').addEventListener('click', prevSlide);
-
-// Carrousel de produits vedettes
-const carrousel = document.querySelector('.carrousel');
-const leftBtn = document.querySelector('.carrousel-btn.left');
-const rightBtn = document.querySelector('.carrousel-btn.right');
-
-if (carrousel && leftBtn && rightBtn) {
-    leftBtn.addEventListener('click', () => {
-        carrousel.scrollBy({ left: -300, behavior: 'smooth' });
-    });
-
-    rightBtn.addEventListener('click', () => {
-        carrousel.scrollBy({ left: 300, behavior: 'smooth' });
-    });
-}
 </script>
 
 <?= $this->include('layouts/footer') ?>
-
-<!-- JavaScript centralisé -->
-<script src="<?= base_url('js/carrousel.js') ?>"></script>
 </body>
 </html>

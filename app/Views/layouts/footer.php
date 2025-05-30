@@ -4,8 +4,12 @@
 <p>&copy; <?= date('Y') ?> Trufficat. Tous droits réservés.</p>
 </footer>
 
+<script src="<?= base_url('js/global.js') ?>"></script>
 <script>
-    const baseUrl = '<?= base_url() ?>';
+// Initialiser les variables globales
+window.TrufficatGlobal.init({
+    baseUrl: '<?= base_url() ?>'
+});
 </script>
 <script src="<?= base_url('js/carrousel.js') ?>"></script>
 <script src="<?= base_url('js/produits-liste.js') ?>"></script>
