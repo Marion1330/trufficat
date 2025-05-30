@@ -186,15 +186,17 @@ main {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #D97B29;
     color: white;
-    cursor: not-allowed;
-    opacity: 0.7;
+    cursor: pointer;
+    opacity: 1;
+    border: 1px solid #D97B29;
 }
 
 .btn-secondary:hover {
-    background-color: #6c757d;
+    background-color: #C4651F;
     color: white;
+    border: 1px solid #C4651F;
 }
 
 .btn-secondary:disabled {
@@ -251,6 +253,17 @@ main {
     background-color: #F2C078;
     color: #4A3A2D;
     margin-top: 40px;
+}
+
+/* Style pour le lien email dans le footer */
+.footer a {
+    color: #4A3A2D;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #A44D25;
+    text-decoration: none;
 }
 
 /* 🌿 Responsive */

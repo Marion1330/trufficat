@@ -48,7 +48,27 @@ class AuthController extends BaseController
             'pays' => $this->request->getPost('pays'),
         ];
 
-        $userModel->save($data);
+        // Sauvegarder l'utilisateur et récupérer son ID
+        $userId = $userModel->insert($data);
+
+        // Créer automatiquement une adresse par défaut
+        $adresseModel = new \App\Models\AdresseModel();
+        $adresseData = [
+            'user_id' => $userId,
+            'nom' => $nom,
+            'prenom' => $prenom,
+            'titre' => 'Adresse par défaut',
+            'adresse' => $this->request->getPost('adresse'),
+            'complement' => $this->request->getPost('complement'),
+            'code_postal' => $this->request->getPost('code_postal'),
+            'ville' => $this->request->getPost('ville'),
+            'departement' => $this->request->getPost('departement'),
+            'pays' => $this->request->getPost('pays'),
+            'telephone' => $this->request->getPost('telephone'),
+            'is_defaut' => 1 // Marquer comme adresse par défaut
+        ];
+
+        $adresseModel->insert($adresseData);
 
         return redirect()->to('/connexion')->with('success', 'Inscription réussie. Vous pouvez maintenant vous connecter.');
     }
@@ -291,8 +311,8 @@ class AuthController extends BaseController
         $adresseModel = new \App\Models\AdresseModel();
         $userId = session()->get('user_id');
 
-        // Met toutes les adresses secondaires à is_principale=0
-        $adresseModel->where('user_id', $userId)->set(['is_principale' => 0])->update();
+        // Met toutes les adresses secondaires à is_defaut=0
+        $adresseModel->where('user_id', $userId)->set(['is_defaut' => 0])->update();
 
         return redirect()->to('/profil')->with('success', 'Adresse principale définie par défaut.');
     }
@@ -319,7 +339,7 @@ class AuthController extends BaseController
 
         return view('AdresseModifier', [
             'adresse' => $adresse,
-            'isPrincipale' => true
+            'isDefaut' => true
         ]);
     }
 

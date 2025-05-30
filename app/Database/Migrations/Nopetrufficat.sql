@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 28 mai 2025 à 14:56
+-- Généré le : mer. 28 mai 2025 à 17:49
 -- Version du serveur : 8.0.42-0ubuntu0.22.04.1
 -- Version de PHP : 8.1.2-1ubuntu2.21
 
@@ -40,15 +40,29 @@ CREATE TABLE `adresses` (
   `departement` varchar(100) DEFAULT NULL,
   `pays` varchar(100) NOT NULL,
   `telephone` varchar(30) NOT NULL,
-  `is_principale` tinyint(1) DEFAULT '0'
+  `is_defaut` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `adresses`
 --
 
-INSERT INTO `adresses` (`id`, `user_id`, `nom`, `prenom`, `titre`, `adresse`, `complement`, `code_postal`, `ville`, `departement`, `pays`, `telephone`, `is_principale`) VALUES
-(42, 12, 'ministrateur', 'Ad', 'Adresse principale', '87', '', '13400', 'Aubagne', 'Bouches-du-Rhône', 'France', '098765432', 0);
+INSERT INTO `adresses` (`id`, `user_id`, `nom`, `prenom`, `titre`, `adresse`, `complement`, `code_postal`, `ville`, `departement`, `pays`, `telephone`, `is_defaut`) VALUES
+(42, 12, 'ministrateur', 'Ad', 'Adresse principale', '87', '', '13400', 'Aubagne', 'Bouches-du-Rhône', 'France', '098765432', 0),
+(43, 17, 'Dupont', 'Marie', 'Adresse principale', '15 rue des Lilas', 'Apt 3B', '75011', 'Paris', 'Paris', 'France', '0612345678', 1),
+(44, 18, 'Martin', 'Thomas', 'Adresse principale', '28 avenue Victor Hugo', '', '69003', 'Lyon', 'Rhône', 'France', '0723456789', 1),
+(45, 19, 'Petit', 'Sophie', 'Adresse principale', '7 boulevard de la Mer', 'Résidence Les Pins', '13008', 'Marseille', 'Bouches-du-Rhône', 'France', '0634567890', 1),
+(46, 20, 'Bernard', 'Lucas', 'Adresse principale', '42 rue du Commerce', '', '44000', 'Nantes', 'Loire-Atlantique', 'France', '0745678901', 1),
+(47, 20, 'Bernard', 'Lucas', 'Adresse principale', '42 rue du Commerce', '', '44000', 'Nantes', 'Loire-Atlantique', 'France', '0745678901', 1),
+(48, 21, 'Robert', 'Emma', 'Adresse principale', '12 place de la République', '4ème étage', '31000', 'Toulouse', 'Haute-Garonne', 'France', '0656789012', 1),
+(49, 14, 'cli', 'ent', 'Adresse principale', '76', '', '13400', 'Aubagne', 'Vienne', 'France', '0987654', 1),
+(53, 12, 'Webber', 'Marion', 'Adresse par défaut', '10 rue chaulan', '', '13400', 'Aubagne', 'Bouches-du-Rhône', 'France', '0762069989', 1),
+(54, 15, 'clie', 'nt', 'Adresse par défaut', '54', '', '13400', 'aubagne', 'Pouilles', 'Italie', '2154854', 1),
+(55, 22, 'Moreau', 'Louis', 'Adresse par défaut', '3 rue des Fleurs', '', '67000', 'Strasbourg', 'Bas-Rhin', 'France', '0767890123', 1),
+(56, 23, 'Laurent', 'Julie', 'Adresse par défaut', '56 avenue des Champs', 'Bât A', '59000', 'Lille', 'Nord', 'France', '0678901234', 1),
+(57, 24, 'Garcia', 'Antoine', 'Adresse par défaut', '18 rue de la Paix', '', '33000', 'Bordeaux', 'Gironde', 'France', '0689012345', 1),
+(58, 25, 'Roux', 'Chloé', 'Adresse par défaut', '9 avenue Jean Jaurès', 'Résidence du Parc', '06000', 'Nice', 'Alpes-Maritimes', 'France', '0690123456', 1),
+(59, 26, 'Leroy', 'Paul', 'Adresse par défaut', '25 rue des Roses', '', '35000', 'Rennes', 'Ille-et-Vilaine', 'France', '0701234567', 1);
 
 -- --------------------------------------------------------
 
@@ -78,7 +92,14 @@ CREATE TABLE `commandes` (
 --
 
 INSERT INTO `commandes` (`id`, `user_id`, `numero_commande`, `adresse_livraison`, `paypal_payment_id`, `paypal_payer_id`, `date_paiement`, `created_at`, `updated_at`, `adresse_livraison_id`, `total`, `statut`, `date_commande`, `date_modification`) VALUES
-(13, 12, 'CMD-2025-77468', '10 rue chaulan, 13400 Aubagne', '58A43684CA5118201', '2L63NZ2CR6UQC', '2025-05-28 12:34:17', NULL, NULL, 42, '87.73', 'validee', '2025-05-28 12:30:38', '2025-05-28 12:34:17');
+(13, 12, 'CMD-2025-77468', '10 rue chaulan, 13400 Aubagne', '58A43684CA5118201', '2L63NZ2CR6UQC', '2025-05-28 12:34:17', NULL, NULL, 42, '87.73', 'validee', '2025-05-28 12:30:38', '2025-05-28 12:34:17'),
+(14, 17, 'CMD-2025-78901', '15 rue des Lilas, Apt 3B, 75011 Paris', NULL, NULL, '2025-05-28 15:05:14', NULL, NULL, 43, '45.98', 'validee', '2025-05-28 13:05:14', '2025-05-28 13:05:14'),
+(15, 18, 'CMD-2025-78902', '28 avenue Victor Hugo, 69003 Lyon', NULL, NULL, '2025-05-27 14:35:00', NULL, NULL, 44, '89.47', 'en_preparation', '2025-05-27 12:30:00', '2025-05-28 13:05:34'),
+(16, 19, 'CMD-2025-78903', '7 boulevard de la Mer, Résidence Les Pins, 13008 Marseille', NULL, NULL, NULL, NULL, NULL, 45, '258.98', 'en_attente', '2025-05-28 07:15:00', '2025-05-28 13:05:59'),
+(17, 20, 'CMD-2025-78904', '42 rue du Commerce, 44000 Nantes', NULL, NULL, '2025-05-26 16:50:00', NULL, NULL, 46, '167.72', 'expediee', '2025-05-26 14:45:00', '2025-05-28 13:06:32'),
+(18, 21, 'CMD-2025-78905', '12 place de la République, 4ème étage, 31000 Toulouse', NULL, NULL, '2025-05-25 11:25:00', NULL, NULL, 47, '108.93', 'livree', '2025-05-25 09:20:00', '2025-05-28 13:06:50'),
+(19, 14, 'CMD-2025-74235', '76, 13400 Aubagne', '4XP85415TJ5596355', '2L63NZ2CR6UQC', '2025-05-28 13:10:48', NULL, NULL, 49, '5.99', 'validee', '2025-05-28 13:10:24', '2025-05-28 13:10:48'),
+(20, 12, 'CMD-2025-59752', '10 rue chaulan, 13400 Aubagne', '821806554X005993W', '2L63NZ2CR6UQC', '2025-05-28 15:32:51', NULL, NULL, 42, '25.94', 'validee', '2025-05-28 15:32:27', '2025-05-28 15:32:51');
 
 -- --------------------------------------------------------
 
@@ -105,7 +126,32 @@ INSERT INTO `commande_produits` (`id`, `commande_id`, `produit_id`, `quantite`, 
 (18, 13, 48, 1, '32.84', '0.00', NULL, NULL),
 (19, 13, 30, 1, '5.99', '0.00', NULL, NULL),
 (20, 13, 46, 1, '3.95', '0.00', NULL, NULL),
-(21, 13, 34, 1, '44.95', '0.00', NULL, NULL);
+(21, 13, 34, 1, '44.95', '0.00', NULL, NULL),
+(22, 14, 7, 2, '5.99', '11.98', NULL, NULL),
+(23, 14, 6, 1, '3.49', '3.49', NULL, NULL),
+(24, 14, 11, 1, '8.95', '8.95', NULL, NULL),
+(25, 14, 14, 3, '0.95', '2.85', NULL, NULL),
+(26, 14, 18, 1, '13.41', '13.41', NULL, NULL),
+(27, 14, 12, 1, '8.09', '8.09', NULL, NULL),
+(28, 15, 2, 1, '23.90', '23.90', NULL, NULL),
+(29, 15, 5, 2, '13.69', '27.38', NULL, NULL),
+(30, 15, 8, 1, '14.99', '14.99', NULL, NULL),
+(31, 15, 9, 1, '16.99', '16.99', NULL, NULL),
+(32, 15, 13, 1, '8.50', '8.50', NULL, NULL),
+(33, 16, 1, 1, '26.99', '26.99', NULL, NULL),
+(34, 16, 4, 1, '32.99', '32.99', NULL, NULL),
+(35, 16, 10, 1, '199.99', '199.99', NULL, NULL),
+(36, 17, 15, 1, '25.99', '25.99', NULL, NULL),
+(37, 17, 16, 1, '75.19', '75.19', NULL, NULL),
+(38, 17, 17, 1, '91.53', '91.53', NULL, NULL),
+(39, 17, 7, 5, '5.99', '29.95', NULL, NULL),
+(40, 18, 3, 1, '75.95', '75.95', NULL, NULL),
+(41, 18, 11, 2, '8.95', '17.90', NULL, NULL),
+(42, 18, 12, 1, '8.09', '8.09', NULL, NULL),
+(43, 18, 6, 2, '3.49', '6.98', NULL, NULL),
+(44, 19, 7, 1, '5.99', '0.00', NULL, NULL),
+(45, 20, 24, 1, '19.95', '0.00', NULL, NULL),
+(46, 20, 7, 1, '5.99', '0.00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -128,7 +174,8 @@ CREATE TABLE `paniers` (
 
 INSERT INTO `paniers` (`id`, `user_id`, `date_creation`, `status`, `created_at`, `updated_at`) VALUES
 (1, 12, '2025-05-23 13:23:10', 'actif', '2025-05-23 15:23:10', '2025-05-23 13:23:10'),
-(2, 13, '2025-05-23 19:28:04', 'actif', '2025-05-23 17:28:04', '2025-05-23 17:28:04');
+(2, 13, '2025-05-23 19:28:04', 'actif', '2025-05-23 17:28:04', '2025-05-23 17:28:04'),
+(3, 14, '2025-05-28 13:10:21', 'actif', '2025-05-28 11:10:21', '2025-05-28 11:10:21');
 
 -- --------------------------------------------------------
 
@@ -186,7 +233,7 @@ INSERT INTO `produits` (`id`, `nom`, `description`, `animal`, `categorie`, `imag
 (4, 'Edgard & Cooper - Croquettes BIO au Boeuf et Poulet pour Chien 2.5Kg', ' Aliment complet et sans céréales « MERVEILLEUX » pour chiens adultes : b½uf et poulet élevé en liberté, betterave, tomate, carotte, chou frisé et noix de coco\r\n\r\nAliment complet.\r\n\r\nDes aliments savoureux avec un maximum de viande fraîche. Des aliments naturels et savoureux bons pour eux, bien pour nous et notre planète. Nous utilisons exclusivement du poulet et du boeuf frais (ni séchés, ni précuits, ni hautement transformés ou sous forme de farine animale) pour favoriser la bonne digestion. Nous y ajoutons un cocktail hyper sain de fruits, de légumes et d\'herbes fraîches. Ensuite, nous cuisons lentement le tout par petites portions afin d\'en conserver tout le goût et les bienfaits.\r\n\r\nD\'extraordinaires ingrédients soigneusement sélectionnés pour une parfaite alimentation :\r\n\r\nBoeuf et poulet frais bio, avec des legumes, fruits et herbes bio\r\nL\'élevage bio répond à des normes plus strictes en termes de bien-être animal. Les animaux sont élevés en plein air et avec beaucoup d\'espace pour qu\'ils puissent s\'épanouir et grandir\r\nL\'agriculture bio contribue à lutter contre le changement climatique en maintenant le carbone dans le sol. Elle protège également les plantes, les insectes et les oiseaux\r\nSans ingrédients génétiquement modifiés ni conservateurs artificiels ni pesticides, la nourriture bio est le choix le plus sûr pour votre animal\r\n\r\nRecette sans céréales.\r\n', 'chien', 'alimentation-bio', 'images/produits/1747947498_1083c6761c38ec177bc7.png', '32.99', 149, 0, 'adulte', 'Boeuf', 0, 'Edgard & Cooper', '2025-05-23 00:13:53', '2025-05-28 10:04:46'),
 (5, 'Royal Canin - Sachets Sterilised en Mousse pour Chien - 12X85g ', ' Aliment humide pour chiens stérilisés de toutes tailles, aide à maintenir un poids idéal, programme CCN\r\n\r\nAprès la stérilisation, le métabolisme de votre chien ralentit, et il peut arriver que votre animal préfère le canapé à l’aventure, tout en gardant le même solide appétit aux heures des repas. Nous savons qu’une alimentation équilibrée peut aider les animaux à mieux faire face aux problèmes de santé. Cet aliment est le fruit de décennies de recherche scientifique avancée en nutrition canine destinée à renforcer la santé des chiens stérilisés comme le vôtre.\r\n\r\nROYAL CANIN Sterilised mousse convient aux chiens de toutes tailles et est spécialement conçu à partir de nutriments actifs afin de satisfaire l’appétit de votre chien tout en préservant sa forme et sa vitalité. Cette savoureuse formule est enrichie en protéines hautement digestibles, parfaitement adaptées aux besoins spécifiques de votre chien.\r\n\r\nLes protéines que contient cet aliment aident votre chien à maintenir sa masse musculaire, tout en réduisant l’apport en calories et en matières grasses. De plus, la teneur modérée en matières grasses de ROYAL CANIN Sterilised mousse, ainsi que son mélange optimal de fibres alimentaires, favorise le maintien du poids idéal de votre chien, tout en lui procurant une sensation de satiété. En plus de cette délicieuse pâtée, notre programme nutritionnel Sterilised est également disponible sous forme de croquettes croustillantes. Toutes deux sont parfaitement équilibrées sur le plan nutritionnel et tout à fait complémentaires.\r\n\r\nPourquoi ne pas essayer la pâtée en accompagnement des croquettes ? Donnez à votre chien la formule ROYAL CANIN Sterilised mousse et découvrez les bienfaits de nutriments de haute qualité spécifiquement dosés pour qu’il reste plein de vie et en parfaite santé.\r\n', 'chien', 'boites-sachets', 'images/produits/1747947757_4fc936eb3c31960886c7.png', '13.69', 200, 0, 'adulte', 'Poulet', 1, 'Royal Canin', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
 (6, 'Royal Canin - Friandises Training Treats pour Chien - 110g ', ' Convenant aux chiens de plus de 6 mois, les friandises ROYAL CANIN® TRAINING TREATS sont conçues par des vétérinaires et approuvées par les chiens. Ces friandises contiennent une combinaison scientifique d’ingrédients, appuyée par plus de 50 ans de recherche et d’observation dans le domaine de la nutrition canine. Que vous enseigniez à votre chien des instructions de base ou des exercices plus complexes, les friandises ROYAL CANIN® TRAINING TREATS offrent un équilibre parfait entre saveur et nutrition.\r\n\r\nRécompensez les progrès de votre chien, une friandise à la fois. Lorsqu’il est question d’éduquer votre chien, nous savons qu’un encouragement positif est essentiel. C’est pourquoi nous avons créé ROYAL CANIN® TRAINING TREATS, afin que vous puissiez récompenser votre chien avec ces savoureuses friandises.\r\n\r\nFormulées par des vétérinaires, approuvées par les chiens.\r\n\r\nLes friandises ROYAL CANIN® TRAINING TREATS sont spécialement formulées pour les chiots de plus de 6 mois, avec une combinaison scientifique d’ingrédients, appuyée par plus de 50 ans de recherche et d’observation dans le domaine de la nutrition canine. Que vous enseigniez à votre chien des instructions de base ou des exercices plus complexes, les friandises ROYAL CANIN® TRAINING TREATS offrent un équilibre parfait entre saveur et nutrition.\r\n\r\nFriandises à faible teneur en calories pour soutenir la santé cérébrale à toutes les étapes de la vie.\r\n\r\nLes friandises ROYAL CANIN® TRAINING TREATS sont formulées avec du DHA et des vitamines C et E pour contribuer au bon fonctionnement cérébral des chiots jusqu’aux chiens matures. Avec moins de 3 calories par unité, ces friandises hypocaloriques sont conçues pour aider à maintenir la santé de votre chien tout en récompensant son bon comportement.\r\n\r\nCompatibles avec les aliments ROYAL CANIN formulés pour des animaux en bonne santé.\r\n\r\nNos friandises pour l’éducation sont élaborées pour compléter n’importe quel aliment de la gamme ROYAL CANIN conçue pour des animaux en bonne santé. Si votre chien est quotidiennement nourri avec un aliment de maintenance, les friandises ROYAL CANIN® TRAINING TREATS s’y associent parfaitement comme de savoureuses récompenses. Cela permet à votre chien de maintenir sa routine alimentaire tout en bénéficiant d’un soutien ciblé à son éducation.\r\n\r\nAvec moins de 3 calories par unité, ces friandises sont formulées avec du DHA et des vitamines C et E pour contribuer au bon fonctionnement cérébral des chiots jusqu’aux chiens matures.\r\n\r\nVeillez à respecter le tableau de rationnement figurant sur l’emballage et à ne pas donner à votre chien plus que le nombre recommandé d’unités par jour.\r\n\r\nLorsque vous offrez des friandises à votre animal de compagnie, il est conseillé d’ajuster sa ration journalière pour l’aider à maintenir un poids idéal.\r\n\r\nPour toute question ou préoccupation concernant la santé de votre chien, veuillez consulter votre vétérinaire.\r\n\r\nQue vous enseigniez à votre chien des instructions de base ou des exercices plus complexes, les friandises ROYAL CANIN® TRAINING TREATS offrent un équilibre parfait entre saveur et nutrition.\r\n', 'chien', 'friandises', 'images/produits/1747947891_ed9c93af84746b9f29f5.png', '3.49', 400, 0, 'adulte', 'Poulet', 0, 'Royal Canin', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
-(7, 'Animalis - Jouet Ecureuil en Laine Recyclée pour Chiens - 35cm ', 'Jouet pour chien en laine recyclée et polyfibres recyclées, sans rembourrage et avec sifflet (pouic-pouic). ', 'chien', 'jouets', 'images/produits/1747948178_7d83d074c13bd3299ac9.png', '5.99', 139, 1, NULL, NULL, 0, 'Animalis', '2025-05-23 00:13:53', '2025-05-27 12:38:54'),
+(7, 'Animalis - Jouet Ecureuil en Laine Recyclée pour Chiens - 35cm ', 'Jouet pour chien en laine recyclée et polyfibres recyclées, sans rembourrage et avec sifflet (pouic-pouic). ', 'chien', 'jouets', 'images/produits/1747948178_7d83d074c13bd3299ac9.png', '5.99', 137, 1, NULL, NULL, 0, 'Animalis', '2025-05-23 00:13:53', '2025-05-28 13:32:52'),
 (8, 'Leeby - Couverture Mouton pour Chiens - Gris ', 'Couverture douce réversible pour le confort de votre chiot. Grâce à son revêtement doux au toucher, votre chiot pourra s\'installer et se reposer confortablement sur cette couverture. Elle est réversible et offre deux surfaces différentes, ce qui lui permet de s\'adapter aux préférences de votre chiot et à chaque saison.\r\n\r\nCARACTERISTIQUES :\r\n\r\nMatière : Polyester\r\nDimensions : 75x100cm\r\nCouverture réversible', 'chien', 'paniers-coussins', 'images/produits/1747948483_a0bf713f622e520e9e81.png', '14.99', 240, 0, NULL, NULL, 0, 'Leeby', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
 (9, 'Leeby - Coussin Volutes Beige pour Chiens - S', 'Coussin extra doux multi-usage pour le confort de votre animal. Idéal à utiliser dans une corbeille en plastique, ce coussin fera le bonheur de votre chien. Grâce à son rembourrage douillet, ce coussin est épais et moelleux, mais également très doux au toucher, ce qui permettra à votre chien de dormir et/ou de voyager confortablement.\r\n\r\nCARACTERISTIQUES :\r\n\r\nMatière : Polyester\r\nDimensions : 10x70x40cm\r\nCoussin déhoussable', 'chien', 'paniers-coussins', 'images/produits/1747948651_7b80011920ab10e6ea44.png', '16.99', 60, 0, 'junior', NULL, 0, 'Leeby', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
 (10, 'Ferplast - Niche en Bois Baita - 100 ', ' Offrez à votre chien un lieu pour lui empreint de confort où il prendra plaisir à se réfugier.\r\nCette niche Baita 100 deviendra le lieu de refuge préféré de votre compagnon de toujours. Cette niche en bois, au design et à la couleur élégante, accueillera votre chien et le protégera des intempéries. Montée sur pieds, cette niche bénéficiera d\'une meilleure isolation au sol. Son toit traité avec un vernis spécial offrira une résistance optimale aux écarts thermiques. Adaptée aux chiens de grande taille, cette niche sera un abri de qualité pour votre canidé et un élément décoratif pour votre extérieur.\r\n', 'chien', 'niches-chenils', 'images/produits/1747948805_b09380be4d12238bdb8e.jpg', '199.99', 200, 0, NULL, NULL, 0, 'Ferplast', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
@@ -203,7 +250,7 @@ INSERT INTO `produits` (`id`, `nom`, `description`, `animal`, `categorie`, `imag
 (21, 'Gotoo - Collier Montagne pour Chien XL', 'Les chiens sont des compagnons de vie exceptionnels, apportant amour et bonheur à nos journées. Que ce soit lors de balades tranquilles en ville ou d’aventures en pleine nature, chaque moment partagé avec eux est précieux.\r\n\r\nLe COLLIER MONTAGNE GOTOO allie robustesse et élégance.\r\n\r\nAvec son design inspiré de la nature, il affiche un motif de montagne saisissant qui fera ressortir la personnalité de votre compagnon. Ce collier est à la fois léger et durable, parfait pour les chiens actifs qui aiment explorer leur environnement.', 'chien', 'colliers', 'images/produits/1747951056_cbf2ccba188d8501ac24.jpg', '16.99', 48, 0, 'adulte', NULL, 0, 'Gotoo', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
 (22, 'Gotoo - Harnais Essentials Rouge pour Chien L', ' Allie confort, sécurité et robustesse pour chiens.\r\n\r\nLes chiens sont des explorateurs naturels, toujours prêts à découvrir de nouveaux horizons et à profiter de chaque sortie pour satisfaire leur curiosité.\r\n\r\nPour ces moments essentiels de découverte et d\'activité, équipez votre chien avec les accessoires fonctionnels de GOTOO, garantissant à la fois confort et sécurité.\r\n\r\nLe harnais rouge Essential de GOTOO est un accessoire indispensable pour tous les propriétaires de chiens soucieux du bien-être de leur compagnon.\r\n\r\nConçu avec une attention minutieuse aux détails, ce harnais allie robustesse et ergonomie pour offrir à votre animal une expérience de promenade agréable et sécurisée.\r\n\r\nCARACTÉRISTIQUES :\r\nMatériaux résistants\r\nConfort ergonomique\r\nSangles réglables\r\nFermeture rapide\r\n\r\nL : 70-95 cm', 'chien', 'harnais', 'images/produits/1747951136_339181fe1905f33f4061.jpg', '17.99', 17, 0, 'adulte', NULL, 0, 'Gotoo', '2025-05-23 00:13:53', '2025-05-27 12:02:53'),
 (23, 'Trixie - Muselière Muzzle Flex en Noir pour Chien - Taille L', 'La muselière ergonomique pour se balader en toute sérénité !\r\nLa muselière Muzzle Flex de Trixie est solide et résistante tout en offrant du confort à votre chien avec ses attaches en néoprène matelassé au niveau du visage et du cou. Le maintien en place de la muselière est garanti grâce aux attaches triples.\r\n\r\nL/XL : muselière max. 30 centimètres, circonférence intérieure de 36 centimètres\r\n\r\nCaractéristiques de la muselière Muzzle Flex :\r\nSilicone\r\nEmpêche de mordre\r\nAucun problème pour haleter, boire et manger des friandises\r\nTrès confortable à porter grâce à sa forme ergonomique, silicone souple indéformable et attaches en néoprène matelassé au niveau du visage et du cou\r\nMaintien sûr grâce aux attaches triples\r\nAttaches du front et du nez entièrement réglable en continu ainsi que la sangle du cou\r\nBandes réfléchissantes\r\nCouleur : Noir\r\n\r\nTaille de ce harnais : L. ', 'chien', 'muselieres', 'images/produits/1747951291_fa529879341fb81f3985.png', '14.99', 45, 0, 'adulte', NULL, 0, 'Trixie', '2025-05-23 00:13:53', '2025-05-27 12:02:53'),
-(24, 'Bobby - Gamelle rose \"Delicious\" pour Chiens Taille M', 'Gamelle en mélamine comportant un bol amovible en inox adapté au lave-vaisselle. Son motif ‘Delicious’ mettra votre animal en appétit, et trouvera sa place dans la cuisine…\r\n\r\nJoint antidérapant\r\nBol amovible inox', 'chien', 'gamelles', 'images/produits/1747951427_2b127edd14886aad560f.jpg', '19.95', 119, 0, NULL, NULL, 0, 'Bobby', '2025-05-23 00:13:53', '2025-05-27 12:38:54'),
+(24, 'Bobby - Gamelle rose \"Delicious\" pour Chiens Taille M', 'Gamelle en mélamine comportant un bol amovible en inox adapté au lave-vaisselle. Son motif ‘Delicious’ mettra votre animal en appétit, et trouvera sa place dans la cuisine…\r\n\r\nJoint antidérapant\r\nBol amovible inox', 'chien', 'gamelles', 'images/produits/1747951427_2b127edd14886aad560f.jpg', '19.95', 118, 0, NULL, NULL, 0, 'Bobby', '2025-05-23 00:13:53', '2025-05-28 13:32:51'),
 (25, 'Nath Veterinary Diet - Croquettes Diabetic Sans Céréales pour Chat - 4Kg', 'Aliment complet diététique pour chats, régulation de l\'apport en glucose (Diabète sucré)convient aux chats souffrant de diabète sucré. Convient également pour un maintien optimal du poids. Contient des fibres ajoutées pour la satiété. ', 'chat', 'alimentation-sans-cereales', 'images/produits/1747951978_b536bc34b6775d45af65.png', '8.50', 58, 0, 'adulte', 'Poulet', 0, 'Nath Veterinary Diet', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
 (26, 'Yarrah - Croquettes Bio Poulet et Poisson pour Chat Adultes 6KG', ' Croquettes biologiques au poulet et poisson certifié pêche durable pour chat adulte.\r\n\r\nDélicieuses croquettes au hareng MSC et au poulet avec des pois et du lupin, pour tout type de chat adulte.\r\n\r\nCes croquettes appétissantes constituent un repas nutritionnellement complet pour votre chat.\r\n', 'chat', 'alimentation-bio', 'images/produits/1747951991_818004213b999c836bc0.png', '43.19', 250, 0, 'adulte', NULL, 0, 'Yarrah', '2025-05-23 00:13:53', '2025-05-23 00:13:53'),
 (27, 'CatXtreme - Croquettes Adult Sterilised au Saumon Frais pour Chat kg', '\r\n\r\nAliment complet pour chat adulte stérilisé spécialement adapté à ses besoins pour une bonne vitalité. Contient de la viande fraiche, gage de protéines de qualité et d\'une plus grand appétence pour votre chat\r\n\r\nCatxtreme Sterilized est l\'aliment pour chats adultes stérilisés , il a été spécialement conçu pour couvrir leurs besoins alimentaires et énergétiques particuliers, en prévenant le risque d\'obésité.\r\n\r\nLa nourriture pour chat stérilisé Catxtreme incorpore la délicieuse saveur du saumon frais, l\'un des poissons à haute teneur en oméga 3 , qui fait partie des acides gras essentiels pour une bonne santé cardiovasculaire, du pelage et des articulations. Catxtreme Sterilized intègre également des fibres végétales et des minéraux tels que le calcium et le fer qui contribuent aux performances optimales de votre félin, fournissant l\'énergie nécessaire pour mener à bien toutes ses activités avec force et vitalité.\r\n\r\n \r\n\r\n    Aliment spécial pour chats adultes stérilisés avec des protéines et des graisses saines\r\n    Aide à contrôler le poids et prévient l\'obésité\r\n    Il contient des fibres et des minéraux comme le fer pour prévenir l\'anémie et générer de l\'énergie\r\n    Riche en vitamines et antioxydants pour prévenir les maladies graves\r\n    Il comprend de la biotine pour un pelage fort et brillant, ainsi que de la taurine pour une bonne vision et une bonne fonction cardiaque\r\n    Aide à contrôler le poids après la stérilisation\r\n\r\n \r\n\r\nStocker le produit dans un endroit frais et sec.\r\n', 'chat', 'croquettes-sterilise', 'images/produits/1747952238_dddc0a39b70b30d1bad7.jpg', '35.99', 238, 1, 'adulte', 'Saumon', 0, 'CATXTREME', '2025-05-23 00:13:53', '2025-05-27 12:45:39'),
@@ -286,7 +333,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nomcompte`, `prenomcompte`, `email`, `password`, `role`, `nom`, `prenom`, `adresse`, `complement`, `code_postal`, `ville`, `departement`, `pays`, `telephone`, `created_at`, `updated_at`) VALUES
-(12, 'Webber', 'Marion', 'admin@outlook.fr', '$2y$10$Lo19Mqcj4tsMcSqlqZC28ervQlX8i0gGqXOk7GedbM7DFevvAqnMC', 'admin', 'Webber', 'Marion', '10 rue chaulan', '', '13400', 'Aubagne', 'Bouches-du-Rhône', 'France', '0762069989', '2025-05-23 00:13:53', '2025-05-28 12:52:26'),
+(12, 'Webber', 'Marion', 'admin@outlook.fr', '$2y$10$Lo19Mqcj4tsMcSqlqZC28ervQlX8i0gGqXOk7GedbM7DFevvAqnMC', 'admin', 'Webber', 'Marion', '10 rue chaulan', '', '13400', 'Aubagne', 'Bouches-du-Rhône', 'France', '0762069989', '2025-05-23 00:13:53', '2025-05-28 15:37:11'),
 (14, 'cli', 'ent', 'client@outlook.fr', '$2y$10$UPlhM4HOB3MIhps4HbMPj.iU0JpeXHjgd2nRvifz1I.a9TNO67AN2', 'client', 'cli', 'ent', '76', '', '13400', 'Aubagne', 'Vienne', 'France', '0987654', '2025-05-23 14:51:55', '2025-05-23 14:51:55'),
 (15, 'clie', 'nt', 'clientmaison@outlook.fr', '$2y$10$dkGS1NKLnePjhbWW5C3UD.ErEcvwituTpDHNUoDcqQLspJ90U3KGO', 'client', 'clie', 'nt', '54', '', '13400', 'aubagne', 'Pouilles', 'Italie', '2154854', '2025-05-23 20:22:06', '2025-05-23 20:22:06'),
 (17, 'dupont', 'marie', 'marie.dupont@email.fr', '$2y$10$Lo19Mqcj4tsMcSqlqZC28ervQlX8i0gGqXOk7GedbM7DFevvAqnMC', 'client', 'Dupont', 'Marie', '15 rue des Lilas', 'Apt 3B', '75011', 'Paris', 'Paris', 'France', '0612345678', '2025-05-26 13:07:29', '2025-05-26 13:07:29'),
@@ -369,31 +416,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `adresses`
 --
 ALTER TABLE `adresses`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT pour la table `commandes`
 --
 ALTER TABLE `commandes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `commande_produits`
 --
 ALTER TABLE `commande_produits`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT pour la table `paniers`
 --
 ALTER TABLE `paniers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `panier_produits`
 --
 ALTER TABLE `panier_produits`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT pour la table `produits`

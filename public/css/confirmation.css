@@ -288,13 +288,13 @@
 }
 
 .btn-secondary {
-    background-color: #A44D25;
+    background-color: #D97B29;
 }
 
 .btn-secondary:hover {
-    background-color: #8B3A1F;
+    background-color: #C4651F;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(164, 77, 37, 0.3);
+    box-shadow: 0 4px 12px rgba(217, 123, 41, 0.3);
 }
 
 .btn-admin {
