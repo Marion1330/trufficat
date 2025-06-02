@@ -24,6 +24,11 @@ class AuthController extends BaseController
             return redirect()->back()->withInput()->with('error', 'Les mots de passe ne correspondent pas.');
         }
 
+        // Validation de la longueur du mot de passe
+        if (strlen($password) < 9) {
+            return redirect()->back()->withInput()->with('error', 'Le mot de passe doit contenir au minimum 9 caractères.');
+        }
+
         $userModel = new UserModel();
 
         // Vérifie si l'e-mail existe déjà
@@ -239,6 +244,11 @@ class AuthController extends BaseController
         }
         if ($nouveau !== $confirmer) {
             return redirect()->back()->withInput()->with('error', 'Les mots de passe ne correspondent pas.');
+        }
+
+        // Validation de la longueur du nouveau mot de passe
+        if (strlen($nouveau) < 9) {
+            return redirect()->back()->withInput()->with('error', 'Le nouveau mot de passe doit contenir au minimum 9 caractères.');
         }
 
         // Le hash sera fait automatiquement par UserModel
