@@ -33,7 +33,16 @@ window.TrufficatPanier = {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    const produitId = e.target.dataset.id;
+                    
+                    // Récupérer l'ID depuis le bouton, pas depuis l'élément cliqué
+                    const button = e.target.closest('.btn-supprimer');
+                    const produitId = button.dataset.id;
+                    
+                    if (!produitId) {
+                        console.error('ID du produit non trouvé');
+                        return;
+                    }
+                    
                     this.supprimerProduit(produitId);
                 });
             });
@@ -97,6 +106,14 @@ window.TrufficatPanier = {
         });
     },
 
+    /**
+     * Supprime un produit du panier sans confirmation ni rechargement
+     * - Effectue une requete AJAX vers le serveur
+     * - Supprime l'element du DOM avec animation fluide
+     * - Met a jour le resume du panier en temps reel
+     * - Affiche le message de panier vide si necessaire
+     * - Gere les erreurs silencieusement pour une UX fluide
+     */
     supprimerProduit: function(produitId) {
         console.log('Suppression du produit:', produitId);
 
@@ -106,7 +123,12 @@ window.TrufficatPanier = {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('Réponse de suppression:', data);
             if (data.success) {
@@ -117,35 +139,74 @@ window.TrufficatPanier = {
                         throw new Error(`Élément panier-item non trouvé pour l'ID ${produitId}`);
                     }
                     
-                    // Supprimer l'élément
-                    item.remove();
+                    // Supprimer l'élément avec une animation fluide
+                    item.classList.add('removing');
+                    setTimeout(() => {
+                        item.remove();
+                        
+                        // Mettre à jour le résumé
+                        this.updateResume();
+                        
+                        // Si le panier est vide, afficher le message de panier vide
+                        const panierItems = document.querySelectorAll('.panier-item');
+                        if (panierItems.length === 0) {
+                            this.afficherPanierVide();
+                        }
+                    }, 200);
                     
-                    // Mettre à jour le résumé
-                    this.updateResume();
-                    
-                    // Si le panier est vide, recharger la page
-                    const panierItems = document.querySelectorAll('.panier-item');
-                    if (panierItems.length === 0) {
-                        window.location.reload();
-                    }
                 } catch (error) {
                     console.error('Erreur lors de la suppression:', error);
                 }
             } else {
-                throw new Error('La suppression a échoué');
+                throw new Error(data.message || 'La suppression a échoué');
             }
         })
         .catch(error => {
             console.error('Erreur lors de la suppression:', error);
-            alert('Une erreur est survenue lors de la suppression du produit');
         });
+    },
+
+    /**
+     * Affiche le message de panier vide sans rechargement
+     * - Remplace dynamiquement le contenu du panier
+     * - Conserve la structure HTML existante
+     * - Permet une transition fluide vers l'etat vide
+     */
+    afficherPanierVide: function() {
+        const panierContainer = document.querySelector('.panier-container');
+        const panierContent = document.querySelector('.panier-content');
+        
+        if (panierContent) {
+            panierContent.remove();
+        }
+        
+        const panierVideHTML = `
+            <div class="panier-empty">
+                <img src="${this.config.baseUrl}images/empty-cart.png" alt="Panier vide" class="img-fluid">
+                <h2>Votre panier est vide</h2>
+                <p>Découvrez nos produits et commencez vos achats !</p>
+                <a href="${this.config.baseUrl}produits/chiens" class="panier-btn">
+                    Continuer mes achats
+                </a>
+            </div>
+        `;
+        
+        panierContainer.innerHTML = panierVideHTML;
     },
 
     updateResume: function() {
         try {
+            // Vérifier s'il reste des produits dans le panier
+            const panierItems = document.querySelectorAll('.panier-item');
+            
+            if (panierItems.length === 0) {
+                // Si le panier est vide, ne pas mettre à jour le résumé
+                return;
+            }
+            
             // Calculer le sous-total
             let sousTotal = 0;
-            document.querySelectorAll('.panier-item').forEach(item => {
+            panierItems.forEach(item => {
                 const prixUnitaire = parseFloat(item.querySelector('.prix').textContent.replace('€', '').trim());
                 const quantite = parseInt(item.querySelector('.quantite-input').value);
                 if (!isNaN(prixUnitaire) && !isNaN(quantite)) {

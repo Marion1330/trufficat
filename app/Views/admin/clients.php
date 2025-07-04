@@ -64,13 +64,13 @@
                     <tbody>
                         <?php foreach ($clients as $client): ?>
                             <tr>
-                                <td class="td-name"><?= esc($client['nom']) ?></td>
-                                <td class="td-name"><?= esc($client['prenom']) ?></td>
+                                <td class="td-name"><?= esc($client['nom_affichage']) ?></td>
+                                <td class="td-name"><?= esc($client['prenom_affichage']) ?></td>
                                 <td class="td-email"><?= esc($client['email']) ?></td>
-                                <td class="td-phone"><?= esc($client['telephone']) ?></td>
-                                <td class="td-address"><?= esc($client['adresse']) ?></td>
-                                <td class="td-postal"><?= esc($client['code_postal']) ?></td>
-                                <td class="td-city"><?= esc($client['ville']) ?></td>
+                                <td class="td-phone"><?= esc($client['telephone_affichage']) ?></td>
+                                <td class="td-address"><?= esc($client['adresse_affichage']) ?></td>
+                                <td class="td-postal"><?= esc($client['code_postal_affichage']) ?></td>
+                                <td class="td-city"><?= esc($client['ville_affichage']) ?></td>
                                 <td class="td-role">
                                     <span class="role-badge <?= strtolower($client['role']) ?>">
                                         <?= ucfirst($client['role']) ?>

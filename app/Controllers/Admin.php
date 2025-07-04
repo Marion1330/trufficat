@@ -205,44 +205,128 @@ class Admin extends BaseController
         return redirect()->to('/admin/produits')->with('error', 'Produit non trouvé');
     }
 
+    /**
+     * Affiche la liste des clients avec leurs adresses par defaut
+     * - Verifie les droits administrateur obligatoires
+     * - Recupere tous les utilisateurs admin et client
+     * - Joint les adresses par defaut avec nom/prenom associes
+     * - Ordonne par role puis par nom pour affichage organise
+     */
     public function clients()
     {
         if (session()->get('role') !== 'admin') {
             return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
-        $model = new \App\Models\UserModel();
-        $data['clients'] = $model->where('role IN ("admin", "client")')
-                                ->orderBy('role', 'ASC')  // ASC mettra 'admin' avant 'client'
-                                ->orderBy('nom', 'ASC')
-                                ->findAll();
+        $userModel = new \App\Models\UserModel();
+        $adresseModel = new \App\Models\AdresseModel();
+        
+        // Récupérer tous les utilisateurs admin et client
+        $users = $userModel->where('role IN ("admin", "client")')
+                          ->orderBy('role', 'ASC')
+                          ->orderBy('nomcompte', 'ASC')
+                          ->findAll();
+        
+        // Pour chaque utilisateur, récupérer son adresse par défaut
+        foreach ($users as &$user) {
+            $adresseDefaut = $adresseModel->where('user_id', $user['id'])
+                                         ->where('is_defaut', 1)
+                                         ->first();
+            
+            if ($adresseDefaut) {
+                // Utiliser les informations de l'adresse par défaut
+                $user['nom_affichage'] = $adresseDefaut['nom'];
+                $user['prenom_affichage'] = $adresseDefaut['prenom'];
+                $user['adresse_affichage'] = $adresseDefaut['adresse'];
+                $user['complement_affichage'] = $adresseDefaut['complement'];
+                $user['code_postal_affichage'] = $adresseDefaut['code_postal'];
+                $user['ville_affichage'] = $adresseDefaut['ville'];
+                $user['departement_affichage'] = $adresseDefaut['departement'];
+                $user['pays_affichage'] = $adresseDefaut['pays'];
+                $user['telephone_affichage'] = $adresseDefaut['telephone'];
+            } else {
+                // Fallback sur les informations utilisateur si pas d'adresse par défaut
+                $user['nom_affichage'] = $user['nom'] ?: $user['nomcompte'];
+                $user['prenom_affichage'] = $user['prenom'] ?: $user['prenomcompte'];
+                $user['adresse_affichage'] = $user['adresse'] ?: 'Non renseignée';
+                $user['complement_affichage'] = $user['complement'];
+                $user['code_postal_affichage'] = $user['code_postal'] ?: 'Non renseigné';
+                $user['ville_affichage'] = $user['ville'] ?: 'Non renseignée';
+                $user['departement_affichage'] = $user['departement'];
+                $user['pays_affichage'] = $user['pays'] ?: 'Non renseigné';
+                $user['telephone_affichage'] = $user['telephone'] ?: 'Non renseigné';
+            }
+        }
+        
+        $data['clients'] = $users;
         return view('admin/clients', $data);
     }
 
+    /**
+     * Affiche le formulaire de modification d'un utilisateur
+     * - Verifie les droits administrateur obligatoires
+     * - Recupere les donnees utilisateur avec tous les champs
+     * - Recupere l'adresse par defaut pour les valeurs a jour
+     * - Prepare la vue avec les informations les plus recentes
+     * - Synchronise les donnees entre table users et adresse par defaut
+     */
     public function modifierClient($id)
     {
         if (session()->get('role') !== 'admin') {
             return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
-        $model = new \App\Models\UserModel();
-        $data['client'] = $model->find($id);
+        $userModel = new \App\Models\UserModel();
+        $adresseModel = new \App\Models\AdresseModel();
         
-        if (!$data['client']) {
+        $client = $userModel->find($id);
+        
+        if (!$client) {
             return redirect()->to('/admin/clients')->with('error', 'Utilisateur non trouvé');
         }
 
+        // Recuperer l'adresse par defaut pour avoir les informations a jour
+        // Les adresses par defaut contiennent souvent les donnees les plus recentes
+        $adresseDefaut = $adresseModel->where('user_id', $id)
+                                     ->where('is_defaut', 1)
+                                     ->first();
+        
+        if ($adresseDefaut) {
+            // Utiliser les informations de l'adresse par defaut comme valeurs principales
+            // Cela garantit que le formulaire affiche les donnees les plus a jour
+            $client['nom'] = $adresseDefaut['nom'];
+            $client['prenom'] = $adresseDefaut['prenom'];
+            $client['adresse'] = $adresseDefaut['adresse'];
+            $client['complement'] = $adresseDefaut['complement'];
+            $client['code_postal'] = $adresseDefaut['code_postal'];
+            $client['ville'] = $adresseDefaut['ville'];
+            $client['departement'] = $adresseDefaut['departement'];
+            $client['pays'] = $adresseDefaut['pays'];
+            $client['telephone'] = $adresseDefaut['telephone'];
+        }
+
+        $data['client'] = $client;
         return view('admin/modifier_client', $data);
     }
 
+    /**
+     * Met a jour les donnees d'un utilisateur depuis l'interface admin
+     * - Verifie les droits administrateur et existence utilisateur
+     * - Gere la protection du dernier compte administrateur
+     * - Traite les 4 champs distincts : nomcompte/prenomcompte et nom/prenom
+     * - Met a jour la table users ET l'adresse par defaut correspondante
+     * - Applique le hachage securise pour les nouveaux mots de passe
+     */
     public function updateClient($id)
     {
         if (session()->get('role') !== 'admin') {
             return redirect()->to('/')->with('error', 'Accès refusé');
         }
 
-        $model = new \App\Models\UserModel();
-        $client = $model->find($id);
+        $userModel = new \App\Models\UserModel();
+        $adresseModel = new \App\Models\AdresseModel();
+        
+        $client = $userModel->find($id);
 
         if (!$client) {
             return redirect()->to('/admin/clients')->with('error', 'Utilisateur non trouvé');
@@ -251,13 +335,14 @@ class Admin extends BaseController
         // Empêcher la modification du rôle du dernier administrateur
         $newRole = $this->request->getPost('role');
         if ($client['role'] === 'admin' && $newRole !== 'admin') {
-            $adminCount = $model->where('role', 'admin')->countAllResults();
+            $adminCount = $userModel->where('role', 'admin')->countAllResults();
             if ($adminCount <= 1) {
                 return redirect()->to('/admin/clients')->with('error', 'Impossible de changer le rôle du dernier administrateur');
             }
         }
 
-        $data = [
+        // Données pour la table users
+        $userData = [
             'email' => $this->request->getPost('email'),
             'nomcompte' => $this->request->getPost('nomcompte'),
             'prenomcompte' => $this->request->getPost('prenomcompte'),
@@ -275,15 +360,39 @@ class Admin extends BaseController
 
         // Si un nouveau mot de passe est fourni
         if ($password = $this->request->getPost('password')) {
-            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+            $userData['password'] = $password; // Le UserModel s'occupera du hachage
         }
 
         try {
-            if ($model->update($id, $data)) {
-                return redirect()->to('/admin/clients')->with('success', 'Utilisateur modifié avec succès');
-            } else {
+            // Mettre a jour la table users avec les nouvelles donnees
+            // Cela inclut les identifiants de connexion et les informations personnelles
+            if (!$userModel->update($id, $userData)) {
                 return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification de l\'utilisateur');
             }
+
+            // Mettre a jour l'adresse par defaut correspondante pour maintenir la coherence
+            // Cela garantit que les donnees affichees dans le tableau de bord restent synchronisees
+            $adresseDefaut = $adresseModel->where('user_id', $id)
+                                         ->where('is_defaut', 1)
+                                         ->first();
+            
+            if ($adresseDefaut) {
+                $adresseData = [
+                    'nom' => $this->request->getPost('nom'),
+                    'prenom' => $this->request->getPost('prenom'),
+                    'adresse' => $this->request->getPost('adresse'),
+                    'complement' => $this->request->getPost('complement'),
+                    'code_postal' => $this->request->getPost('code_postal'),
+                    'ville' => $this->request->getPost('ville'),
+                    'departement' => $this->request->getPost('departement'),
+                    'pays' => $this->request->getPost('pays'),
+                    'telephone' => $this->request->getPost('telephone'),
+                ];
+                
+                $adresseModel->update($adresseDefaut['id'], $adresseData);
+            }
+
+            return redirect()->to('/admin/clients')->with('success', 'Utilisateur modifié avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'Erreur lors de la modification de l\'utilisateur: ' . $e->getMessage());
         }

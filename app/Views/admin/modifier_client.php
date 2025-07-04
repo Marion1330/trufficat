@@ -60,6 +60,16 @@
             </div>
 
             <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" value="<?= esc($client['nom']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" value="<?= esc($client['prenom']) ?>" required>
+            </div>
+
+            <div class="form-group">
                 <label for="telephone">Téléphone</label>
                 <input type="tel" id="telephone" name="telephone" value="<?= esc($client['telephone']) ?>" required>
             </div>
@@ -67,6 +77,11 @@
             <div class="form-group full-width">
                 <label for="adresse">Adresse</label>
                 <input type="text" id="adresse" name="adresse" value="<?= esc($client['adresse']) ?>" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="complement">Complément d'adresse</label>
+                <input type="text" id="complement" name="complement" value="<?= esc($client['complement']) ?>">
             </div>
 
             <div class="form-group">
@@ -87,6 +102,12 @@
             <div class="form-group">
                 <label for="pays">Pays</label>
                 <input type="text" id="pays" name="pays" value="<?= esc($client['pays']) ?>" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="password">Nouveau mot de passe (optionnel)</label>
+                <input type="password" id="password" name="password" placeholder="Laisser vide pour ne pas changer">
+                <small>Minimum 9 caractères</small>
             </div>
         </div>
 

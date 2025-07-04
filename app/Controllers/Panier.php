@@ -161,6 +161,15 @@ class Panier extends BaseController
         }
     }
 
+    /**
+     * Supprime un produit du panier via requete AJAX
+     * - Verifie l'authentification utilisateur obligatoire
+     * - Recupere le panier actif de l'utilisateur
+     * - Supprime le produit specifique du panier
+     * - Recalcule le total du panier apres suppression
+     * - Retourne les nouvelles donnees du panier en JSON
+     * - Gere les erreurs avec messages explicites
+     */
     public function supprimer($id)
     {
         if (!$this->session->get('isLoggedIn')) {
@@ -181,10 +190,12 @@ class Panier extends BaseController
         }
 
         try {
-            // Supprimer le produit
+            // Supprimer le produit du panier
+            // Cette operation supprime l'entree correspondante dans panier_produits
             $this->panierProduitModel->supprimerProduit($panier['id'], $id);
             
-            // Récupérer les nouvelles données du panier
+            // Récupérer les nouvelles données du panier après suppression
+            // Pour mettre à jour les totaux et verifier l'etat du panier
             $produits = $this->panierProduitModel->getProduitsPanier($panier['id']);
             $total = array_reduce($produits, function($carry, $item) {
                 return $carry + ($item['prix_unitaire'] * $item['quantite']);
