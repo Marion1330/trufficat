@@ -4,15 +4,36 @@ namespace App\Controllers;
 
 use App\Models\ProduitModel;
 
+/**
+ * Controleur Admin pour la gestion complete de l'interface d'administration
+ * - Gere tous les aspects de l'administration : produits, clients, commandes
+ * - Verifie les droits administrateur sur toutes les actions
+ * - Permet la gestion CRUD complete des produits avec upload d'images
+ * - Gere les utilisateurs avec synchronisation adresses par defaut
+ * - Controle les commandes et leurs statuts avec validation
+ */
 class Admin extends BaseController
 {
+    // Chemin de stockage des images de produits
     protected $uploadPath = 'images/produits/';
 
+    /**
+     * Constructeur du controleur Admin
+     * - Initialise les helpers necessaires pour la gestion des fichiers
+     * - Prepare l'environnement pour les operations d'upload
+     */
     public function __construct()
     {
         helper('filesystem');
     }
 
+    /**
+     * Tableau de bord principal de l'administration
+     * - Verifie les droits administrateur obligatoires
+     * - Recupere les statistiques globales : nombre de produits, utilisateurs, commandes
+     * - Affiche le tableau de bord avec les donnees synthetiques
+     * - Utilise des requetes directes pour optimiser les performances
+     */
     public function index()
     {
         if (session()->get('role') !== 'admin') {
@@ -32,6 +53,14 @@ class Admin extends BaseController
         return view('admin/index', $data);
     }
 
+    /**
+     * Gestion de la liste des produits avec filtres et pagination
+     * - Verifie les droits administrateur obligatoires
+     * - Applique des filtres par type d'animal (chien/chat)
+     * - Permet la recherche textuelle sur nom, description, marque, categorie, saveur
+     * - Implemente la pagination avec 10 produits par page
+     * - Retourne les donnees filtrees avec les informations de pagination
+     */
     public function produits()
     {
         if (session()->get('role') !== 'admin') {
@@ -77,11 +106,24 @@ class Admin extends BaseController
         return view('admin/produits', $data);
     }
 
+    /**
+     * Affichage du formulaire d'ajout de produit
+     * - Affiche le formulaire vide pour la creation d'un nouveau produit
+     * - Prepare l'interface pour l'upload d'image et la saisie des donnees
+     */
     public function ajouterProduit()
     {
         return view('admin/ajouter_produit');
     }
 
+    /**
+     * Traitement de l'ajout d'un nouveau produit
+     * - Recupere et valide toutes les donnees du formulaire
+     * - Gere l'upload d'image avec generation de nom unique
+     * - Cree le dossier d'upload si necessaire
+     * - Insere le produit en base avec gestion d'erreurs
+     * - Redirige avec message de succes ou d'erreur
+     */
     public function saveProduit()
     {
         $model = new ProduitModel();
@@ -126,6 +168,12 @@ class Admin extends BaseController
         }
     }
 
+    /**
+     * Affichage du formulaire de modification d'un produit
+     * - Recupere le produit existant par son ID
+     * - Affiche le formulaire pre-rempli avec les donnees actuelles
+     * - Permet la modification de tous les champs du produit
+     */
     public function modifierProduit($id)
     {
         $model = new ProduitModel();
@@ -133,6 +181,14 @@ class Admin extends BaseController
         return view('admin/modifier_produit', $data);
     }
 
+    /**
+     * Traitement de la modification d'un produit existant
+     * - Verifie l'existence du produit avant modification
+     * - Gere l'upload d'une nouvelle image avec suppression de l'ancienne
+     * - Met a jour tous les champs du produit en base
+     * - Applique la validation et la gestion d'erreurs
+     * - Redirige avec message de succes ou d'erreur
+     */
     public function updateProduit($id)
     {
         $model = new ProduitModel();
@@ -187,6 +243,13 @@ class Admin extends BaseController
         }
     }
 
+    /**
+     * Suppression d'un produit avec nettoyage des fichiers associes
+     * - Verifie l'existence du produit avant suppression
+     * - Supprime l'image associee du serveur si elle existe
+     * - Supprime l'entree en base de donnees
+     * - Redirige avec message de confirmation ou d'erreur
+     */
     public function supprimerProduit($id)
     {
         $model = new ProduitModel();
@@ -398,6 +461,14 @@ class Admin extends BaseController
         }
     }
 
+    /**
+     * Suppression d'un utilisateur avec protection du dernier administrateur
+     * - Verifie les droits administrateur obligatoires
+     * - Controle l'existence de l'utilisateur avant suppression
+     * - Protege le dernier compte administrateur de la suppression
+     * - Supprime l'utilisateur en base avec gestion d'erreurs
+     * - Redirige avec message de confirmation ou d'erreur
+     */
     public function supprimerClient($id)
     {
         if (session()->get('role') !== 'admin') {
@@ -427,6 +498,13 @@ class Admin extends BaseController
         }
     }
 
+    /**
+     * Affichage de la liste des commandes avec informations utilisateur
+     * - Verifie les droits administrateur obligatoires
+     * - Recupere toutes les commandes avec les donnees utilisateur associees
+     * - Utilise le modele CommandeModel pour la jointure automatique
+     * - Affiche la liste complete des commandes pour suivi administratif
+     */
     public function commandes()
     {
         if (session()->get('role') !== 'admin') {
@@ -439,6 +517,13 @@ class Admin extends BaseController
         return view('admin/commandes', $data);
     }
 
+    /**
+     * Affichage du detail d'une commande specifique
+     * - Verifie les droits administrateur obligatoires
+     * - Recupere la commande par son ID avec verification d'existence
+     * - Redirige vers la page de confirmation existante pour affichage detaille
+     * - Permet a l'admin de consulter tous les details de la commande
+     */
     public function voirCommande($id)
     {
         if (session()->get('role') !== 'admin') {
@@ -456,6 +541,15 @@ class Admin extends BaseController
         return redirect()->to('/commande/confirmation/' . $id);
     }
 
+    /**
+     * Mise a jour du statut d'une commande avec validation et logging
+     * - Verifie les droits administrateur obligatoires
+     * - Valide le statut soumis contre la liste des statuts autorises
+     * - Gere automatiquement la date de paiement lors du passage en "validee"
+     * - Applique la mise a jour avec verification de reussite
+     * - Log toutes les operations pour audit et debugging
+     * - Redirige avec message de succes ou d'erreur detaille
+     */
     public function updateStatutCommande($id)
     {
         if (session()->get('role') !== 'admin') {

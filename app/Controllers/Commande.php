@@ -8,14 +8,33 @@ use App\Models\PanierModel;
 use App\Models\PanierProduitModel;
 use App\Models\ProduitModel;
 
+/**
+ * Controleur Commande pour la gestion complete du processus de commande
+ * - Gere la creation, validation et suivi des commandes
+ * - Integre le systeme de paiement PayPal
+ * - Gere l'historique des commandes utilisateur
+ * - Controle la gestion des stocks et adresses de livraison
+ * - Assure la securite des transactions et l'integrite des donnees
+ */
 class Commande extends BaseController
 {
+    /**
+     * Proprietes pour les modeles de donnees
+     * - Instanciation des modeles necessaires pour la gestion des commandes
+     * - Permet l'acces aux donnees de commandes, paniers et produits
+     */
     protected $commandeModel;
     protected $commandeDetailModel;
     protected $panierModel;
     protected $panierProduitModel;
     protected $produitModel;
 
+    /**
+     * Constructeur du controleur Commande
+     * - Initialise tous les modeles necessaires
+     * - Prepare l'environnement pour la gestion des commandes
+     * - Assure la disponibilite des modeles dans toutes les methodes
+     */
     public function __construct()
     {
         $this->commandeModel = new CommandeModel();
@@ -25,12 +44,25 @@ class Commande extends BaseController
         $this->produitModel = new ProduitModel();
     }
 
+    /**
+     * Page d'accueil des commandes
+     * - Redirige automatiquement vers le checkout
+     * - Simplifie le parcours utilisateur vers la finalisation
+     * - Evite les pages intermediaires inutiles
+     */
     public function index()
     {
         // Rediriger directement vers le checkout pour passer commande
         return redirect()->to('/commande/checkout');
     }
 
+    /**
+     * Affichage de l'historique des commandes utilisateur
+     * - Verifie que l'utilisateur est connecte
+     * - Recupere toutes les commandes de l'utilisateur triees par date
+     * - Ajoute les details des produits pour chaque commande
+     * - Affiche l'historique complet avec statuts et informations
+     */
     public function historique()
     {
         if (!session('user_id')) {
@@ -51,6 +83,14 @@ class Commande extends BaseController
         return view('commande/historique', $data);
     }
 
+    /**
+     * Page de finalisation de commande (checkout)
+     * - Verifie l'authentification et l'existence du panier
+     * - Calcule le total de la commande
+     * - Charge la configuration PayPal pour le paiement
+     * - Prepare les donnees pour l'interface de paiement
+     * - Valide que le panier contient des produits
+     */
     public function checkout()
     {
         if (!session('user_id')) {
@@ -86,6 +126,16 @@ class Commande extends BaseController
         return view('commande/checkout', $data);
     }
 
+    /**
+     * Creation d'une nouvelle commande via AJAX
+     * - Valide l'authentification et l'existence du panier
+     * - Calcule le total de la commande
+     * - Recupere ou cree l'adresse de livraison
+     * - Genere un numero de commande unique
+     * - Cree la commande et ses details en base
+     * - Retourne une reponse JSON pour l'interface
+     * - Gere les erreurs avec try-catch et logging
+     */
     public function creerCommande()
     {
         if (!session('user_id')) {
@@ -158,6 +208,15 @@ class Commande extends BaseController
         }
     }
 
+    /**
+     * Traitement du succes du paiement PayPal
+     * - Recupere les parametres de retour PayPal (paymentId, payerId)
+     * - Met a jour le statut de la commande en 'validee'
+     * - Enregistre les informations de paiement PayPal
+     * - Vide le panier de l'utilisateur
+     * - Met a jour les stocks des produits
+     * - Redirige vers la page de confirmation
+     */
     public function paypalSuccess()
     {
         $paymentId = $this->request->getGet('paymentId');
@@ -189,11 +248,25 @@ class Commande extends BaseController
         return redirect()->to('/panier')->with('error', 'Erreur lors du paiement');
     }
 
+    /**
+     * Traitement de l'annulation du paiement PayPal
+     * - Redirige vers le panier avec message d'annulation
+     * - Permet a l'utilisateur de reessayer le paiement
+     * - Conserve les produits dans le panier
+     */
     public function paypalCancel()
     {
         return redirect()->to('/panier')->with('error', 'Paiement annulé');
     }
 
+    /**
+     * Page de confirmation de commande
+     * - Verifie l'authentification et la propriete de la commande
+     * - Recupere les details complets de la commande
+     * - Affiche la confirmation avec adresse de livraison
+     * - Permet l'acces aux administrateurs pour toutes les commandes
+     * - Controle la securite d'acces aux commandes
+     */
     public function confirmation($commandeId)
     {
         if (!session('user_id')) {
@@ -227,6 +300,13 @@ class Commande extends BaseController
         ]);
     }
 
+    /**
+     * Methode privee pour recuperer l'adresse de livraison formattee
+     * - Recupere les informations d'adresse de l'utilisateur
+     * - Formate l'adresse pour l'affichage
+     * - Utilise les informations du profil utilisateur
+     * - Retourne une chaine formatee pour la livraison
+     */
     private function getAdresseLivraison()
     {
         $userModel = new \App\Models\UserModel();
@@ -235,6 +315,14 @@ class Commande extends BaseController
         return $user['adresse'] . ', ' . $user['code_postal'] . ' ' . $user['ville'];
     }
 
+    /**
+     * Methode privee pour recuperer ou creer l'adresse de livraison
+     * - Cherche d'abord l'adresse par defaut de l'utilisateur
+     * - Si aucune adresse par defaut, utilise la premiere adresse disponible
+     * - Si aucune adresse, cree une adresse par defaut depuis les infos utilisateur
+     * - Assure qu'une adresse de livraison est toujours disponible
+     * - Retourne l'ID de l'adresse de livraison
+     */
     private function getOrCreateAdresseLivraison()
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -284,6 +372,14 @@ class Commande extends BaseController
         return null;
     }
 
+    /**
+     * Methode privee pour mettre a jour les stocks apres validation de commande
+     * - Recupere tous les produits de la commande
+     * - Calcule le nouveau stock pour chaque produit
+     * - Met a jour les stocks en base de donnees
+     * - Assure que le stock ne descend jamais en dessous de 0
+     * - Gere la logique metier de gestion des stocks
+     */
     private function updateStocks($commandeId)
     {
         $produits = $this->commandeDetailModel->where('commande_id', $commandeId)->findAll();

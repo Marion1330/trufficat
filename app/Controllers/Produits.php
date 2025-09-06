@@ -4,28 +4,69 @@ namespace App\Controllers;
 
 use App\Models\ProduitModel;
 
+/**
+ * Controleur Produits pour la gestion complete du catalogue produits
+ * - Gere l'affichage des produits par animal (chiens/chats)
+ * - Implemente un systeme de filtres avances (marque, age, saveur, prix)
+ * - Gere la pagination pour optimiser les performances
+ * - Permet la recherche textuelle dans tous les champs produits
+ * - Affiche les details complets d'un produit specifique
+ * - Optimise les requetes SQL avec Query Builder
+ */
 class Produits extends BaseController
 {
+    /**
+     * Propriete pour le modele de donnees produits
+     * - Instanciation du modele ProduitModel pour l'acces aux donnees
+     * - Permet l'acces aux methodes de requetage et de filtrage
+     */
     protected $produitModel;
     
+    /**
+     * Constructeur du controleur Produits
+     * - Initialise le modele ProduitModel
+     * - Prepare l'environnement pour la gestion des produits
+     */
     public function __construct()
     {
         $this->produitModel = new ProduitModel();
     }
     
+    /**
+     * Affichage des produits pour chiens
+     * - Redirige vers la methode generique afficherProduits
+     * - Passe le parametre 'chien' pour filtrer les produits
+     * - Permet l'affichage de tous les produits pour chiens
+     */
     public function chiens()
     {
         return $this->afficherProduits('chien');
     }
 
+    /**
+     * Affichage des produits pour chats
+     * - Redirige vers la methode generique afficherProduits
+     * - Passe le parametre 'chat' pour filtrer les produits
+     * - Permet l'affichage de tous les produits pour chats
+     */
     public function chats()
     {
         return $this->afficherProduits('chat');
     }
     
+    /**
+     * Methode privee principale pour l'affichage des produits
+     * - Gere tous les filtres possibles (marque, age, saveur, prix, recherche)
+     * - Implemente la pagination pour optimiser les performances
+     * - Construit des requetes SQL dynamiques avec Query Builder
+     * - Gere le tri des resultats selon plusieurs criteres
+     * - Prepare toutes les donnees necessaires pour la vue
+     * - Optimise les requetes avec des jointures et des conditions complexes
+     */
     private function afficherProduits($animal, $categorie = null)
     {
-        // Récupération des filtres depuis l'URL
+        // Recuperation des filtres depuis l'URL
+        // Ces parametres permettent un filtrage avance des produits
         $marque = $this->request->getGet('marque');
         $age = $this->request->getGet('age');
         $saveur = $this->request->getGet('saveur');
@@ -35,12 +76,14 @@ class Produits extends BaseController
         $recherche = $this->request->getGet('recherche');
         $page = $this->request->getGet('page') ? (int)$this->request->getGet('page') : 1;
         
-        // Construction de la requête avec les filtres
+        // Construction de la requete avec les filtres
+        // Utilisation du Query Builder pour des requetes optimisees
         $db = \Config\Database::connect();
         $builder = $db->table('produits');
         $builder->where('animal', $animal);
         
-        // Filtre de recherche
+        // Filtre de recherche textuelle
+        // Recherche dans tous les champs pertinents du produit
         if ($recherche) {
             $builder->groupStart()
                 ->like('nom', $recherche)
@@ -52,8 +95,11 @@ class Produits extends BaseController
             ->groupEnd();
         }
         
+        // Filtre par categorie avec logique complexe
+        // Gestion des categories speciales selon l'animal
         if ($categorie) {
             if ($categorie === 'alimentation') {
+                // Regroupement de toutes les categories d'alimentation
                 $builder->groupStart()
                     ->where('categorie', 'alimentation')
                     ->orWhere('categorie', 'alimentation-sans-cereales')
@@ -64,6 +110,7 @@ class Produits extends BaseController
                     ->orWhere('categorie', 'friandises')
                     ->groupEnd();
             } elseif ($categorie === 'hygiene-soins') {
+                // Categories d'hygiene differentes selon l'animal
                 if ($animal === 'chien') {
                     $builder->groupStart()
                         ->where('categorie', 'hygiene-soins')
@@ -83,6 +130,7 @@ class Produits extends BaseController
                         ->groupEnd();
                 }
             } elseif ($categorie === 'accessoires') {
+                // Accessoires specifiques selon l'animal
                 if ($animal === 'chien') {
                     $builder->groupStart()
                         ->where('categorie', 'gamelles')
@@ -99,6 +147,7 @@ class Produits extends BaseController
                         ->groupEnd();
                 }
             } elseif ($categorie === 'couchage') {
+                // Couchage adapte selon l'animal
                 if ($animal === 'chien') {
                     $builder->groupStart()
                         ->where('categorie', 'paniers-coussins')
@@ -112,16 +161,19 @@ class Produits extends BaseController
                         ->groupEnd();
                 }
             } elseif ($categorie === 'transports' && $animal === 'chien') {
+                // Transport specifique aux chiens
                 $builder->groupStart()
                     ->where('categorie', 'caisses-transport')
                     ->orWhere('categorie', 'accessoires-voyage')
                     ->groupEnd();
             } elseif ($categorie === 'transport' && $animal === 'chat') {
+                // Transport specifique aux chats
                 $builder->groupStart()
                     ->where('categorie', 'sac-transport')
                     ->orWhere('categorie', 'caisse-transport')
                     ->groupEnd();
             } elseif ($categorie === 'sellerie' && $animal === 'chien') {
+                // Sellerie specifique aux chiens
                 $builder->groupStart()
                     ->where('categorie', 'laisses')
                     ->orWhere('categorie', 'laisses-enrouleur')
@@ -130,10 +182,13 @@ class Produits extends BaseController
                     ->orWhere('categorie', 'muselieres')
                     ->groupEnd();
             } else {
+                // Categorie simple sans logique speciale
                 $builder->where('categorie', $categorie);
             }
         }
         
+        // Application des filtres simples
+        // Ces filtres s'appliquent directement sur les colonnes
         if ($marque) {
             $builder->where('marque', $marque);
         }
@@ -146,23 +201,30 @@ class Produits extends BaseController
             $builder->where('saveur', $saveur);
         }
         
+        // Filtre par besoin special avec logique complexe
+        // Gestion des besoins nutritionnels et specifiques
         if ($besoin) {
             switch ($besoin) {
                 case 'sterilise':
+                    // Produits pour animaux sterilises
                     $builder->groupStart()
                         ->where('sterilise', 1)
                         ->orWhere('categorie', 'croquettes-sterilise')
                     ->groupEnd();
                     break;
                 case 'sans_cereales':
+                    // Produits sans cereales
                     $builder->like('categorie', 'sans-cereales');
                     break;
                 case 'bio':
+                    // Produits biologiques
                     $builder->like('categorie', 'bio');
                     break;
             }
         }
         
+        // Filtres de prix avec validation
+        // Permet de definir une fourchette de prix
         if ($prix_min) {
             $builder->where('prix >=', $prix_min);
         }
@@ -171,7 +233,8 @@ class Produits extends BaseController
             $builder->where('prix <=', $prix_max);
         }
         
-        // Tri des résultats
+        // Tri des resultats selon plusieurs criteres
+        // Permet un tri flexible selon les besoins utilisateur
         $tri = $this->request->getGet('tri');
         if ($tri) {
             switch ($tri) {
@@ -212,13 +275,16 @@ class Produits extends BaseController
                     $builder->orderBy('saveur', 'DESC');
                     break;
                 default:
+                    // Tri par defaut par ID decroissant
                     $builder->orderBy('id', 'DESC');
             }
         } else {
+            // Tri par defaut si aucun tri specifie
             $builder->orderBy('id', 'DESC');
         }
         
-        // Récupérer le prix maximum pour l'animal spécifique
+        // Recuperation du prix maximum pour l'animal specifique
+        // Utilise pour l'affichage du slider de prix
         $maxPrice = $db->table('produits')
             ->where('animal', $animal)
             ->selectMax('prix')
@@ -227,23 +293,29 @@ class Produits extends BaseController
             ->prix;
         
         // Compter le nombre total de produits (pour la pagination)
+        // Cette requete est optimisee pour le comptage
         $totalProduits = $builder->countAllResults(false);
         
-        // Produits par page
+        // Configuration de la pagination
+        // Limite le nombre de produits par page pour les performances
         $produitsParPage = 9;
         
-        // Calculer l'offset
+        // Calculer l'offset pour la pagination
+        // Permet de recuperer la bonne page de resultats
         $offset = ($page - 1) * $produitsParPage;
         
-        // Récupérer les produits pour la page actuelle
+        // Recuperer les produits pour la page actuelle
+        // Application de la limite et de l'offset
         $produits = $builder->limit($produitsParPage, $offset)->get()->getResultArray();
         
-        // Créer un objet pager maison
+        // Creation d'un objet pager maison
+        // Calculs pour la navigation entre les pages
         $totalPages = ceil($totalProduits / $produitsParPage);
         $hasPrevious = $page > 1;
         $hasNext = $page < $totalPages;
         
-        // Préparer les paramètres de requête pour les liens
+        // Preparation des parametres de requete pour les liens
+        // Conservation des filtres lors de la navigation
         $queryParams = [];
         if ($marque) $queryParams['marque'] = $marque;
         if ($age) $queryParams['age'] = $age;
@@ -254,13 +326,15 @@ class Produits extends BaseController
         if ($recherche) $queryParams['recherche'] = $recherche;
         if ($tri) $queryParams['tri'] = $tri;
         
-        // Préparation des données pour la vue
+        // Preparation des donnees pour la vue
+        // Toutes les informations necessaires pour l'affichage
         $data['produits'] = $produits;
         $data['animal'] = $animal;
         $data['categorie'] = $categorie;
-        $data['max_price'] = ceil($maxPrice); // Arrondir au nombre entier supérieur
+        $data['max_price'] = ceil($maxPrice); // Arrondir au nombre entier superieur
         
         // Informations de pagination pour la vue
+        // Donnees pour la navigation entre les pages
         $data['pagination'] = [
             'page' => $page,
             'total_pages' => $totalPages,
@@ -270,12 +344,14 @@ class Produits extends BaseController
             'total_produits' => $totalProduits
         ];
         
-        // Récupération des marques, âges et saveurs pour les filtres
+        // Recuperation des marques, ages et saveurs pour les filtres
+        // Donnees pour peupler les menus deroulants
         $data['marques'] = $this->produitModel->getMarques($animal);
         $data['ages'] = $this->produitModel->getAges($animal);
         $data['saveurs'] = $this->produitModel->getSaveurs($animal);
         
         // Valeurs actuelles des filtres
+        // Conservation de l'etat des filtres pour l'interface
         $data['filtre_marque'] = $marque;
         $data['filtre_age'] = $age;
         $data['filtre_saveur'] = $saveur;
@@ -285,38 +361,66 @@ class Produits extends BaseController
         $data['filtre_recherche'] = $recherche;
         $data['filtre_tri'] = $tri;
         
+        // Affichage de la vue avec toutes les donnees
         return view('produits/liste', $data);
     }
     
+    /**
+     * Affichage des produits par categorie
+     * - Redirige vers la methode generique afficherProduits
+     * - Passe les parametres animal et categorie
+     * - Permet l'affichage filtre par categorie
+     */
     public function categorie($animal, $categorie)
     {
         return $this->afficherProduits($animal, $categorie);
     }
     
+    /**
+     * Affichage des details d'un produit specifique
+     * - Recupere les informations completes du produit
+     * - Verifie l'existence du produit en base
+     * - Redirige vers l'accueil si le produit n'existe pas
+     * - Affiche la page de detail avec toutes les informations
+     */
     public function detail($id)
     {
+        // Recuperation des details complets du produit
         $produit = $this->produitModel->getProduit($id);
         
+        // Verification de l'existence du produit
         if (!$produit) {
             return redirect()->to('/');
         }
         
+        // Preparation des donnees pour la vue
         $data['produit'] = $produit;
         return view('produits/detail', $data);
     }
     
+    /**
+     * Fonction de recherche globale
+     * - Recupere le terme de recherche depuis l'URL
+     * - Compte les resultats pour chiens et chats separement
+     * - Determine automatiquement vers quelle page rediriger
+     * - Redirige vers la page appropriee avec le filtre de recherche
+     * - Optimise l'experience utilisateur en choisissant la page la plus pertinente
+     */
     public function recherche()
     {
+        // Recuperation du terme de recherche
         $terme = $this->request->getGet('q');
         
+        // Redirection si aucun terme de recherche
         if (!$terme) {
             return redirect()->to('/');
         }
         
-        // Connexion à la base de données
+        // Connexion a la base de donnees
         $db = \Config\Database::connect();
         
         // Compter les produits pour chiens correspondant au terme de recherche
+        // Recherche dans tous les champs pertinents
         $builderChiens = $db->table('produits');
         $builderChiens->where('animal', 'chien');
         $builderChiens->groupStart()
@@ -330,6 +434,7 @@ class Produits extends BaseController
         $countChiens = $builderChiens->countAllResults();
         
         // Compter les produits pour chats correspondant au terme de recherche
+        // Meme logique de recherche pour les chats
         $builderChats = $db->table('produits');
         $builderChats->where('animal', 'chat');
         $builderChats->groupStart()
@@ -342,16 +447,17 @@ class Produits extends BaseController
         ->groupEnd();
         $countChats = $builderChats->countAllResults();
         
-        // Déterminer vers quelle page rediriger
-        // Si égalité ou plus de chats, on va vers chats
-        // Sinon on va vers chiens
+        // Determination de la page de destination
+        // Logique : si egalite ou plus de chats, on va vers chats
+        // Sinon on va vers chiens (priorite aux chiens en cas d'egalite)
         if ($countChats >= $countChiens) {
             $animal = 'chats';
         } else {
             $animal = 'chiens';
         }
         
-        // Rediriger vers la page appropriée avec le terme de recherche comme filtre
+        // Redirection vers la page appropriee avec le terme de recherche
+        // Le terme est encode pour la securite URL
         return redirect()->to("/produits/$animal?recherche=" . urlencode($terme));
     }
 }

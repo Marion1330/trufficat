@@ -5,13 +5,36 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use CodeIgniter\Controller;
 
+/**
+ * Controleur AuthController pour la gestion complete de l'authentification et du profil utilisateur
+ * - Gere l'inscription, connexion et deconnexion des utilisateurs
+ * - Permet la gestion du profil utilisateur avec informations personnelles
+ * - Gere les adresses multiples avec systeme d'adresse par defaut
+ * - Controle la securite des mots de passe et des sessions
+ * - Permet la modification des informations et la suppression de compte
+ */
 class AuthController extends BaseController
 {
+    /**
+     * Affichage du formulaire d'inscription
+     * - Affiche le formulaire vide pour la creation d'un nouveau compte
+     * - Prepare l'interface pour la saisie des informations personnelles
+     * - Permet l'inscription avec validation des donnees
+     */
     public function inscription()
     {
         return view('VueInscription');
     }
 
+    /**
+     * Traitement de l'inscription d'un nouvel utilisateur
+     * - Valide les donnees du formulaire (email unique, mot de passe, confirmation)
+     * - Verifie la longueur minimale du mot de passe (9 caracteres)
+     * - Cree l'utilisateur en base avec role 'client' par defaut
+     * - Cree automatiquement une adresse par defaut avec les informations saisies
+     * - Applique le hachage securise du mot de passe via UserModel
+     * - Redirige vers la page de connexion avec message de succes
+     */
     public function traitementInscription()
     {
         $nom = $this->request->getPost('nom');
@@ -78,11 +101,24 @@ class AuthController extends BaseController
         return redirect()->to('/connexion')->with('success', 'Inscription réussie. Vous pouvez maintenant vous connecter.');
     }
 
+    /**
+     * Affichage du formulaire de connexion
+     * - Affiche le formulaire de connexion avec email et mot de passe
+     * - Permet l'authentification des utilisateurs existants
+     */
     public function connexion()
     {
         return view('VueConnexion');
     }
 
+    /**
+     * Traitement de la connexion utilisateur
+     * - Verifie les identifiants (email et mot de passe)
+     * - Applique la verification securisee du mot de passe avec password_verify()
+     * - Cree la session utilisateur avec toutes les informations necessaires
+     * - Redirige selon le role (admin vers tableau de bord, client vers accueil)
+     * - Gere les erreurs d'authentification avec messages explicites
+     */
     public function traitementConnexion()
     {
         $email = $this->request->getPost('email');
@@ -111,12 +147,26 @@ class AuthController extends BaseController
         return redirect()->back()->withInput()->with('error', 'Identifiants invalides.');
     }
 
+    /**
+     * Deconnexion de l'utilisateur
+     * - Detruit completement la session utilisateur
+     * - Supprime toutes les donnees de session
+     * - Redirige vers l'accueil avec message de confirmation
+     */
     public function deconnexion()
     {
         session()->destroy();
         return redirect()->to('/')->with('success', 'Déconnexion réussie.');
     }
 
+    /**
+     * Affichage du profil utilisateur avec gestion des adresses
+     * - Recupere les informations utilisateur depuis la session
+     * - Recupere toutes les adresses de l'utilisateur
+     * - Separe l'adresse par defaut des adresses supplementaires
+     * - Affiche le profil avec toutes les informations organisees
+     * - Permet la gestion des adresses multiples
+     */
     public function profil()
     {
         $userModel = new \App\Models\UserModel();
@@ -148,12 +198,24 @@ class AuthController extends BaseController
         ]);
     }
 
-
+    /**
+     * Affichage du formulaire d'ajout d'adresse supplementaire
+     * - Affiche le formulaire vide pour creer une nouvelle adresse
+     * - Permet l'ajout d'adresses supplementaires au profil
+     * - Les nouvelles adresses ne sont jamais definies comme adresse par defaut
+     */
     public function ajouterAdresse()
     {
         return view('AdresseAjouter');
     }
 
+    /**
+     * Traitement de l'ajout d'une adresse supplementaire
+     * - Recupere et valide les donnees du formulaire d'adresse
+     * - Cree une nouvelle adresse avec is_defaut = 0 (supplementaire)
+     * - Associe l'adresse a l'utilisateur connecte via user_id
+     * - Redirige vers le profil avec message de confirmation
+     */
     public function saveAdresse()
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -177,6 +239,13 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse supplémentaire ajoutée.');
     }
 
+    /**
+     * Affichage du formulaire de modification d'une adresse
+     * - Verifie que l'adresse appartient bien a l'utilisateur connecte
+     * - Affiche le formulaire pre-rempli avec les donnees actuelles
+     * - Permet la modification de tous les champs de l'adresse
+     * - Controle la securite pour eviter la modification d'adresses d'autres utilisateurs
+     */
     public function modifierAdresse($id)
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -189,6 +258,13 @@ class AuthController extends BaseController
         return view('AdresseModifier', ['adresse' => $adresse]);
     }
 
+    /**
+     * Traitement de la modification d'une adresse existante
+     * - Met a jour tous les champs de l'adresse avec les nouvelles donnees
+     * - Conserve l'ID de l'adresse et sa propriete (defaut ou supplementaire)
+     * - Redirige vers le profil avec message de confirmation
+     * - Permet la modification des adresses supplementaires et par defaut
+     */
     public function updateAdresse($id)
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -210,6 +286,13 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse mise à jour.');
     }
 
+    /**
+     * Suppression d'une adresse supplementaire
+     * - Verifie que l'adresse appartient a l'utilisateur connecte
+     * - Supprime l'adresse de la base de donnees
+     * - Permet la suppression libre des adresses supplementaires
+     * - Redirige vers le profil avec message de confirmation
+     */
     public function supprimerAdresse($id)
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -223,11 +306,25 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('error', 'Adresse non trouvée.');
     }
 
+    /**
+     * Affichage du formulaire de changement de mot de passe
+     * - Affiche le formulaire avec ancien mot de passe et nouveau
+     * - Permet la modification securisee du mot de passe
+     * - Inclut la confirmation du nouveau mot de passe
+     */
     public function changerMotDePasse()
     {
         return view('ChangerMotDePasse');
     }
 
+    /**
+     * Traitement du changement de mot de passe
+     * - Verifie l'ancien mot de passe avec password_verify()
+     * - Valide la correspondance entre nouveau mot de passe et confirmation
+     * - Controle la longueur minimale du nouveau mot de passe (9 caracteres)
+     * - Applique le hachage securise via UserModel
+     * - Redirige vers le profil avec message de confirmation
+     */
     public function traiterChangementMotDePasse()
     {
         $userModel = new \App\Models\UserModel();
@@ -256,6 +353,13 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Mot de passe changé.');
     }
 
+    /**
+     * Suppression du compte utilisateur
+     * - Supprime completement l'utilisateur de la base de donnees
+     * - Detruit la session utilisateur
+     * - Redirige vers l'accueil avec message de confirmation
+     * - Action irreversible qui supprime toutes les donnees utilisateur
+     */
     public function supprimerCompte()
     {
         $userModel = new \App\Models\UserModel();
@@ -270,7 +374,14 @@ class AuthController extends BaseController
         return redirect()->to('/')->with('success', 'Votre compte a bien été supprimé.');
     }
 
-    // Pour définir une adresse supplémentaire comme défaut
+    /**
+     * Definition d'une adresse supplementaire comme adresse par defaut
+     * - Recupere l'adresse a definir comme defaut
+     * - Met a jour l'ancienne adresse par defaut (is_defaut = 0)
+     * - Definit la nouvelle adresse comme defaut (is_defaut = 1)
+     * - Assure qu'une seule adresse par defaut existe par utilisateur
+     * - Redirige vers le profil avec message de confirmation
+     */
     public function definirAdresseDefaut($id)
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -295,7 +406,13 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse par défaut modifiée.');
     }
 
-    // Quand une adresse devient principale
+    /**
+     * Synchronisation d'une adresse supplementaire vers l'adresse principale
+     * - Met a jour les informations de l'utilisateur avec celles de l'adresse
+     * - Synchronise nom, prenom, adresse, telephone et autres champs
+     * - Permet de recuperer les informations d'une adresse supplementaire
+     * - Utilise pour la synchronisation des donnees entre adresses
+     */
     public function adresseDevientPrincipale($adresseId)
     {
         $userModel = new \App\Models\UserModel();
@@ -315,7 +432,13 @@ class AuthController extends BaseController
         ]);
     }
 
-    // Pour remettre l'adresse principale comme défaut
+    /**
+     * Remise de l'adresse principale comme adresse par defaut
+     * - Met toutes les adresses supplementaires a is_defaut = 0
+     * - Permet de revenir a l'adresse principale comme adresse par defaut
+     * - Redirige vers le profil avec message de confirmation
+     * - Utilise pour la gestion du systeme d'adresses multiples
+     */
     public function definirPrincipaleDefaut()
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -327,7 +450,13 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse principale définie par défaut.');
     }
 
-
+    /**
+     * Affichage du formulaire de modification de l'adresse principale
+     * - Recupere les informations de l'utilisateur depuis la base
+     * - Transforme les donnees utilisateur en format adresse
+     * - Affiche le formulaire avec le flag isDefaut = true
+     * - Permet la modification de l'adresse principale du profil
+     */
     public function afficherFormulaireAdressePrincipale()
     {
         $userModel = new \App\Models\UserModel();
@@ -353,6 +482,13 @@ class AuthController extends BaseController
         ]);
     }
 
+    /**
+     * Traitement de la modification des informations de compte
+     * - Met a jour nomcompte, prenomcompte, email et telephone
+     * - Conserve les autres informations du profil
+     * - Redirige vers le profil avec message de confirmation
+     * - Permet la modification des informations de base du compte
+     */
     public function modifierInfos()
     {
         $userModel = new \App\Models\UserModel();
@@ -367,6 +503,13 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Informations modifiées.');
     }
 
+    /**
+     * Traitement de la mise a jour des informations personnelles
+     * - Met a jour uniquement nom et prenom dans les champs personnels
+     * - Distingue les informations de compte (nomcompte) des informations personnelles (nom)
+     * - Redirige vers le profil avec message de confirmation
+     * - Permet la synchronisation des donnees personnelles
+     */
     public function updateInfos()
     {
         $userModel = new \App\Models\UserModel();
@@ -379,6 +522,12 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Informations modifiées.');
     }
 
+    /**
+     * Affichage du formulaire de modification des informations
+     * - Recupere les informations actuelles de l'utilisateur
+     * - Affiche le formulaire pre-rempli avec les donnees existantes
+     * - Permet la modification des informations personnelles
+     */
     public function afficherFormulaireInfos()
     {
         $userModel = new \App\Models\UserModel();
@@ -387,6 +536,13 @@ class AuthController extends BaseController
         return view('InfosModifier', ['user' => $user]);
     }
 
+    /**
+     * Traitement de la modification de l'adresse principale
+     * - Met a jour tous les champs d'adresse de l'utilisateur
+     * - Synchronise les informations avec l'adresse principale
+     * - Redirige vers le profil avec message de confirmation
+     * - Permet la modification de l'adresse principale du profil
+     */
     public function modifierAdressePrincipale()
     {
         $userModel = new \App\Models\UserModel();
@@ -406,6 +562,13 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse principale modifiée.');
     }
 
+    /**
+     * Affichage du formulaire de modification de l'adresse par defaut
+     * - Recupere l'adresse par defaut actuelle de l'utilisateur
+     * - Verifie qu'une adresse par defaut existe
+     * - Affiche le formulaire avec le flag isDefaut = true
+     * - Permet la modification de l'adresse par defaut
+     */
     public function modifierAdresseDefaut()
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -424,6 +587,14 @@ class AuthController extends BaseController
         ]);
     }
 
+    /**
+     * Traitement de la mise a jour de l'adresse par defaut
+     * - Recupere l'adresse par defaut actuelle
+     * - Met a jour tous les champs de l'adresse par defaut
+     * - Conserve le statut is_defaut = 1
+     * - Redirige vers le profil avec message de confirmation
+     * - Permet la modification de l'adresse par defaut
+     */
     public function updateAdresseDefaut()
     {
         $adresseModel = new \App\Models\AdresseModel();
@@ -452,6 +623,14 @@ class AuthController extends BaseController
         return redirect()->to('/profil')->with('success', 'Adresse par défaut modifiée.');
     }
 
+    /**
+     * Creation d'une adresse par defaut a partir des informations utilisateur
+     * - Verifie qu'aucune adresse par defaut n'existe deja
+     * - Controle que l'utilisateur a des informations d'adresse completes
+     * - Cree une nouvelle adresse par defaut avec is_defaut = 1
+     * - Utilise les informations du profil utilisateur
+     * - Redirige vers le profil avec message de confirmation
+     */
     public function creerAdresseDefaut()
     {
         $userModel = new \App\Models\UserModel();
